@@ -53,7 +53,17 @@ export interface RefreshTokenResponse {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 const API_TIMEOUT = Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 30000;
-const ENABLE_MOCK_AUTH = process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH === 'true';
+
+// Read mock auth dynamically (for debugging)
+const isMockAuthEnabled = (): boolean => {
+  if (typeof window !== 'undefined') {
+    // Client-side: check the env var
+    const envValue = process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH;
+    console.log('[Auth] NEXT_PUBLIC_ENABLE_MOCK_AUTH =', envValue);
+    return envValue === 'true';
+  }
+  return process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH === 'true';
+};
 
 // ============================================
 // Token Management
@@ -62,6 +72,22 @@ const ENABLE_MOCK_AUTH = process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH === 'true';
 const TOKEN_KEY = 'yeison_access_token';
 const REFRESH_TOKEN_KEY = 'yeison_refresh_token';
 const USER_KEY = 'yeison_user';
+// Cookie name that middleware expects
+const AUTH_COOKIE_NAME = 'yeison_auth_token';
+
+// Helper to set a cookie
+const setCookie = (name: string, value: string, days: number = 7): void => {
+  if (typeof document === 'undefined') return;
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+};
+
+// Helper to delete a cookie
+const deleteCookie = (name: string): void => {
+  if (typeof document === 'undefined') return;
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;SameSite=Lax`;
+};
 
 export const tokenStorage = {
   getAccessToken: (): string | null => {
@@ -72,6 +98,8 @@ export const tokenStorage = {
   setAccessToken: (token: string): void => {
     if (typeof window === 'undefined') return;
     localStorage.setItem(TOKEN_KEY, token);
+    // Also set cookie for middleware to read
+    setCookie(AUTH_COOKIE_NAME, token, 7);
   },
 
   getRefreshToken: (): string | null => {
@@ -100,6 +128,8 @@ export const tokenStorage = {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+    // Also clear the auth cookie
+    deleteCookie(AUTH_COOKIE_NAME);
   },
 
   isAuthenticated: (): boolean => {
@@ -224,7 +254,7 @@ class ApiClient {
 
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
     // Mock authentication for development
-    if (ENABLE_MOCK_AUTH) {
+    if (isMockAuthEnabled()) {
       return this.mockLogin(credentials);
     }
 
@@ -233,7 +263,7 @@ class ApiClient {
 
   async logout(): Promise<void> {
     try {
-      if (!ENABLE_MOCK_AUTH) {
+      if (!isMockAuthEnabled()) {
         await this.post('/auth/logout');
       }
     } finally {
@@ -253,7 +283,7 @@ class ApiClient {
   }
 
   async getCurrentUser(): Promise<User> {
-    if (ENABLE_MOCK_AUTH) {
+    if (isMockAuthEnabled()) {
       const user = tokenStorage.getUser();
       if (user) return user;
       throw { message: 'Not authenticated', status: 401 } as ApiError;

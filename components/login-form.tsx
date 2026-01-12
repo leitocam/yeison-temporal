@@ -43,7 +43,7 @@ export default function LoginForm() {
       {/* Email Field */}
       <div>
         <label htmlFor="email" className="block text-sm font-semibold mb-2.5 text-foreground">
-          Email address
+          Correo electrónico
         </label>
         <input
           id="email"
@@ -54,14 +54,14 @@ export default function LoginForm() {
           autoComplete="email"
           disabled={isLoading}
           className="w-full px-4 py-3 glass border-2 border-primary/20 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/60 focus:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-          placeholder="you@company.com"
+          placeholder="tu@empresa.com"
         />
       </div>
 
       {/* Password Field */}
       <div>
         <label htmlFor="password" className="block text-sm font-semibold mb-2.5 text-foreground">
-          Password
+          Contraseña
         </label>
         <div className="relative">
           <input
@@ -80,7 +80,7 @@ export default function LoginForm() {
             onClick={() => setShowPassword(!showPassword)}
             disabled={isLoading}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent transition-colors disabled:opacity-50"
-            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
           >
             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
           </button>
@@ -98,11 +98,11 @@ export default function LoginForm() {
             className="w-4 h-4 rounded bg-input border border-primary/20 cursor-pointer accent-primary transition-all group-hover:border-primary/60"
           />
           <span className="text-muted-foreground group-hover:text-foreground transition-colors">
-            Remember me
+            Recordarme
           </span>
         </label>
         <a href="#" className="text-sm text-accent hover:text-primary transition font-medium">
-          Forgot password?
+          ¿Olvidaste tu contraseña?
         </a>
       </div>
 
@@ -115,11 +115,11 @@ export default function LoginForm() {
         {isLoading ? (
           <>
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            <span>Signing in...</span>
+            <span>Ingresando...</span>
           </>
         ) : (
           <>
-            <span>Sign in to dashboard</span>
+            <span>Ingresar al panel</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </>
         )}
@@ -131,7 +131,7 @@ export default function LoginForm() {
           <div className="w-full border-t border-border/50"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-background text-muted-foreground">Or continue with</span>
+          <span className="px-2 bg-background text-muted-foreground">O continúa con</span>
         </div>
       </div>
 
@@ -141,14 +141,14 @@ export default function LoginForm() {
         disabled={isLoading}
         className="w-full py-3 glass border-2 border-primary/20 rounded-lg font-semibold text-foreground hover:bg-white/20 hover:border-primary/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Continue with Google
+        Continuar con Google
       </button>
 
       {/* Development Mode Indicator */}
       {process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH === 'true' && (
         <div className="flex items-center gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">
           <CheckCircle className="w-4 h-4" />
-          <p className="text-xs">Development mode: Any email/password will work</p>
+          <p className="text-xs">Modo desarrollo: Cualquier email/contraseña funcionará</p>
         </div>
       )}
     </form>

@@ -9,9 +9,9 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Yeison - AI Sales Automation for Enterprise",
+  title: "Yeison - Automatización de Ventas con IA para Bolivia",
   description:
-    "Close deals 3x faster with AI-powered intelligent agents. Enterprise sales automation platform trusted by Fortune 500 companies.",
+    "Cierra más ventas sin contratar más personal. Agentes inteligentes que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti. Diseñado para PYMES bolivianas.",
   generator: "v0.app",
   icons: {
     icon: [

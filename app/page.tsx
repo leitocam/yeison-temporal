@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Zap, BarChart3, Users, Sparkles, Shield, TrendingUp, Clock, CheckCircle } from "lucide-react"
+import { ArrowRight, Zap, BarChart3, Users, Sparkles, Shield, MessageCircle, Clock, CheckCircle, TrendingDown } from "lucide-react"
 import { useState } from "react"
 
 export default function LandingPage() {
@@ -32,27 +32,27 @@ export default function LandingPage() {
               href="#features"
               className="text-sm text-muted-foreground hover:text-accent transition relative group"
             >
-              Features
+              Producto
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link href="#pricing" className="text-sm text-muted-foreground hover:text-accent transition relative group">
-              Pricing
+              Precios
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link href="#" className="text-sm text-muted-foreground hover:text-accent transition relative group">
-              Docs
+              Documentación
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </Link>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-accent transition">
-              Sign in
+              Ingresar
             </Link>
             <Link
               href="/login"
               className="px-6 py-2 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg text-sm font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover-lift"
             >
-              Start Free Trial
+              Probar Gratis
             </Link>
           </div>
         </div>
@@ -62,19 +62,19 @@ export default function LandingPage() {
       <section className="pt-40 pb-32 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-5xl mx-auto text-center">
           <div className="fade-in-up inline-block mb-6 px-4 py-2 glass rounded-full border-2 border-primary/30">
-            <span className="text-sm font-medium text-accent">✨ New: Multi-language Agent Support</span>
+            <span className="text-sm font-medium text-accent">✨ Nuevo: Agentes en Español adaptados al mercado boliviano</span>
           </div>
 
-          <h1 className="fade-in-up stagger-1 text-6xl sm:text-7xl lg:text-8xl font-black mb-6 text-balance leading-tight tracking-tight">
-            Close deals{" "}
+          <h1 className="fade-in-up stagger-1 text-5xl sm:text-6xl lg:text-7xl font-black mb-6 text-balance leading-tight tracking-tight">
+            Cierra más ventas{" "}
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              3x faster
+              sin contratar más personal
             </span>
           </h1>
 
           <p className="fade-in-up stagger-2 text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 text-balance leading-relaxed">
-            AI agents that never sleep. Intelligent automation that scales your entire sales operation. Enterprise-grade
-            security. Fortune 500 approved.
+            Agentes inteligentes que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.
+            Reduce costos, responde a todos tus clientes a tiempo y escala tu negocio sin aumentar tu planilla.
           </p>
 
           <div className="fade-in-up stagger-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
@@ -82,14 +82,14 @@ export default function LandingPage() {
               href="/login"
               className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover-lift flex items-center gap-2 group btn-premium text-lg"
             >
-              Start Free Trial
+              Probar Gratis
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="#demo"
               className="px-8 py-4 glass rounded-lg font-bold transition-all duration-300 border-2 border-primary/30 hover:border-primary/60 text-lg hover:bg-white/20"
             >
-              Watch 2-min Demo
+              Ver demo (2 minutos)
             </Link>
           </div>
 
@@ -131,12 +131,12 @@ export default function LandingPage() {
       {/* Stats Section */}
       <section className="py-24 border-y border-border/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <p className="text-center text-muted-foreground mb-8 text-lg">+2.500 empresas confían en automatización inteligente</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { label: "Companies trust us", value: "2,500+" },
-              { label: "Deals closed annually", value: "$5.2B" },
-              { label: "Uptime SLA", value: "99.99%" },
-              { label: "Response time", value: "<100ms" },
+              { label: "En ventas gestionadas automáticamente", value: "Bs. millones" },
+              { label: "Disponibilidad garantizada", value: "99.9%" },
+              { label: "Tiempo de respuesta", value: "<100 ms" },
             ].map((stat, i) => (
               <div
                 key={i}
@@ -153,58 +153,70 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Value Proposition */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl sm:text-5xl font-black mb-6">
+            Automatización empresarial <span className="text-gradient">sin complejidad</span>
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Yeison fue diseñado para <strong className="text-foreground">PYMES bolivianas</strong> que necesitan vender más, atender mejor y gastar menos.
+          </p>
+        </div>
+      </section>
+
       {/* Features Grid Section */}
       <section id="features" className="py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-5xl sm:text-6xl font-black mb-6 text-balance">
-              Enterprise features. <span className="text-gradient">Zero complexity.</span>
+              Todo lo que necesitas. <span className="text-gradient">En un solo lugar.</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Powerful automation that your entire team will love using
+              Automatización poderosa que tu equipo amará usar
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             {[
               {
-                icon: Sparkles,
-                title: "AI Agents That Sell",
+                icon: MessageCircle,
+                title: "🤖 Agente de Ventas por WhatsApp",
                 description:
-                  "Intelligent agents that qualify leads, handle objections, and negotiate terms 24/7. They learn and improve constantly.",
+                  "Atiende clientes automáticamente, envía cotizaciones, responde objeciones y hace seguimiento hasta cerrar la venta. Funciona las 24 horas, todos los días.",
                 color: "from-primary to-accent",
               },
               {
-                icon: TrendingUp,
-                title: "Predictive Analytics",
+                icon: BarChart3,
+                title: "📊 Análisis y Seguimiento",
                 description:
-                  "AI-powered forecasting shows you exactly which deals will close and when. Never miss a target again.",
+                  "Visualiza cuántos clientes escriben, cuántos compran y en qué etapa se pierden. Decisiones claras, sin Excel.",
                 color: "from-accent to-primary",
               },
               {
-                icon: BarChart3,
-                title: "Real-Time Dashboards",
+                icon: Sparkles,
+                title: "📣 Agente de Marketing",
                 description:
-                  "Live pipeline visibility across your entire sales org. Every metric that matters, in one place.",
+                  "Genera publicaciones, textos promocionales y mantiene activas tus redes sociales sin contratar un community manager.",
                 color: "from-primary to-accent",
               },
               {
                 icon: Clock,
-                title: "Automated Workflows",
+                title: "⚙️ Flujos Automatizados",
                 description:
-                  "Repetitive tasks gone. Your team focuses on strategy, not admin. Save 20+ hours per week per rep.",
+                  "Seguimientos, recordatorios, recuperación de clientes inactivos y respuestas frecuentes sin intervención humana.",
                 color: "from-accent to-primary",
               },
               {
                 icon: Users,
-                title: "Team Intelligence",
-                description: "Share playbooks, track performance, and celebrate wins across your entire organization.",
+                title: "👥 Control para tu Equipo",
+                description: "Define reglas, revisa conversaciones y mantén control total. La IA trabaja, tú decides.",
                 color: "from-primary to-accent",
               },
               {
                 icon: Shield,
-                title: "Enterprise Grade",
-                description: "SOC 2 Type II certified. GDPR compliant. API-first architecture. Trusted by Fortune 500.",
+                title: "🔒 Seguridad Empresarial",
+                description: "Arquitectura segura, control de accesos y datos protegidos. Preparado para crecer con tu empresa.",
                 color: "from-accent to-primary",
               },
             ].map((feature, i) => (
@@ -226,97 +238,138 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Cost Comparison Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none"></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl sm:text-5xl font-black mb-6">
+              Comparación real <span className="text-gradient">(Dolor del mercado)</span>
+            </h2>
+          </div>
+
+          <div className="glass rounded-3xl p-8 border-2 border-primary/30">
+            <h3 className="text-xl font-bold mb-6 text-center">Contratar hoy en Bolivia:</h3>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30">
+                <span className="text-muted-foreground">Vendedor:</span>
+                <span className="font-bold text-red-400">Bs. 2.000 – 4.000 / mes</span>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30">
+                <span className="text-muted-foreground">Encargado de redes:</span>
+                <span className="font-bold text-red-400">Bs. 1.500 – 3.000 / mes</span>
+              </div>
+            </div>
+
+            <div className="text-center p-6 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl border-2 border-primary/40">
+              <p className="text-lg mb-2">
+                <strong className="text-2xl font-black text-gradient">Yeison reemplaza gran parte de ese trabajo</strong>
+              </p>
+              <p className="text-3xl font-black text-accent">desde Bs. 700 – 1.000 / mes</p>
+              <p className="text-muted-foreground mt-4">Sin horarios, sin rotación y sin errores humanos.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
       <section id="pricing" className="py-32 px-4 sm:px-6 lg:px-8 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none"></div>
 
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl sm:text-6xl font-black mb-6">Transparent pricing that scales</h2>
+            <h2 className="text-5xl sm:text-6xl font-black mb-6">Planes y Precios</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Start free. Upgrade when you're ready. Pay for what you use.
+              Empieza gratis. Escala cuando estés listo.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-6">
             {[
               {
                 name: "Starter",
-                price: "$0",
-                period: "Forever free",
-                description: "Perfect for testing the platform",
+                price: "Gratis",
+                period: "Para siempre",
+                description: "Ideal para probar",
                 features: [
-                  "Up to 5 AI agents",
-                  "1,000 conversations/month",
-                  "Basic analytics",
-                  "Community support",
-                  "Salesforce integration",
+                  "Hasta 1 agente",
+                  "Uso limitado",
+                  "Soporte comunidad",
                 ],
-                cta: "Start Free",
+                cta: "Empezar gratis",
                 highlight: false,
               },
               {
-                name: "Professional",
-                price: "$499",
-                period: "/month",
-                description: "For growing sales teams",
+                name: "Ventas",
+                price: "USD 29-39",
+                period: "/mes",
+                description: "Agente de ventas completo",
                 features: [
-                  "Unlimited AI agents",
-                  "Unlimited conversations",
-                  "Advanced analytics & forecasting",
-                  "Priority support",
-                  "Custom integrations",
-                  "Team collaboration",
-                  "API access",
+                  "Agente de ventas por WhatsApp",
+                  "Cotizaciones automáticas",
+                  "Seguimiento de clientes",
+                  "Soporte estándar",
                 ],
-                cta: "Start Trial",
+                cta: "Probar ahora",
+                highlight: false,
+              },
+              {
+                name: "Ventas + Marketing",
+                price: "USD 49-59",
+                period: "/mes",
+                description: "La combinación perfecta",
+                features: [
+                  "Todo de Ventas",
+                  "Agente de Marketing",
+                  "Contenidos mensuales",
+                  "Métricas básicas",
+                  "Soporte prioritario",
+                ],
+                cta: "Recomendado",
                 highlight: true,
               },
               {
-                name: "Enterprise",
-                price: "Custom",
-                period: "Let's talk",
-                description: "For large organizations",
+                name: "Premium",
+                price: "USD 79-99",
+                period: "/mes",
+                description: "Para equipos grandes",
                 features: [
-                  "Everything in Professional",
-                  "Dedicated account manager",
-                  "Custom SLAs & compliance",
-                  "White-label options",
-                  "Advanced security",
-                  "On-premise deployment",
-                  "Training & implementation",
+                  "Todos los agentes",
+                  "Mayor volumen",
+                  "Soporte prioritario 24/7",
+                  "Configuración avanzada",
+                  "Onboarding personalizado",
                 ],
-                cta: "Contact Sales",
+                cta: "Hablar con ventas",
                 highlight: false,
               },
             ].map((plan, i) => (
               <div
                 key={i}
-                className={`fade-in-up group relative rounded-3xl border-2 transition-all duration-300 hover-lift ${
-                  plan.highlight
+                className={`fade-in-up group relative rounded-3xl border-2 transition-all duration-300 hover-lift ${plan.highlight
                     ? "bg-gradient-to-br from-primary/20 to-accent/10 border-primary/60 md:scale-105"
                     : "glass border-primary/20 hover:border-primary/40"
-                }`}
+                  }`}
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
                 {plan.highlight && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-accent text-white text-sm font-bold rounded-full">
-                    RECOMMENDED
+                    RECOMENDADO
                   </div>
                 )}
-                <div className="p-8 h-full flex flex-col">
-                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                  <p className="text-muted-foreground text-sm mb-6">{plan.description}</p>
+                <div className="p-6 h-full flex flex-col">
+                  <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
+                  <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
 
-                  <div className="mb-8">
-                    <div className="text-5xl font-black">{plan.price}</div>
+                  <div className="mb-6">
+                    <div className="text-3xl font-black">{plan.price}</div>
                     <div className="text-muted-foreground text-sm mt-1">{plan.period}</div>
                   </div>
 
-                  <ul className="space-y-4 mb-8 flex-1">
+                  <ul className="space-y-3 mb-6 flex-1">
                     {plan.features.map((feature, j) => (
-                      <li key={j} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                      <li key={j} className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-muted-foreground">{feature}</span>
                       </li>
                     ))}
@@ -324,11 +377,10 @@ export default function LandingPage() {
 
                   <Link
                     href="/login"
-                    className={`w-full py-3 rounded-xl font-bold text-center transition-all duration-300 ${
-                      plan.highlight
+                    className={`w-full py-3 rounded-xl font-bold text-center transition-all duration-300 text-sm ${plan.highlight
                         ? "bg-gradient-to-r from-primary to-accent text-white hover:shadow-2xl hover:shadow-primary/40"
                         : "glass border border-primary/30 hover:bg-white/20"
-                    }`}
+                      }`}
                   >
                     {plan.cta}
                   </Link>
@@ -343,15 +395,15 @@ export default function LandingPage() {
       <section className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 glass border-y border-primary/30"></div>
         <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <h2 className="text-5xl sm:text-6xl font-black mb-6">Ready to transform your sales?</h2>
+          <h2 className="text-5xl sm:text-6xl font-black mb-6">Automatiza tu negocio hoy</h2>
           <p className="text-xl text-muted-foreground mb-12 text-balance">
-            Join 2,500+ companies closing deals faster with Yeison. No credit card required.
+            Más ventas, menos costos y control total desde un solo panel.
           </p>
           <Link
             href="/login"
             className="inline-flex px-10 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover-lift group btn-premium text-lg"
           >
-            Start Your Free Trial
+            Probar gratis – sin tarjeta
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -368,34 +420,34 @@ export default function LandingPage() {
                 </div>
                 <span className="font-bold text-lg">Yeison</span>
               </div>
-              <p className="text-sm text-muted-foreground">Enterprise sales automation powered by AI.</p>
+              <p className="text-sm text-muted-foreground">Automatización empresarial con IA</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Product</h4>
+              <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Producto</h4>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
-                  <Link href="#" className="hover:text-accent transition">
-                    Features
+                  <Link href="#features" className="hover:text-accent transition">
+                    Características
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#pricing" className="hover:text-accent transition">
+                    Precios
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-accent transition">
-                    Security
+                    Seguridad
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+              <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Empresa</h4>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    About
+                    Nosotros
                   </Link>
                 </li>
                 <li>
@@ -405,27 +457,27 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    Careers
+                    Carreras
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Resources</h4>
+              <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Recursos</h4>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    Docs
+                    Documentación
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    API Ref
+                    API
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    Status
+                    Estado
                   </Link>
                 </li>
               </ul>
@@ -435,24 +487,24 @@ export default function LandingPage() {
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    Privacy
+                    Privacidad
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    Terms
+                    Términos
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:text-accent transition">
-                    Contact
+                    Contacto
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="border-t border-border/50 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground gap-4">
-            <p>&copy; 2025 Yeison. All rights reserved.</p>
+            <p>&copy; 2025 Yeison. Todos los derechos reservados.</p>
             <div className="flex gap-6">
               <Link href="#" className="hover:text-accent transition">
                 Twitter
@@ -461,7 +513,7 @@ export default function LandingPage() {
                 LinkedIn
               </Link>
               <Link href="#" className="hover:text-accent transition">
-                GitHub
+                WhatsApp
               </Link>
             </div>
           </div>

@@ -31,17 +31,17 @@ export default function LoginPage() {
 
         <div className="relative z-10 space-y-8">
           <div className="fade-in-up">
-            <h2 className="text-5xl font-black mb-6 tracking-tight">Unlock your sales potential with AI</h2>
+            <h2 className="text-5xl font-black mb-6 tracking-tight">Automatiza tus ventas con inteligencia artificial</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Join 2,500+ companies closing deals 3x faster with intelligent automation.
+              Únete a +2,500 empresas que cierran negocios más rápido con automatización inteligente.
             </p>
           </div>
 
           <div className="space-y-4 pt-8">
             {[
-              { number: "01", title: "AI Agents", desc: "Work 24/7 on your sales process, never sleep" },
-              { number: "02", title: "Predictive AI", desc: "Know which deals will close before they happen" },
-              { number: "03", title: "Enterprise Scale", desc: "Built for teams that think big and move fast" },
+              { number: "01", title: "Agentes IA", desc: "Trabajan 24/7 en tu proceso de ventas, nunca descansan" },
+              { number: "02", title: "WhatsApp Integrado", desc: "Atiende a todos tus clientes automáticamente" },
+              { number: "03", title: "Diseñado para Bolivia", desc: "Adaptado al mercado y las necesidades locales" },
             ].map((item, i) => (
               <div
                 key={item.number}
@@ -63,7 +63,7 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10 pt-8 border-t border-border/50">
-          <p className="text-sm text-muted-foreground">✨ Enterprise sales automation for serious teams</p>
+          <p className="text-sm text-muted-foreground">✨ Automatización empresarial para PYMES bolivianas</p>
           <div className="mt-4 flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex -space-x-2">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-background"></div>
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 +
               </div>
             </div>
-            <span>Trusted by Fortune 500 companies</span>
+            <span>Confiado por empresas en todo Bolivia</span>
           </div>
         </div>
       </div>
@@ -88,20 +88,20 @@ export default function LoginPage() {
           </div>
 
           <div className="fade-in-up stagger-1 mb-10">
-            <h1 className="text-4xl font-black mb-3 tracking-tight">Welcome back</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">Access your AI-powered sales dashboard</p>
+            <h1 className="text-4xl font-black mb-3 tracking-tight">Bienvenido de vuelta</h1>
+            <p className="text-lg text-muted-foreground leading-relaxed">Accede a tu panel de ventas potenciado con IA</p>
           </div>
 
           <LoginForm />
 
           <div className="fade-in-up stagger-2 mt-10 text-center text-sm text-muted-foreground">
             <p>
-              Don't have an account?{" "}
+              ¿No tienes una cuenta?{" "}
               <Link href="#" className="text-accent font-bold hover:text-primary transition">
-                Start a free trial
+                Inicia tu prueba gratis
               </Link>
             </p>
-            <p className="mt-4 text-xs">All plans come with a 14-day free trial. No credit card required.</p>
+            <p className="mt-4 text-xs">Todos los planes incluyen 14 días de prueba gratis. Sin tarjeta de crédito.</p>
           </div>
         </div>
       </div>
