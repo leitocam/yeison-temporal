@@ -54,15 +54,23 @@ export interface RefreshTokenResponse {
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 const API_TIMEOUT = Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 30000;
 
-// Read mock auth dynamically (for debugging)
+// Mock auth is enabled when:
+// 1. NEXT_PUBLIC_ENABLE_MOCK_AUTH is explicitly 'true', OR
+// 2. No real API URL is configured (defaults to localhost)
+// This ensures demos work without backend configuration
 const isMockAuthEnabled = (): boolean => {
-  if (typeof window !== 'undefined') {
-    // Client-side: check the env var
-    const envValue = process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH;
+  const envValue = process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH;
+
+  // If explicitly set, use that value
+  if (envValue !== undefined) {
     console.log('[Auth] NEXT_PUBLIC_ENABLE_MOCK_AUTH =', envValue);
     return envValue === 'true';
   }
-  return process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH === 'true';
+
+  // Default: enable mock if API URL is localhost (no real backend)
+  const isLocalhost = API_BASE_URL.includes('localhost') || API_BASE_URL.includes('127.0.0.1');
+  console.log('[Auth] Mock auth auto-enabled (no backend configured):', isLocalhost);
+  return isLocalhost;
 };
 
 // ============================================
