@@ -73,7 +73,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="fade-in-up stagger-2 text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 text-balance leading-relaxed">
-            Agentes inteligentes que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.
+            Agente inteligente que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.
             Reduce costos, responde a todos tus clientes a tiempo y escala tu negocio sin aumentar tu planilla.
           </p>
 
@@ -347,8 +347,8 @@ export default function LandingPage() {
               <div
                 key={i}
                 className={`fade-in-up group relative rounded-3xl border-2 transition-all duration-300 hover-lift ${plan.highlight
-                    ? "bg-gradient-to-br from-primary/20 to-accent/10 border-primary/60 md:scale-105"
-                    : "glass border-primary/20 hover:border-primary/40"
+                  ? "bg-gradient-to-br from-primary/20 to-accent/10 border-primary/60 md:scale-105"
+                  : "glass border-primary/20 hover:border-primary/40"
                   }`}
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
@@ -378,8 +378,8 @@ export default function LandingPage() {
                   <Link
                     href="/login"
                     className={`w-full py-3 rounded-xl font-bold text-center transition-all duration-300 text-sm ${plan.highlight
-                        ? "bg-gradient-to-r from-primary to-accent text-white hover:shadow-2xl hover:shadow-primary/40"
-                        : "glass border border-primary/30 hover:bg-white/20"
+                      ? "bg-gradient-to-r from-primary to-accent text-white hover:shadow-2xl hover:shadow-primary/40"
+                      : "glass border border-primary/30 hover:bg-white/20"
                       }`}
                   >
                     {plan.cta}
