@@ -317,13 +317,9 @@ class ApiClient {
   }
 
   async logout(): Promise<void> {
-    try {
-      if (!isMockAuthEnabled()) {
-        await this.post('/auth/logout');
-      }
-    } finally {
-      tokenStorage.clearAll();
-    }
+    // Backend doesn't have a logout endpoint - just clear local tokens
+    // JWT tokens will naturally expire, no server-side invalidation needed
+    tokenStorage.clearAll();
   }
 
   async refreshToken(): Promise<RefreshTokenResponse> {

@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { LayoutDashboard, Bot, Settings, LogOut, Menu, X, Lock } from "lucide-react"
 import { useState } from "react"
+import { useAuth } from "@/hooks/useAuth"
 
 interface DashboardSidebarProps {
   open: boolean
@@ -11,6 +12,11 @@ interface DashboardSidebarProps {
 
 export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProps) {
   const [expandUpgrade, setExpandUpgrade] = useState(false)
+  const { logout } = useAuth()
+
+  const handleLogout = async () => {
+    await logout()
+  }
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", active: true },
@@ -103,7 +109,10 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
           </div>
 
           {/* Sign Out */}
-          <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-all text-sm">
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-all text-sm"
+          >
             <LogOut className="w-4 h-4" />
             <span>Sign out</span>
           </button>

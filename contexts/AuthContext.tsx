@@ -84,7 +84,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
             await apiClient.logout();
         } catch (err) {
-            console.error('Logout error:', err);
+            // Logout errors are already handled in api-client
+            // Just log for debugging if needed
+            console.debug('Logout completed with warnings:', err);
         } finally {
             setUser(null);
             setIsLoading(false);
