@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ArrowRight, Zap, BarChart3, Users, Sparkles, Shield, MessageCircle, Clock, CheckCircle, TrendingDown } from "lucide-react"
 import { useState } from "react"
+import GradientText from "@/components/ui/GradientText"
 
 export default function LandingPage() {
   const [activeTab, setActiveTab] = useState(0)
@@ -62,7 +63,13 @@ export default function LandingPage() {
       <section className="pt-40 pb-32 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-5xl mx-auto text-center">
           <div className="fade-in-up inline-block mb-6 px-4 py-2 glass rounded-full border-2 border-primary/30">
-            <span className="text-sm font-medium text-accent">✨ Nuevo: Agentes en Español adaptados al mercado boliviano</span>
+            <GradientText
+              colors={['#2f8db8ff', '#FF9FFC', '#5d6fe3ff']}
+              animationSpeed={8}
+              className="text-sm font-medium"
+            >
+              Agentes en Español adaptados al mercado boliviano
+            </GradientText>
           </div>
 
           <h1 className="fade-in-up stagger-1 text-5xl sm:text-6xl lg:text-7xl font-black mb-6 text-balance leading-tight tracking-tight">
@@ -347,8 +354,8 @@ export default function LandingPage() {
               <div
                 key={i}
                 className={`fade-in-up group relative rounded-3xl border-2 transition-all duration-300 hover-lift ${plan.highlight
-                    ? "bg-gradient-to-br from-primary/20 to-accent/10 border-primary/60 md:scale-105"
-                    : "glass border-primary/20 hover:border-primary/40"
+                  ? "bg-gradient-to-br from-primary/20 to-accent/10 border-primary/60 md:scale-105"
+                  : "glass border-primary/20 hover:border-primary/40"
                   }`}
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
@@ -378,8 +385,8 @@ export default function LandingPage() {
                   <Link
                     href="/login"
                     className={`w-full py-3 rounded-xl font-bold text-center transition-all duration-300 text-sm ${plan.highlight
-                        ? "bg-gradient-to-r from-primary to-accent text-white hover:shadow-2xl hover:shadow-primary/40"
-                        : "glass border border-primary/30 hover:bg-white/20"
+                      ? "bg-gradient-to-r from-primary to-accent text-white hover:shadow-2xl hover:shadow-primary/40"
+                      : "glass border border-primary/30 hover:bg-white/20"
                       }`}
                   >
                     {plan.cta}
