@@ -58,7 +58,7 @@ const nextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME || 'Yeison',
     // Demo mode: enables mock authentication without real backend
-    NEXT_PUBLIC_ENABLE_MOCK_AUTH: 'true',
+    NEXT_PUBLIC_ENABLE_MOCK_AUTH: process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH || 'false',
   },
 
   // Production optimizations

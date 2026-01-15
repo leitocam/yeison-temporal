@@ -4,6 +4,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle } from "lucide-react"
 import { useAuth } from "@/hooks/useAuth"
+import { apiClient } from "@/lib/api-client"
 
 export default function LoginForm() {
   const [email, setEmail] = useState("")
@@ -28,6 +29,10 @@ export default function LoginForm() {
     }
 
     await login({ email, password })
+  }
+
+  const handleGoogleSignIn = () => {
+    apiClient.initiateGoogleOAuth()
   }
 
   return (
@@ -138,6 +143,7 @@ export default function LoginForm() {
       {/* Google Sign In */}
       <button
         type="button"
+        onClick={handleGoogleSignIn}
         disabled={isLoading}
         className="w-full py-3 glass border-2 border-primary/20 rounded-lg font-semibold text-foreground hover:bg-white/20 hover:border-primary/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >

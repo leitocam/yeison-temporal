@@ -62,15 +62,14 @@ const isMockAuthEnabled = (): boolean => {
   const envValue = process.env.NEXT_PUBLIC_ENABLE_MOCK_AUTH;
 
   // If explicitly set, use that value
-  if (envValue !== undefined) {
-    console.log('[Auth] NEXT_PUBLIC_ENABLE_MOCK_AUTH =', envValue);
-    return envValue === 'true';
-  }
+  console.log('[Auth] NEXT_PUBLIC_ENABLE_MOCK_AUTH =', envValue);
+  return envValue === 'true';
+
 
   // Default: enable mock if API URL is localhost (no real backend)
-  const isLocalhost = API_BASE_URL.includes('localhost') || API_BASE_URL.includes('127.0.0.1');
-  console.log('[Auth] Mock auth auto-enabled (no backend configured):', isLocalhost);
-  return isLocalhost;
+  //const isLocalhost = API_BASE_URL.includes('localhost') || API_BASE_URL.includes('127.0.0.1');
+  //console.log('[Auth] Mock auth auto-enabled (no backend configured):', isLocalhost);
+  //return isLocalhost;
 };
 
 // ============================================
@@ -266,7 +265,55 @@ class ApiClient {
       return this.mockLogin(credentials);
     }
 
-    return this.post<LoginResponse>('/auth/login', credentials);
+    // FastAPI expects form-urlencoded data with username field
+    const formData = new URLSearchParams();
+    formData.append('username', credentials.email);
+    formData.append('password', credentials.password);
+
+    const url = `${this.baseUrl}/auth/login`;
+    
+    try {
+      // Step 1: Login and get access token
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString(),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw {
+          message: errorData.detail || `HTTP ${response.status}`,
+          status: response.status,
+          code: errorData.code,
+        } as ApiError;
+      }
+
+      const authData: { access_token: string; token_type: string } = await response.json();
+
+      // Step 2: Store token temporarily and fetch user data
+      tokenStorage.setAccessToken(authData.access_token);
+      
+      const user = await this.getCurrentUser();
+
+      const loginResponse: LoginResponse = {
+        access_token: authData.access_token,
+        token_type: authData.token_type,
+        expires_in: 3600, // FastAPI doesn't return this, assume 1 hour
+        user,
+      };
+
+      // Store user data
+      tokenStorage.setUser(user);
+
+      return loginResponse;
+    } catch (error) {
+      // Clear tokens on error
+      tokenStorage.clearAll();
+      throw error;
+    }
   }
 
   async logout(): Promise<void> {
@@ -290,6 +337,44 @@ class ApiClient {
     });
   }
 
+  // ============================================
+  // Google OAuth
+  // ============================================
+
+  /**
+   * Initiates Google OAuth flow by redirecting to backend OAuth endpoint
+   */
+  initiateGoogleOAuth(): void {
+    if (typeof window === 'undefined') return;
+    
+    // Redirect to FastAPI Google OAuth endpoint
+    // FastAPI will redirect to Google, then back to /auth/google/callback with token
+    window.location.href = `${this.baseUrl}/auth/google`;
+  }
+
+  /**
+   * Handles OAuth callback with token in URL
+   */
+  async handleOAuthCallback(token: string): Promise<LoginResponse> {
+    // Store the token
+    tokenStorage.setAccessToken(token);
+    
+    // Fetch user data
+    const user = await this.getCurrentUser();
+    
+    const loginResponse: LoginResponse = {
+      access_token: token,
+      token_type: 'Bearer',
+      expires_in: 3600,
+      user,
+    };
+
+    // Store user data
+    tokenStorage.setUser(user);
+
+    return loginResponse;
+  }
+
   async getCurrentUser(): Promise<User> {
     if (isMockAuthEnabled()) {
       const user = tokenStorage.getUser();
@@ -297,7 +382,7 @@ class ApiClient {
       throw { message: 'Not authenticated', status: 401 } as ApiError;
     }
 
-    return this.get<User>('/auth/me');
+    return this.get<User>('/tenants/me');
   }
 
   // ============================================
