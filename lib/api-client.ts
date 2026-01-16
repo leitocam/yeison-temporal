@@ -47,6 +47,40 @@ export interface RefreshTokenResponse {
   expires_in: number;
 }
 
+export interface AgentConfiguration {
+  agent_info?: {
+    name?: string;
+    type?: string;
+    version?: string;
+  };
+  personality?: {
+    tone?: string;
+    language?: string;
+    brand_voice?: string;
+    emoji_usage?: string;
+    custom_phrases?: Record<string, string>;
+    greeting_style?: string;
+    formality_level?: string;
+    response_length?: string;
+  };
+  integrations?: Record<string, any>;
+  sales_process?: Record<string, any>;
+  lead_management?: Record<string, any>;
+  product_catalog?: Record<string, any>;
+  response_settings?: Record<string, any>;
+  conversation_settings?: Record<string, any>;
+}
+
+export interface AgentInstance {
+  id: string;
+  name: string;
+  description: string;
+  is_active: boolean;
+  configuration: AgentConfiguration;
+  created_at?: string;
+  updated_at?: string;
+}
+
 // ============================================
 // Configuration
 // ============================================
