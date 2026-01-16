@@ -27,6 +27,7 @@ interface FormData {
     website: string
     location: string
     yearFounded: string
+    description: string
 
     // Contacto principal
     contactName: string
@@ -46,11 +47,6 @@ interface FormData {
     objections: string
     closingTechniques: string
 
-    // Tono y comunicación
-    brandTone: string
-    prohibitedPhrases: string
-    keyPhrases: string
-
     // Horarios y disponibilidad
     businessHours: string
     responseTime: string
@@ -66,8 +62,7 @@ const steps = [
     { id: 2, title: 'Contacto', icon: Users, description: 'Datos del responsable' },
     { id: 3, title: 'Productos', icon: Package, description: 'Catálogo e inventario' },
     { id: 4, title: 'Ventas', icon: Target, description: 'Tu proceso comercial' },
-    { id: 5, title: 'Comunicación', icon: MessageCircle, description: 'Tono y estilo' },
-    { id: 6, title: 'Operaciones', icon: Clock, description: 'Horarios y más' },
+    { id: 5, title: 'Operaciones', icon: Clock, description: 'Horarios y más' },
 ]
 
 const emptyProduct: Omit<Product, 'id'> = {
@@ -95,6 +90,7 @@ export default function OnboardingPage() {
         website: '',
         location: '',
         yearFounded: '',
+        description: '',
         contactName: '',
         contactRole: '',
         contactEmail: '',
@@ -107,9 +103,6 @@ export default function OnboardingPage() {
         commonQuestions: '',
         objections: '',
         closingTechniques: '',
-        brandTone: '',
-        prohibitedPhrases: '',
-        keyPhrases: '',
         businessHours: '',
         responseTime: '',
         languages: '',
@@ -216,6 +209,17 @@ export default function OnboardingPage() {
                                     placeholder="Ej: Comercial Santa Cruz S.R.L."
                                     value={formData.companyName}
                                     onChange={(e) => updateField('companyName', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group full-width">
+                                <label htmlFor="companyName">Descripcion de la Empresa *</label>
+                                <input
+                                    id="companyDescription"
+                                    type="text"
+                                    placeholder="Breve descripcion: Quiénes somos, a qué nos dedicamos, cuál es nuestro objetivo."
+                                    value={formData.description}
+                                    onChange={(e) => updateField('description', e.target.value)}
                                 />
                             </div>
 
@@ -635,59 +639,6 @@ export default function OnboardingPage() {
                 return (
                     <div className="form-section fade-in-up">
                         <div className="section-header">
-                            <MessageCircle className="section-icon" />
-                            <div>
-                                <h2>Tono y Comunicación</h2>
-                                <p>Define cómo debe comunicarse el agente con tus clientes</p>
-                            </div>
-                        </div>
-
-                        <div className="form-grid">
-                            <div className="form-group full-width">
-                                <label htmlFor="brandTone">Tono de comunicación *</label>
-                                <select
-                                    id="brandTone"
-                                    value={formData.brandTone}
-                                    onChange={(e) => updateField('brandTone', e.target.value)}
-                                >
-                                    <option value="">Selecciona el tono</option>
-                                    <option value="formal">Formal y profesional</option>
-                                    <option value="friendly">Amigable y cercano</option>
-                                    <option value="casual">Casual y relajado</option>
-                                    <option value="technical">Técnico y especializado</option>
-                                    <option value="enthusiastic">Entusiasta y enérgico</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group full-width">
-                                <label htmlFor="keyPhrases">Frases clave que usas (saludos, despedidas, etc.)</label>
-                                <textarea
-                                    id="keyPhrases"
-                                    placeholder="Ej: Saludo: '¡Hola! Gracias por escribirnos a [Empresa]'. Despedida: 'Quedamos a sus órdenes, que tenga un excelente día'. Firma: 'Equipo [Empresa] 🏢'"
-                                    value={formData.keyPhrases}
-                                    onChange={(e) => updateField('keyPhrases', e.target.value)}
-                                    rows={3}
-                                />
-                            </div>
-
-                            <div className="form-group full-width">
-                                <label htmlFor="prohibitedPhrases">Palabras o frases que NUNCA debe usar el agente</label>
-                                <textarea
-                                    id="prohibitedPhrases"
-                                    placeholder="Ej: No usar 'barato', preferir 'accesible'. No prometer tiempos de entrega sin confirmar. No mencionar a la competencia por nombre..."
-                                    value={formData.prohibitedPhrases}
-                                    onChange={(e) => updateField('prohibitedPhrases', e.target.value)}
-                                    rows={3}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                )
-
-            case 6:
-                return (
-                    <div className="form-section fade-in-up">
-                        <div className="section-header">
                             <Clock className="section-icon" />
                             <div>
                                 <h2>Operaciones y Contexto Adicional</h2>
@@ -855,8 +806,7 @@ export default function OnboardingPage() {
                         {currentStep === 2 && "El contacto principal recibirá notificaciones importantes sobre las conversaciones del agente."}
                         {currentStep === 3 && "Agrega todos tus productos con stock. El agente verificará disponibilidad antes de ofrecer cada producto."}
                         {currentStep === 4 && "Las objeciones bien documentadas ayudan al agente a cerrar más ventas."}
-                        {currentStep === 5 && "El tono correcto genera confianza. Asegúrate de que refleje la identidad de tu marca."}
-                        {currentStep === 6 && "Esta información ayuda al agente a manejar expectativas y dar información precisa."}
+                        {currentStep === 5 && "Esta información ayuda al agente a manejar expectativas y dar información precisa."}
                     </p>
                 </div>
             </aside>
