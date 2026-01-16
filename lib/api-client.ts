@@ -58,13 +58,20 @@ export interface AgentConfiguration {
     language?: string;
     brand_voice?: string;
     emoji_usage?: string;
-    custom_phrases?: Record<string, string>;
-    greeting_style?: string;
+    custom_phrases?: {
+      thanks?: string;
+      farewell?: string;
+      greeting?: string;
+    };
     formality_level?: string;
     response_length?: string;
   };
   integrations?: Record<string, any>;
-  sales_process?: Record<string, any>;
+  sales_process?: {
+    QR_payment?: boolean;
+    physical_payment?: boolean;
+    [key: string]: any;
+  };
   lead_management?: Record<string, any>;
   product_catalog?: Record<string, any>;
   response_settings?: Record<string, any>;

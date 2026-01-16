@@ -230,19 +230,19 @@ export default function AgentsSection() {
                   {editingAgent === agent.id && agent.type?.toLowerCase() === "ventas" && (
                     <div className="space-y-4 pt-4 border-t border-primary/20">
                       <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-lg font-bold">Sales Agent Configuration</h4>
+                        <h4 className="text-lg font-bold">Configuración del Agente de Ventas</h4>
                         <button
                           onClick={() => handleSaveConfiguration(agent.id)}
                           className="px-4 py-2 bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500/30 rounded-lg font-semibold transition-all flex items-center gap-2"
                         >
                           <Save className="w-4 h-4" />
-                          Save Changes
+                          Guardar Cambios
                         </button>
                       </div>
 
                       {/* Agent Name */}
                       <div>
-                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Agent Name</label>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Nombre del Agente</label>
                         <input
                           type="text"
                           value={configForm?.agent_info?.name || ""}
@@ -251,13 +251,13 @@ export default function AgentsSection() {
                             agent_info: { ...configForm.agent_info, name: e.target.value }
                           })}
                           className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
-                          placeholder="Enter agent name"
+                          placeholder="Ingrese el nombre del agente"
                         />
                       </div>
 
                       {/* Brand Voice */}
                       <div>
-                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Brand Voice</label>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Voz de Marca</label>
                         <textarea
                           value={configForm?.personality?.brand_voice || ""}
                           onChange={(e) => setConfigForm({
@@ -265,13 +265,13 @@ export default function AgentsSection() {
                             personality: { ...configForm.personality, brand_voice: e.target.value }
                           })}
                           className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors min-h-[100px]"
-                          placeholder="Describe your brand voice"
+                          placeholder="Describe la voz de tu marca"
                         />
                       </div>
 
                       {/* Tone */}
                       <div>
-                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Tone</label>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Tono</label>
                         <select
                           value={configForm?.personality?.tone || "cool"}
                           onChange={(e) => setConfigForm({
@@ -280,16 +280,16 @@ export default function AgentsSection() {
                           })}
                           className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
                         >
-                          <option value="cool">Cool</option>
-                          <option value="professional">Professional</option>
-                          <option value="friendly">Friendly</option>
-                          <option value="enthusiastic">Enthusiastic</option>
+                          <option value="cool">Fresco</option>
+                          <option value="professional">Profesional</option>
+                          <option value="friendly">Amigable</option>
+                          <option value="enthusiastic">Entusiasta</option>
                         </select>
                       </div>
 
                       {/* Language */}
                       <div>
-                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Language</label>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Idioma</label>
                         <select
                           value={configForm?.personality?.language || "es"}
                           onChange={(e) => setConfigForm({
@@ -298,30 +298,30 @@ export default function AgentsSection() {
                           })}
                           className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
                         >
-                          <option value="es">Spanish</option>
-                          <option value="en">English</option>
-                          <option value="pt">Portuguese</option>
+                          <option value="es">Español</option>
+                          <option value="en">Inglés</option>
+                          <option value="pt">Portugués</option>
                         </select>
                       </div>
 
                       {/* WhatsApp Number */}
                       <div>
-                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">WhatsApp Number</label>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Número de WhatsApp del Supervisor</label>
                         <input
                           type="text"
-                          value={configForm?.integrations?.whatsapp_number || ""}
+                          value={configForm?.integrations?.supervisor_number || ""}
                           onChange={(e) => setConfigForm({
                             ...configForm,
-                            integrations: { ...configForm.integrations, whatsapp_number: e.target.value }
+                            integrations: { ...configForm.integrations, supervisor_number: e.target.value }
                           })}
                           className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
-                          placeholder="e.g., 59170123456"
+                          placeholder="ej., 59170123456"
                         />
                       </div>
 
                       {/* Formality Level */}
                       <div>
-                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Formality Level</label>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Nivel de Formalidad</label>
                         <select
                           value={configForm?.personality?.formality_level || "informal"}
                           onChange={(e) => setConfigForm({
@@ -338,7 +338,7 @@ export default function AgentsSection() {
 
                       {/* Response Length */}
                       <div>
-                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Response Length</label>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Longitud de Respuesta</label>
                         <select
                           value={configForm?.personality?.response_length || "concise"}
                           onChange={(e) => setConfigForm({
@@ -347,10 +347,127 @@ export default function AgentsSection() {
                           })}
                           className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
                         >
-                          <option value="brief">Brief</option>
-                          <option value="concise">Concise</option>
-                          <option value="detailed">Detailed</option>
+                          <option value="brief">Breve</option>
+                          <option value="concise">Concisa</option>
+                          <option value="detailed">Detallada</option>
                         </select>
+                      </div>
+
+                      {/* Custom Phrases Section */}
+                      <div className="pt-4 border-t border-primary/20">
+                        <h5 className="text-md font-bold text-muted-foreground mb-3">Frases Personalizadas</h5>
+                        
+                        {/* Greeting */}
+                        <div className="mb-4">
+                          <label className="text-sm font-semibold text-muted-foreground mb-2 block">Saludo</label>
+                          <input
+                            type="text"
+                            maxLength={200}
+                            value={configForm?.personality?.custom_phrases?.greeting || ""}
+                            onChange={(e) => setConfigForm({
+                              ...configForm,
+                              personality: { 
+                                ...configForm.personality, 
+                                custom_phrases: { 
+                                  ...configForm.personality?.custom_phrases, 
+                                  greeting: e.target.value 
+                                }
+                              }
+                            })}
+                            className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                            placeholder="ej., ¡Hola! ¿Cómo puedo ayudarte hoy?"
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">{configForm?.personality?.custom_phrases?.greeting?.length || 0}/200 caracteres</p>
+                        </div>
+
+                        {/* Thanks */}
+                        <div className="mb-4">
+                          <label className="text-sm font-semibold text-muted-foreground mb-2 block">Agradecimiento</label>
+                          <input
+                            type="text"
+                            maxLength={200}
+                            value={configForm?.personality?.custom_phrases?.thanks || ""}
+                            onChange={(e) => setConfigForm({
+                              ...configForm,
+                              personality: { 
+                                ...configForm.personality, 
+                                custom_phrases: { 
+                                  ...configForm.personality?.custom_phrases, 
+                                  thanks: e.target.value 
+                                }
+                              }
+                            })}
+                            className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                            placeholder="ej., ¡Gracias por tu interés!"
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">{configForm?.personality?.custom_phrases?.thanks?.length || 0}/200 caracteres</p>
+                        </div>
+
+                        {/* Farewell */}
+                        <div>
+                          <label className="text-sm font-semibold text-muted-foreground mb-2 block">Despedida</label>
+                          <input
+                            type="text"
+                            maxLength={200}
+                            value={configForm?.personality?.custom_phrases?.farewell || ""}
+                            onChange={(e) => setConfigForm({
+                              ...configForm,
+                              personality: { 
+                                ...configForm.personality, 
+                                custom_phrases: { 
+                                  ...configForm.personality?.custom_phrases, 
+                                  farewell: e.target.value 
+                                }
+                              }
+                            })}
+                            className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                            placeholder="ej., ¡Hasta pronto! Estoy aquí si me necesitas."
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">{configForm?.personality?.custom_phrases?.farewell?.length || 0}/200 caracteres</p>
+                        </div>
+                      </div>
+
+                      {/* Sales Process Section */}
+                      <div className="pt-4 border-t border-primary/20">
+                        <h5 className="text-md font-bold text-muted-foreground mb-3">Proceso de Ventas</h5>
+                        
+                        {/* QR Payment */}
+                        <div className="mb-3">
+                          <label className="flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={configForm?.sales_process?.QR_payment || false}
+                              onChange={(e) => setConfigForm({
+                                ...configForm,
+                                sales_process: { 
+                                  ...configForm.sales_process, 
+                                  QR_payment: e.target.checked 
+                                }
+                              })}
+                              className="w-5 h-5 rounded border-primary/20 bg-white/10 text-primary focus:ring-2 focus:ring-primary/40 transition-colors cursor-pointer"
+                            />
+                            <span className="ml-3 text-sm font-semibold text-muted-foreground">Pago con QR</span>
+                          </label>
+                        </div>
+
+                        {/* Physical Payment */}
+                        <div>
+                          <label className="flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={configForm?.sales_process?.physical_payment || false}
+                              onChange={(e) => setConfigForm({
+                                ...configForm,
+                                sales_process: { 
+                                  ...configForm.sales_process, 
+                                  physical_payment: e.target.checked 
+                                }
+                              })}
+                              className="w-5 h-5 rounded border-primary/20 bg-white/10 text-primary focus:ring-2 focus:ring-primary/40 transition-colors cursor-pointer"
+                            />
+                            <span className="ml-3 text-sm font-semibold text-muted-foreground">Pago Físico</span>
+                          </label>
+                        </div>
                       </div>
                     </div>
                   )}
