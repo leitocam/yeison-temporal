@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ArrowRight, Zap, BarChart3, Users, Sparkles, Shield, MessageCircle, Clock, CheckCircle, TrendingDown } from "lucide-react"
 import { useState } from "react"
 import GradientText from "@/components/ui/GradientText"
+import GradientButton from "@/components/ui/GradientButton"
 
 export default function LandingPage() {
   const [activeTab, setActiveTab] = useState(0)
@@ -46,15 +47,12 @@ export default function LandingPage() {
             </Link>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-accent transition">
+            <GradientButton href="/login">
               Ingresar
-            </Link>
-            <Link
-              href="/login"
-              className="px-6 py-2 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg text-sm font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover-lift"
-            >
+            </GradientButton>
+            <GradientButton href="/login">
               Probar Gratis
-            </Link>
+            </GradientButton>
           </div>
         </div>
       </nav>
@@ -80,24 +78,18 @@ export default function LandingPage() {
           </h1>
 
           <p className="fade-in-up stagger-2 text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 text-balance leading-relaxed">
-            Agente inteligente que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.
+            Agentes inteligentes que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.
             Reduce costos, responde a todos tus clientes a tiempo y escala tu negocio sin aumentar tu planilla.
           </p>
 
           <div className="fade-in-up stagger-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <Link
-              href="/login"
-              className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover-lift flex items-center gap-2 group btn-premium text-lg"
-            >
+            <GradientButton href="/login">
               Probar Gratis
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              href="#demo"
-              className="px-8 py-4 glass rounded-lg font-bold transition-all duration-300 border-2 border-primary/30 hover:border-primary/60 text-lg hover:bg-white/20"
-            >
+              <ArrowRight className="w-5 h-5" />
+            </GradientButton>
+            <GradientButton href="#demo">
               Ver demo (2 minutos)
-            </Link>
+            </GradientButton>
           </div>
 
           {/* Hero Visualization */}
@@ -382,15 +374,9 @@ export default function LandingPage() {
                     ))}
                   </ul>
 
-                  <Link
-                    href="/login"
-                    className={`w-full py-3 rounded-xl font-bold text-center transition-all duration-300 text-sm ${plan.highlight
-                      ? "bg-gradient-to-r from-primary to-accent text-white hover:shadow-2xl hover:shadow-primary/40"
-                      : "glass border border-primary/30 hover:bg-white/20"
-                      }`}
-                  >
+                  <GradientButton href="/login">
                     {plan.cta}
-                  </Link>
+                  </GradientButton>
                 </div>
               </div>
             ))}
@@ -406,13 +392,10 @@ export default function LandingPage() {
           <p className="text-xl text-muted-foreground mb-12 text-balance">
             Más ventas, menos costos y control total desde un solo panel.
           </p>
-          <Link
-            href="/login"
-            className="inline-flex px-10 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover-lift group btn-premium text-lg"
-          >
+          <GradientButton href="/login">
             Probar gratis – sin tarjeta
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Link>
+            <ArrowRight className="w-5 h-5" />
+          </GradientButton>
         </div>
       </section>
 
