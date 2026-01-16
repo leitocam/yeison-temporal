@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Bot, Settings, Play, BarChart3, Users, MessageSquare, TrendingUp, AlertCircle, Loader2 } from "lucide-react"
+import { Bot, Settings, Play, BarChart3, Users, MessageSquare, TrendingUp, AlertCircle, Loader2, ChevronDown, Edit, Power, Save, X } from "lucide-react"
 import { useApi } from "@/hooks/useApi"
 import { apiClient, AgentInstance } from "@/lib/api-client"
 
@@ -11,6 +11,8 @@ interface Agent {
   description: string
   status: "active" | "inactive" | "training"
   icon: any
+  type?: string
+  instance: AgentInstance
 }
 
 // Map agent type to icon
@@ -26,6 +28,8 @@ const getIconForType = (type?: string) => {
 
 export default function AgentsSection() {
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null)
+  const [editingAgent, setEditingAgent] = useState<string | null>(null)
+  const [configForm, setConfigForm] = useState<any>({})
   
   const { data: agentInstances, isLoading, error, execute } = useApi<AgentInstance[]>(
     () => apiClient.get("/agents?skip=0&limit=100")
@@ -43,7 +47,33 @@ export default function AgentsSection() {
     description: `${instance.configuration?.agent_info?.type || "Agent"}: ${instance.configuration?.personality?.brand_voice || "No brand voice configured"}`,
     status: instance.is_active ? "active" : "inactive",
     icon: getIconForType(instance.configuration?.agent_info?.type),
+    type: instance.configuration?.agent_info?.type,
+    instance: instance,
   }))
+
+  const handleDisableAgent = async (agentId: string, currentStatus: boolean) => {
+    try {
+      await apiClient.put(`/agents/${agentId}`, {
+        is_active: !currentStatus
+      })
+      // Refresh the list
+      execute()
+    } catch (err) {
+      console.error('Failed to toggle agent status:', err)
+    }
+  }
+
+  const handleSaveConfiguration = async (agentId: string) => {
+    try {
+      await apiClient.patch(`/agents/${agentId}/configuration`, configForm)
+      setEditingAgent(null)
+      setConfigForm({})
+      // Refresh the list
+      execute()
+    } catch (err) {
+      console.error('Failed to update configuration:', err)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -131,10 +161,11 @@ export default function AgentsSection() {
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
+                      setExpandedAgent(isExpanded ? null : agent.id)
                     }}
                     className="p-2 glass hover:bg-white/20 rounded-lg transition-all ml-2 flex-shrink-0"
                   >
-                    <Settings className="w-5 h-5 text-muted-foreground" />
+                    <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                   </button>
                 </div>
               </div>
@@ -158,6 +189,173 @@ export default function AgentsSection() {
                   <p className="text-lg font-black">--</p>
                 </div>
               </div>
+
+              {/* Expanded Configuration Menu */}
+              {isExpanded && (
+                <div className="p-6 border-t border-primary/20 space-y-4">
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        if (editingAgent === agent.id) {
+                          setEditingAgent(null)
+                          setConfigForm({})
+                        } else {
+                          setEditingAgent(agent.id)
+                          setConfigForm(agent.instance.configuration || {})
+                        }
+                      }}
+                      className="flex-1 py-3 rounded-lg font-semibold transition-all duration-300 bg-primary/30 hover:bg-primary/40 flex items-center justify-center gap-2"
+                    >
+                      {editingAgent === agent.id ? (
+                        <><X className="w-4 h-4" /> Cancel Edit</>
+                      ) : (
+                        <><Edit className="w-4 h-4" /> Edit Configuration</>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => handleDisableAgent(agent.id, agent.instance.is_active)}
+                      className={`flex-1 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+                        agent.status === "active"
+                          ? "bg-red-500/20 text-red-500 hover:bg-red-500/30"
+                          : "bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500/30"
+                      }`}
+                    >
+                      <Power className="w-4 h-4" />
+                      {agent.status === "active" ? "Disable" : "Enable"}
+                    </button>
+                  </div>
+
+                  {/* Configuration Form for Ventas type */}
+                  {editingAgent === agent.id && agent.type?.toLowerCase() === "ventas" && (
+                    <div className="space-y-4 pt-4 border-t border-primary/20">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-bold">Sales Agent Configuration</h4>
+                        <button
+                          onClick={() => handleSaveConfiguration(agent.id)}
+                          className="px-4 py-2 bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500/30 rounded-lg font-semibold transition-all flex items-center gap-2"
+                        >
+                          <Save className="w-4 h-4" />
+                          Save Changes
+                        </button>
+                      </div>
+
+                      {/* Agent Name */}
+                      <div>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Agent Name</label>
+                        <input
+                          type="text"
+                          value={configForm?.agent_info?.name || ""}
+                          onChange={(e) => setConfigForm({
+                            ...configForm,
+                            agent_info: { ...configForm.agent_info, name: e.target.value }
+                          })}
+                          className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                          placeholder="Enter agent name"
+                        />
+                      </div>
+
+                      {/* Brand Voice */}
+                      <div>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Brand Voice</label>
+                        <textarea
+                          value={configForm?.personality?.brand_voice || ""}
+                          onChange={(e) => setConfigForm({
+                            ...configForm,
+                            personality: { ...configForm.personality, brand_voice: e.target.value }
+                          })}
+                          className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors min-h-[100px]"
+                          placeholder="Describe your brand voice"
+                        />
+                      </div>
+
+                      {/* Tone */}
+                      <div>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Tone</label>
+                        <select
+                          value={configForm?.personality?.tone || "cool"}
+                          onChange={(e) => setConfigForm({
+                            ...configForm,
+                            personality: { ...configForm.personality, tone: e.target.value }
+                          })}
+                          className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                        >
+                          <option value="cool">Cool</option>
+                          <option value="professional">Professional</option>
+                          <option value="friendly">Friendly</option>
+                          <option value="enthusiastic">Enthusiastic</option>
+                        </select>
+                      </div>
+
+                      {/* Language */}
+                      <div>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Language</label>
+                        <select
+                          value={configForm?.personality?.language || "es"}
+                          onChange={(e) => setConfigForm({
+                            ...configForm,
+                            personality: { ...configForm.personality, language: e.target.value }
+                          })}
+                          className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                        >
+                          <option value="es">Spanish</option>
+                          <option value="en">English</option>
+                          <option value="pt">Portuguese</option>
+                        </select>
+                      </div>
+
+                      {/* WhatsApp Number */}
+                      <div>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">WhatsApp Number</label>
+                        <input
+                          type="text"
+                          value={configForm?.integrations?.whatsapp_number || ""}
+                          onChange={(e) => setConfigForm({
+                            ...configForm,
+                            integrations: { ...configForm.integrations, whatsapp_number: e.target.value }
+                          })}
+                          className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                          placeholder="e.g., 59170123456"
+                        />
+                      </div>
+
+                      {/* Formality Level */}
+                      <div>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Formality Level</label>
+                        <select
+                          value={configForm?.personality?.formality_level || "informal"}
+                          onChange={(e) => setConfigForm({
+                            ...configForm,
+                            personality: { ...configForm.personality, formality_level: e.target.value }
+                          })}
+                          className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                        >
+                          <option value="informal">Informal</option>
+                          <option value="semi-formal">Semi-formal</option>
+                          <option value="formal">Formal</option>
+                        </select>
+                      </div>
+
+                      {/* Response Length */}
+                      <div>
+                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">Response Length</label>
+                        <select
+                          value={configForm?.personality?.response_length || "concise"}
+                          onChange={(e) => setConfigForm({
+                            ...configForm,
+                            personality: { ...configForm.personality, response_length: e.target.value }
+                          })}
+                          className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                        >
+                          <option value="brief">Brief</option>
+                          <option value="concise">Concise</option>
+                          <option value="detailed">Detailed</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
             </div>
           )
