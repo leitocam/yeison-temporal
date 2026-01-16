@@ -9,20 +9,22 @@ interface GradientButtonProps {
   href?: string
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }
 
 const GradientButton: React.FC<GradientButtonProps> = ({
   children,
   href,
   onClick,
-  type = 'button'
+  type = 'button',
+  disabled = false
 }) => {
   if (href) {
     return (
-      <Link href={href} style={{ textDecoration: 'none' }}>
+      <Link href={href} style={{ textDecoration: 'none', pointerEvents: disabled ? 'none' : 'auto' }}>
         <StyledWrapper>
           <div className="container">
-            <button className="button" type={type}>
+            <button className="button" type={type} disabled={disabled}>
               {children}
             </button>
           </div>
@@ -34,7 +36,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({
   return (
     <StyledWrapper>
       <div className="container">
-        <button className="button" type={type} onClick={onClick}>
+        <button className="button" type={type} onClick={onClick} disabled={disabled}>
           {children}
         </button>
       </div>
@@ -58,6 +60,12 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 0.4em;
+    transition: opacity 0.3s ease;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   .container {

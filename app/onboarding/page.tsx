@@ -1,11 +1,60 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { ArrowRight, ArrowLeft, Building2, Users, MessageCircle, Target, Package, Clock, CheckCircle, Sparkles, Save, Plus, Trash2, Edit2 } from 'lucide-react'
 import GradientButton from '@/components/ui/GradientButton'
+import { apiClient } from '@/lib/api-client'
+import { useApi, useMutation } from '@/hooks/useApi'
 import './onboarding.css'
 
-// Interface para productos individuales
+// API Response Types
+interface TenantConfiguration {
+    id: number
+    tenant_id: number
+    business: BusinessData | null
+    contact: ContactData | null
+    products: Record<string, any> | null
+    operations: OperationsData | null
+    active: boolean
+    is_completed: boolean
+    created_at: string
+    last_update: string
+}
+
+interface BusinessData {
+    company_name: string
+    industry: string
+    company_size: string
+    website: string
+    location: string
+    year_founded: string
+    description: string
+}
+
+interface ContactData {
+    contact_name: string
+    contact_role: string
+    contact_email: string
+    contact_phone: string
+}
+
+interface OperationsData {
+    sales_process: string
+    common_questions: string
+    objections: string
+    closing_techniques: string
+    business_hours: string
+    response_time: string
+    languages: string
+    competitors: string
+    additional_context: string
+    unique_selling_points: string
+    target_audience: string
+    payment_methods: string
+}
+
+// Interface para productos individuales (dummy - not sent to API)
 interface Product {
     id: string
     name: string
@@ -78,10 +127,15 @@ const emptyProduct: Omit<Product, 'id'> = {
 }
 
 export default function OnboardingPage() {
+    const router = useRouter()
     const [currentStep, setCurrentStep] = useState(1)
     const [showProductForm, setShowProductForm] = useState(false)
     const [editingProductId, setEditingProductId] = useState<string | null>(null)
     const [currentProduct, setCurrentProduct] = useState<Omit<Product, 'id'>>(emptyProduct)
+    const [configId, setConfigId] = useState<number | null>(null)
+    const [isSaving, setIsSaving] = useState(false)
+    const [saveError, setSaveError] = useState<string | null>(null)
+    const [saveSuccess, setSaveSuccess] = useState<string | null>(null)
 
     const [formData, setFormData] = useState<FormData>({
         companyName: '',
@@ -110,8 +164,127 @@ export default function OnboardingPage() {
         additionalContext: '',
     })
 
+    // Load existing configuration on mount
+    useEffect(() => {
+        loadConfiguration()
+    }, [])
+
+    const loadConfiguration = async () => {
+        try {
+            const config = await apiClient.get<TenantConfiguration>('/configurations/current-or-create')
+            setConfigId(config.id)
+
+            // Populate form with existing data (handle null JSONB fields from fresh configurations)
+            setFormData({
+                companyName: config.business?.company_name || '',
+                industry: config.business?.industry || '',
+                companySize: config.business?.company_size || '',
+                website: config.business?.website || '',
+                location: config.business?.location || '',
+                yearFounded: config.business?.year_founded || '',
+                description: config.business?.description || '',
+                contactName: config.contact?.contact_name || '',
+                contactRole: config.contact?.contact_role || '',
+                contactEmail: config.contact?.contact_email || '',
+                contactPhone: config.contact?.contact_phone || '',
+                products: [], // Dummy field, not loaded from API
+                uniqueSellingPoints: config.operations?.unique_selling_points || '',
+                targetAudience: config.operations?.target_audience || '',
+                paymentMethods: config.operations?.payment_methods || '',
+                salesProcess: config.operations?.sales_process || '',
+                commonQuestions: config.operations?.common_questions || '',
+                objections: config.operations?.objections || '',
+                closingTechniques: config.operations?.closing_techniques || '',
+                businessHours: config.operations?.business_hours || '',
+                responseTime: config.operations?.response_time || '',
+                languages: config.operations?.languages || '',
+                competitors: config.operations?.competitors || '',
+                additionalContext: config.operations?.additional_context || '',
+            })
+        } catch (error: any) {
+            console.error('Error loading configuration:', error)
+            setSaveError('Error al cargar la configuración. Por favor, recarga la página.')
+        }
+    }
+
     const updateField = (field: keyof FormData, value: string | Product[]) => {
         setFormData(prev => ({ ...prev, [field]: value }))
+    }
+
+    const saveSection = async (section: 'business' | 'contact' | 'operations') => {
+        if (!configId) {
+            setSaveError('No se encontró la configuración. Por favor, recarga la página.')
+            return
+        }
+
+        setSaveError(null)
+        setSaveSuccess(null)
+        setIsSaving(true)
+
+        try {
+            let sectionData: any
+
+            switch (section) {
+                case 'business':
+                    sectionData = {
+                        company_name: formData.companyName,
+                        industry: formData.industry,
+                        company_size: formData.companySize,
+                        website: formData.website,
+                        location: formData.location,
+                        year_founded: formData.yearFounded,
+                        description: formData.description,
+                    }
+                    break
+                case 'contact':
+                    sectionData = {
+                        contact_name: formData.contactName,
+                        contact_role: formData.contactRole,
+                        contact_email: formData.contactEmail,
+                        contact_phone: formData.contactPhone,
+                    }
+                    break
+                case 'operations':
+                    sectionData = {
+                        sales_process: formData.salesProcess,
+                        common_questions: formData.commonQuestions,
+                        objections: formData.objections,
+                        closing_techniques: formData.closingTechniques,
+                        business_hours: formData.businessHours,
+                        response_time: formData.responseTime,
+                        languages: formData.languages,
+                        competitors: formData.competitors,
+                        additional_context: formData.additionalContext,
+                        unique_selling_points: formData.uniqueSellingPoints,
+                        target_audience: formData.targetAudience,
+                        payment_methods: formData.paymentMethods,
+                    }
+                    break
+            }
+
+            await apiClient.patch(`/configurations/${configId}/section?section=${section}`, sectionData)
+            setSaveSuccess('✓ Guardado correctamente')
+            setTimeout(() => setSaveSuccess(null), 3000)
+        } catch (error: any) {
+            console.error('Error saving section:', error)
+            
+            // Format error message properly
+            let errorMessage = 'Error al guardar. Por favor, intenta de nuevo.'
+            
+            if (error.message && typeof error.message === 'string') {
+                errorMessage = error.message
+            } else if (error.details) {
+                // Handle validation errors from FastAPI
+                const detailMessages = Object.entries(error.details)
+                    .map(([field, messages]) => `${field}: ${(messages as string[]).join(', ')}`)
+                    .join('; ')
+                errorMessage = detailMessages || errorMessage
+            }
+            
+            setSaveError(errorMessage)
+        } finally {
+            setIsSaving(false)
+        }
     }
 
     const updateProductField = (field: keyof Omit<Product, 'id'>, value: string | number) => {
@@ -181,10 +354,44 @@ export default function OnboardingPage() {
         }
     }
 
-    const handleSubmit = () => {
-        console.log('Form data submitted:', formData)
-        // TODO: Enviar datos al backend
-        alert('¡Información guardada correctamente! Tus agentes de IA ya tienen el contexto necesario.')
+    const handleSubmit = async () => {
+        if (!configId) {
+            setSaveError('No se encontró la configuración. Por favor, recarga la página.')
+            return
+        }
+
+        setSaveError(null)
+        setIsSaving(true)
+
+        try {
+            // First, save the final section (operations)
+            await saveSection('operations')
+
+            // Then mark as complete
+            await apiClient.post(`/configurations/${configId}/complete`, {})
+
+            // Redirect to dashboard
+            alert('¡Información guardada correctamente! Tus agentes de IA ya tienen el contexto necesario.')
+            router.push('/dashboard')
+        } catch (error: any) {
+            console.error('Error completing onboarding:', error)
+            
+            // Format error message properly
+            let errorMessage = 'Error al finalizar. Por favor, intenta de nuevo.'
+            
+            if (error.message && typeof error.message === 'string') {
+                errorMessage = error.message
+            } else if (error.details) {
+                const detailMessages = Object.entries(error.details)
+                    .map(([field, messages]) => `${field}: ${(messages as string[]).join(', ')}`)
+                    .join('; ')
+                errorMessage = detailMessages || errorMessage
+            }
+            
+            setSaveError(errorMessage)
+        } finally {
+            setIsSaving(false)
+        }
     }
 
     const renderStepContent = () => {
@@ -294,6 +501,16 @@ export default function OnboardingPage() {
                                 />
                             </div>
                         </div>
+
+                        {/* Save Button */}
+                        <div className="save-section-container" style={{ marginTop: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            <GradientButton onClick={() => saveSection('business')} disabled={isSaving}>
+                                <Save className="btn-icon" />
+                                {isSaving ? 'Guardando...' : 'Guardar Progreso'}
+                            </GradientButton>
+                            {saveSuccess && <span style={{ color: '#10b981', fontWeight: '500' }}>{saveSuccess}</span>}
+                            {saveError && <span style={{ color: '#ef4444', fontSize: '0.875rem' }}>{saveError}</span>}
+                        </div>
                     </div>
                 )
 
@@ -353,6 +570,16 @@ export default function OnboardingPage() {
                                 />
                             </div>
                         </div>
+
+                        {/* Save Button */}
+                        <div className="save-section-container" style={{ marginTop: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            <GradientButton onClick={() => saveSection('contact')} disabled={isSaving}>
+                                <Save className="btn-icon" />
+                                {isSaving ? 'Guardando...' : 'Guardar Progreso'}
+                            </GradientButton>
+                            {saveSuccess && <span style={{ color: '#10b981', fontWeight: '500' }}>{saveSuccess}</span>}
+                            {saveError && <span style={{ color: '#ef4444', fontSize: '0.875rem' }}>{saveError}</span>}
+                        </div>
                     </div>
                 )
 
@@ -364,6 +591,7 @@ export default function OnboardingPage() {
                             <div>
                                 <h2>Catálogo de Productos</h2>
                                 <p>Agrega tus productos con detalles. Esto servirá como base para tu inventario.</p>
+                                <p style={{ fontSize: '0.875rem', color: '#f59e0b', marginTop: '0.5rem' }}>⚠️ Nota: Esta sección está en desarrollo. Los productos no se guardarán aún.</p>
                             </div>
                         </div>
 
@@ -632,6 +860,16 @@ export default function OnboardingPage() {
                                 />
                             </div>
                         </div>
+
+                        {/* Save Button */}
+                        <div className="save-section-container" style={{ marginTop: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            <GradientButton onClick={() => saveSection('operations')} disabled={isSaving}>
+                                <Save className="btn-icon" />
+                                {isSaving ? 'Guardando...' : 'Guardar Progreso'}
+                            </GradientButton>
+                            {saveSuccess && <span style={{ color: '#10b981', fontWeight: '500' }}>{saveSuccess}</span>}
+                            {saveError && <span style={{ color: '#ef4444', fontSize: '0.875rem' }}>{saveError}</span>}
+                        </div>
                     </div>
                 )
 
@@ -706,6 +944,16 @@ export default function OnboardingPage() {
                                 />
                             </div>
                         </div>
+
+                        {/* Save Button */}
+                        <div className="save-section-container" style={{ marginTop: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            <GradientButton onClick={() => saveSection('operations')} disabled={isSaving}>
+                                <Save className="btn-icon" />
+                                {isSaving ? 'Guardando...' : 'Guardar Progreso'}
+                            </GradientButton>
+                            {saveSuccess && <span style={{ color: '#10b981', fontWeight: '500' }}>{saveSuccess}</span>}
+                            {saveError && <span style={{ color: '#ef4444', fontSize: '0.875rem' }}>{saveError}</span>}
+                        </div>
                     </div>
                 )
 
@@ -774,7 +1022,7 @@ export default function OnboardingPage() {
                     {/* Navigation Buttons */}
                     <div className="form-navigation">
                         {currentStep > 1 && (
-                            <GradientButton onClick={prevStep}>
+                            <GradientButton onClick={prevStep} disabled={isSaving}>
                                 <ArrowLeft className="btn-icon" />
                                 Anterior
                             </GradientButton>
@@ -783,14 +1031,14 @@ export default function OnboardingPage() {
                         <div className="spacer"></div>
 
                         {currentStep < steps.length ? (
-                            <GradientButton onClick={nextStep}>
+                            <GradientButton onClick={nextStep} disabled={isSaving}>
                                 Siguiente
                                 <ArrowRight className="btn-icon" />
                             </GradientButton>
                         ) : (
-                            <GradientButton onClick={handleSubmit}>
+                            <GradientButton onClick={handleSubmit} disabled={isSaving}>
                                 <Save className="btn-icon" />
-                                Guardar y Finalizar
+                                {isSaving ? 'Finalizando...' : 'Guardar y Finalizar'}
                             </GradientButton>
                         )}
                     </div>
