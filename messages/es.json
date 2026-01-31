@@ -1,0 +1,409 @@
+{
+    "nav": {
+        "product": "Producto",
+        "pricing": "Precios",
+        "testimonials": "Testimonios",
+        "docs": "Documentación",
+        "login": "Ingresar",
+        "tryFree": "Probar Gratis"
+    },
+    "hero": {
+        "badge": "Agentes en Español adaptados al mercado boliviano",
+        "title": "Cierra más ventas",
+        "titleHighlight": "sin contratar más personal",
+        "description": "Agentes inteligentes que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.",
+        "descriptionHighlight": "Reduce costos, responde a todos tus clientes y escala tu negocio.",
+        "cta": "Comenzar gratis",
+        "demo": "Ver demo",
+        "demoTime": "2 minutos",
+        "noCard": "Sin tarjeta requerida",
+        "setup": "Configuración en 5 min"
+    },
+    "stats": {
+        "trust": "+2,500 empresas bolivianas confían en automatización inteligente",
+        "salesManaged": "En ventas gestionadas",
+        "uptime": "Disponibilidad garantizada",
+        "responseTime": "Tiempo de respuesta",
+        "salesIncrease": "Aumento promedio en ventas"
+    },
+    "value": {
+        "title": "Automatización empresarial",
+        "titleHighlight": "sin complejidad",
+        "description": "Yeison fue diseñado para",
+        "descriptionBold": "PYMEs bolivianas",
+        "descriptionEnd": "que necesitan vender más, atender mejor y gastar menos. Tecnología de clase mundial adaptada a tu realidad."
+    },
+    "features": {
+        "title": "Todo lo que necesitas.",
+        "titleHighlight": "En un solo lugar.",
+        "subtitle": "Automatización poderosa que tu equipo amará usar",
+        "whatsapp": {
+            "title": "🤖 Agente de Ventas por WhatsApp",
+            "description": "Atiende clientes automáticamente, envía cotizaciones, responde objeciones y hace seguimiento hasta cerrar la venta. Funciona las 24 horas, todos los días."
+        },
+        "analytics": {
+            "title": "📊 Análisis y Seguimiento",
+            "description": "Visualiza cuántos clientes escriben, cuántos compran y en qué etapa se pierden. Decisiones claras, sin Excel."
+        },
+        "marketing": {
+            "title": "📣 Agente de Marketing",
+            "description": "Genera publicaciones, textos promocionales y mantiene activas tus redes sociales sin contratar un community manager."
+        },
+        "automation": {
+            "title": "⚙️ Flujos Automatizados",
+            "description": "Seguimientos, recordatorios, recuperación de clientes inactivos y respuestas frecuentes sin intervención humana."
+        },
+        "team": {
+            "title": "👥 Control para tu Equipo",
+            "description": "Define reglas, revisa conversaciones y mantén control total. La IA trabaja, tú decides."
+        },
+        "security": {
+            "title": "🔒 Seguridad Empresarial",
+            "description": "Arquitectura segura, control de accesos y datos protegidos. Preparado para crecer con tu empresa."
+        }
+    },
+    "costs": {
+        "title": "¿Por qué seguir pagando de más?",
+        "subtitle": "Comparación real con costos del mercado boliviano",
+        "hiringTitle": "💸 Contratar hoy en Bolivia:",
+        "seller": "Vendedor tiempo completo:",
+        "sellerCost": "Bs. 2,500 – 4,500 / mes",
+        "community": "Community Manager:",
+        "communityCost": "Bs. 2,000 – 3,500 / mes",
+        "benefits": "+ Aportes, aguinaldo, vacaciones...",
+        "benefitsCost": "+35% sobre el salario",
+        "yeisonReplaces": "Yeison reemplaza gran parte de ese trabajo",
+        "yeisonPrice": "desde Bs. 280 / mes",
+        "yeisonBenefits": "Sin horarios limitados • Sin rotación de personal • Sin errores humanos"
+    },
+    "testimonials": {
+        "title": "Lo que dicen nuestros clientes",
+        "subtitle": "Empresas reales, resultados reales",
+        "items": [
+            {
+                "quote": "Yeison transformó nuestra forma de vender. Antes perdíamos clientes por no responder a tiempo, ahora el agente responde al instante y nuestras ventas subieron un 40%.",
+                "author": "María Fernández",
+                "role": "Gerente Comercial",
+                "company": "Tienda El Sol"
+            },
+            {
+                "quote": "El ROI fue inmediato. En el primer mes recuperamos la inversión. El agente de marketing nos genera contenido que realmente conecta con nuestros clientes bolivianos.",
+                "author": "Carlos Mamani",
+                "role": "Fundador",
+                "company": "TechnoCell Bolivia"
+            },
+            {
+                "quote": "Pensé que la IA sería complicada, pero Yeison se configuró en minutos. Ahora tenemos un vendedor incansable que trabaja mientras dormimos.",
+                "author": "Ana Quispe",
+                "role": "Propietaria",
+                "company": "Boutique Elegance"
+            },
+            {
+                "quote": "Nuestro equipo de 3 personas ahora rinde como si fuera de 10. Yeison maneja toda la primera línea de atención y solo nos pasan los clientes listos para comprar.",
+                "author": "Roberto Flores",
+                "role": "Director de Operaciones",
+                "company": "Distribuidora Oriental"
+            }
+        ]
+    },
+    "pricing": {
+        "title": "Planes y Precios",
+        "subtitle": "Empieza gratis. Escala cuando estés listo.",
+        "monthly": "Mensual",
+        "annual": "Anual",
+        "discount": "-20%",
+        "recommended": "RECOMENDADO",
+        "plans": {
+            "starter": {
+                "name": "Starter",
+                "price": "Gratis",
+                "period": "Para siempre",
+                "description": "Ideal para probar",
+                "features": [
+                    "Hasta 1 agente",
+                    "50 conversaciones/mes",
+                    "Soporte comunidad"
+                ],
+                "cta": "Empezar gratis"
+            },
+            "sales": {
+                "name": "Ventas",
+                "priceMonthly": "USD 39",
+                "priceAnnual": "USD 33",
+                "periodMonthly": "/mes",
+                "periodAnnual": "/mes (facturado anual)",
+                "description": "Agente de ventas completo",
+                "features": [
+                    "Agente de ventas por WhatsApp",
+                    "Cotizaciones automáticas",
+                    "Seguimiento de clientes",
+                    "500 conversaciones/mes",
+                    "Soporte estándar"
+                ],
+                "cta": "Probar ahora"
+            },
+            "salesMarketing": {
+                "name": "Ventas + Marketing",
+                "priceMonthly": "USD 59",
+                "priceAnnual": "USD 49",
+                "periodMonthly": "/mes",
+                "periodAnnual": "/mes (facturado anual)",
+                "description": "La combinación perfecta",
+                "features": [
+                    "Todo de Ventas",
+                    "Agente de Marketing",
+                    "30 contenidos/mes",
+                    "1000 conversaciones/mes",
+                    "Métricas avanzadas",
+                    "Soporte prioritario"
+                ],
+                "cta": "Recomendado"
+            },
+            "premium": {
+                "name": "Premium",
+                "priceMonthly": "USD 99",
+                "priceAnnual": "USD 79",
+                "periodMonthly": "/mes",
+                "periodAnnual": "/mes (facturado anual)",
+                "description": "Para equipos grandes",
+                "features": [
+                    "Todos los agentes",
+                    "Conversaciones ilimitadas",
+                    "Soporte prioritario 24/7",
+                    "Configuración avanzada",
+                    "API acceso completo",
+                    "Onboarding personalizado"
+                ],
+                "cta": "Hablar con ventas"
+            }
+        }
+    },
+    "cta": {
+        "title": "Automatiza tu negocio hoy",
+        "description": "Más ventas, menos costos y control total desde un solo panel.",
+        "descriptionHighlight": "Únete a +2,500 empresas que ya confían en Yeison.",
+        "button": "Probar gratis – sin tarjeta",
+        "buttonSecondary": "Hablar con un asesor"
+    },
+    "footer": {
+        "description": "Automatización empresarial con IA para el mercado boliviano.",
+        "product": "Producto",
+        "features": "Características",
+        "pricing": "Precios",
+        "security": "Seguridad",
+        "integrations": "Integraciones",
+        "company": "Empresa",
+        "about": "Nosotros",
+        "blog": "Blog",
+        "careers": "Carreras",
+        "press": "Prensa",
+        "resources": "Recursos",
+        "docs": "Documentación",
+        "api": "API",
+        "status": "Estado del sistema",
+        "help": "Centro de ayuda",
+        "legal": "Legal",
+        "privacy": "Privacidad",
+        "terms": "Términos",
+        "cookies": "Cookies",
+        "contact": "Contacto",
+        "copyright": "© 2025 Yeison. Todos los derechos reservados. Hecho con ❤️ en Bolivia.",
+        "systemStatus": "Todos los sistemas operativos"
+    },
+    "login": {
+        "title": "Bienvenido de vuelta",
+        "subtitle": "Accede a tu panel de ventas potenciado con IA",
+        "brandTitle": "Automatiza tus ventas con inteligencia artificial",
+        "brandSubtitle": "Únete a +2,500 empresas que cierran negocios más rápido con automatización inteligente.",
+        "feature1Title": "Agentes IA",
+        "feature1Desc": "Trabajan 24/7 en tu proceso de ventas, nunca descansan",
+        "feature2Title": "WhatsApp Integrado",
+        "feature2Desc": "Atiende a todos tus clientes automáticamente",
+        "feature3Title": "Diseñado para Bolivia",
+        "feature3Desc": "Adaptado al mercado y las necesidades locales",
+        "tagline": "✨ Automatización empresarial para PYMES bolivianas",
+        "trustedBy": "Confiado por empresas en todo Bolivia",
+        "noAccount": "¿No tienes una cuenta?",
+        "startTrial": "Inicia tu prueba gratis",
+        "trialInfo": "Todos los planes incluyen 14 días de prueba gratis. Sin tarjeta de crédito.",
+        "email": "Correo electrónico",
+        "emailPlaceholder": "tu@empresa.com",
+        "password": "Contraseña",
+        "passwordPlaceholder": "••••••••",
+        "submit": "Ingresar",
+        "submitting": "Ingresando..."
+    },
+    "onboarding": {
+        "stepOf": "Paso {current} de {total}",
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "finishing": "Finalizando...",
+        "saveAndFinish": "Guardar y Finalizar",
+        "successMessage": "¡Información guardada correctamente! Tus agentes de IA ya tienen el contexto necesario.",
+        "steps": {
+            "1": {
+                "title": "Empresa",
+                "description": "Información básica"
+            },
+            "2": {
+                "title": "Contacto",
+                "description": "Datos del responsable"
+            },
+            "3": {
+                "title": "Productos",
+                "description": "Catálogo e inventario"
+            },
+            "4": {
+                "title": "Ventas",
+                "description": "Tu proceso comercial"
+            },
+            "5": {
+                "title": "Operaciones",
+                "description": "Horarios y más"
+            }
+        },
+        "tips": {
+            "title": "Consejo",
+            "step1": "Mientras más detallada sea la información de tu empresa, mejor podrá representarte nuestro agente de IA.",
+            "step2": "El contacto principal recibirá notificaciones importantes sobre las conversaciones del agente.",
+            "step3": "Agrega todos tus productos con stock. El agente verificará disponibilidad antes de ofrecer cada producto.",
+            "step4": "Las objeciones bien documentadas ayudan al agente a cerrar más ventas.",
+            "step5": "Esta información ayuda al agente a manejar expectativas y dar información precisa."
+        },
+        "company": {
+            "title": "Información de la Empresa",
+            "subtitle": "Cuéntanos sobre tu negocio para que nuestros agentes te representen correctamente",
+            "companyName": "Nombre de la empresa",
+            "companyNamePlaceholder": "Ej: Comercial Santa Cruz S.R.L.",
+            "description": "Descripción de la Empresa",
+            "descriptionPlaceholder": "Breve descripción: Quiénes somos, a qué nos dedicamos, cuál es nuestro objetivo.",
+            "industry": "Industria / Rubro",
+            "selectOption": "Selecciona una opción",
+            "industries": {
+                "retail": "Retail / Comercio",
+                "services": "Servicios",
+                "technology": "Tecnología",
+                "food": "Alimentos y Bebidas",
+                "health": "Salud",
+                "education": "Educación",
+                "construction": "Construcción",
+                "automotive": "Automotriz",
+                "realEstate": "Bienes Raíces",
+                "tourism": "Turismo",
+                "other": "Otro"
+            },
+            "companySize": "Tamaño de empresa",
+            "sizes": {
+                "1-5": "1-5 empleados",
+                "6-20": "6-20 empleados",
+                "21-50": "21-50 empleados",
+                "51-200": "51-200 empleados",
+                "200+": "Más de 200"
+            },
+            "website": "Sitio web",
+            "websitePlaceholder": "https://www.tuempresa.com",
+            "location": "Ubicación",
+            "locationPlaceholder": "Ej: Santa Cruz, Bolivia",
+            "yearFounded": "Año de fundación",
+            "yearFoundedPlaceholder": "Ej: 2015",
+            "saving": "Guardando...",
+            "saveProgress": "Guardar Progreso"
+        },
+        "contact": {
+            "title": "Contacto Principal",
+            "subtitle": "¿Quién será el responsable de gestionar los agentes?",
+            "contactName": "Nombre completo",
+            "contactNamePlaceholder": "Ej: Juan Pérez Miranda",
+            "contactRole": "Cargo / Rol",
+            "contactRolePlaceholder": "Ej: Gerente Comercial",
+            "email": "Email",
+            "emailPlaceholder": "juan@empresa.com",
+            "phone": "Teléfono / WhatsApp",
+            "phonePlaceholder": "+591 70000000",
+            "saving": "Guardando...",
+            "saveProgress": "Guardar Progreso"
+        },
+        "products": {
+            "title": "Catálogo de Productos",
+            "subtitle": "Agrega tus productos con detalles. Esto servirá como base para tu inventario.",
+            "devNote": "Nota: Esta sección está en desarrollo. Los productos no se guardarán aún.",
+            "productsAdded": "Productos agregados",
+            "addProductBtn": "Agregar Producto",
+            "stock": "Stock",
+            "edit": "Editar",
+            "delete": "Eliminar",
+            "newProduct": "Nuevo Producto",
+            "editProduct": "Editar Producto",
+            "productName": "Nombre del producto",
+            "productNamePlaceholder": "Ej: Silla Ergonómica Premium",
+            "category": "Categoría",
+            "categoryPlaceholder": "Ej: Muebles de oficina",
+            "description": "Descripción del producto",
+            "descriptionPlaceholder": "Describe el producto con detalles que el agente pueda usar para vender...",
+            "price": "Precio (Bs.)",
+            "unit": "Unidad de venta",
+            "units": {
+                "unit": "Unidad",
+                "kg": "Kilogramo",
+                "liter": "Litro",
+                "meter": "Metro",
+                "box": "Caja",
+                "package": "Paquete",
+                "service": "Servicio",
+                "hour": "Hora"
+            },
+            "sku": "Código/SKU (opcional)",
+            "skuPlaceholder": "Ej: SILLA-PREM-001",
+            "stockLabel": "Stock disponible",
+            "variants": "Variantes (colores, tamaños, etc.)",
+            "variantsPlaceholder": "Ej: Negro, Blanco, Gris | Pequeño, Mediano, Grande",
+            "features": "Características destacadas",
+            "featuresPlaceholder": "Ej: Respaldo ajustable, ruedas de goma, garantía 2 años, soporte lumbar...",
+            "cancel": "Cancelar",
+            "update": "Actualizar",
+            "addProduct": "Agregar Producto",
+            "uniqueSellingPoints": "¿Qué diferencia a tus productos de la competencia?",
+            "uniqueSellingPointsPlaceholder": "Ej: Garantía extendida, entrega en 24h, instalación gratuita, mejores materiales...",
+            "targetAudience": "¿Quién es tu cliente ideal?",
+            "targetAudiencePlaceholder": "Ej: Empresas medianas, profesionales independientes, familias...",
+            "paymentMethods": "Métodos de pago aceptados",
+            "paymentMethodsPlaceholder": "Ej: Efectivo, Transferencia, QR, Tarjetas, Financiamiento"
+        },
+        "sales": {
+            "title": "Proceso de Ventas",
+            "subtitle": "Ayúdanos a entender cómo vendes actualmente",
+            "salesProcess": "¿Cómo es tu proceso de venta típico?",
+            "salesProcessPlaceholder": "Describe paso a paso. Ej: 1) Cliente pregunta por WhatsApp, 2) Le enviamos catálogo PDF, 3) Cotizamos según sus necesidades, 4) Agendamos visita a showroom, 5) Cerramos venta y coordinamos entrega...",
+            "commonQuestions": "Preguntas frecuentes que hacen tus clientes",
+            "commonQuestionsPlaceholder": "Lista las preguntas más comunes. Ej: ¿Tienen garantía? ¿Hacen entregas al interior? ¿Cuánto demora la entrega? ¿Tienen financiamiento? ¿Puedo personalizar colores?...",
+            "objections": "Objeciones comunes y cómo las manejas",
+            "objectionsPlaceholder": "Ej: 'Es muy caro' → Ofrecemos financiamiento y nuestros productos duran el doble. 'Necesito pensarlo' → Ofrecemos un 10% de descuento si decide hoy...",
+            "closingTechniques": "Técnicas de cierre que funcionan",
+            "closingTechniquesPlaceholder": "Ej: Ofrecer descuento por tiempo limitado, agregar un producto gratis, mostrar testimonios de otros clientes...",
+            "saving": "Guardando...",
+            "saveProgress": "Guardar Progreso"
+        },
+        "operations": {
+            "title": "Operaciones y Contexto Adicional",
+            "subtitle": "Información operativa y detalles finales",
+            "businessHours": "Horario de atención",
+            "businessHoursPlaceholder": "Ej: Lunes a Viernes 8:00-18:00, Sábados 9:00-13:00",
+            "responseTime": "Tiempo de respuesta esperado",
+            "select": "Selecciona",
+            "responseTimes": {
+                "immediate": "Inmediato (24/7)",
+                "1hour": "En menos de 1 hora",
+                "sameDay": "Mismo día",
+                "businessHours": "Solo en horario laboral"
+            },
+            "languages": "Idiomas de atención",
+            "languagesPlaceholder": "Ej: Español, un poco de inglés",
+            "competitors": "Principales competidores (opcional)",
+            "competitorsPlaceholder": "Menciona tus principales competidores y qué te diferencia de ellos...",
+            "additionalContext": "Cualquier otra información que deba saber el agente",
+            "additionalContextPlaceholder": "Agrega cualquier contexto adicional que ayude al agente a representar mejor a tu empresa...",
+            "saving": "Guardando...",
+            "saveProgress": "Guardar Progreso"
+        }
+    }
+}

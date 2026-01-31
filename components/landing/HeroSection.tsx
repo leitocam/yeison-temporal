@@ -2,6 +2,7 @@
 
 import { ArrowRight, Play, CheckCircle } from "lucide-react"
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import GradientText from "@/components/ui/GradientText"
 import GradientButton from "@/components/ui/GradientButton"
 import ShineText from "@/components/ui/ShineText"
@@ -9,6 +10,8 @@ import WhatsAppDemo from "@/components/ui/WhatsAppDemo"
 import ParticleBackground from "@/components/ui/ParticleBackground"
 
 export default function HeroSection() {
+    const t = useTranslations('hero')
+
     return (
         <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 relative min-h-screen flex items-center">
             <ParticleBackground particleCount={40} />
@@ -31,12 +34,12 @@ export default function HeroSection() {
                                 animationSpeed={8}
                                 className="text-sm font-medium"
                             >
-                                Agentes en Español adaptados al mercado boliviano
+                                {t('badge')}
                             </GradientText>
                         </div>
 
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 text-balance leading-tight tracking-tight">
-                            Cierra más ventas{" "}
+                            {t('title')}{" "}
                             <ShineText
                                 fontSize="inherit"
                                 fontWeight={900}
@@ -44,20 +47,20 @@ export default function HeroSection() {
                                 shineColor="#67e8f9"
                                 duration={5}
                             >
-                                sin contratar más personal
+                                {t('titleHighlight')}
                             </ShineText>
                         </h1>
 
                         <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-balance leading-relaxed">
-                            Agentes inteligentes que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.
+                            {t('description')}
                             <span className="block mt-2 text-foreground font-medium">
-                                Reduce costos, responde a todos tus clientes y escala tu negocio.
+                                {t('descriptionHighlight')}
                             </span>
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
                             <GradientButton href="/login">
-                                Comenzar gratis
+                                {t('cta')}
                                 <ArrowRight className="w-5 h-5" />
                             </GradientButton>
                             <motion.button
@@ -92,8 +95,8 @@ export default function HeroSection() {
                                     <Play className="w-4 h-4 text-white ml-0.5 relative z-10" fill="white" />
                                 </span>
                                 <span className="relative z-10 flex flex-col items-start">
-                                    <span className="text-white font-semibold text-sm">Ver demo</span>
-                                    <span className="text-white/50 text-xs">2 minutos</span>
+                                    <span className="text-white font-semibold text-sm">{t('demo')}</span>
+                                    <span className="text-white/50 text-xs">{t('demoTime')}</span>
                                 </span>
                             </motion.button>
                         </div>
@@ -102,11 +105,11 @@ export default function HeroSection() {
                         <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-muted-foreground">
                             <div className="flex items-center gap-2">
                                 <CheckCircle className="w-4 h-4 text-primary" />
-                                Sin tarjeta requerida
+                                {t('noCard')}
                             </div>
                             <div className="flex items-center gap-2">
                                 <CheckCircle className="w-4 h-4 text-primary" />
-                                Configuración en 5 min
+                                {t('setup')}
                             </div>
                         </div>
                     </motion.div>

@@ -1,113 +1,120 @@
 "use client"
 
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { Zap, Menu, X } from "lucide-react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import styled from "styled-components"
+import { useTranslations } from "next-intl"
 import GradientButton from "@/components/ui/GradientButton"
-
-const NavLinks = [
-    { href: "#features", label: "Producto" },
-    { href: "#pricing", label: "Precios" },
-    { href: "#testimonials", label: "Testimonios" },
-    { href: "#", label: "Documentación" },
-]
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher"
 
 export default function Navbar() {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const t = useTranslations('nav')
 
-    return (
-        <StyledNavbar>
-            <nav className="navbar">
-                {/* Background with blur and gradient */}
-                <div className="navbar-bg" />
+  const NavLinks = [
+    { href: "#features", label: t('product') },
+    { href: "#pricing", label: t('pricing') },
+    { href: "#testimonials", label: t('testimonials') },
+    { href: "#", label: t('docs') },
+  ]
 
-                {/* Animated border bottom */}
-                <div className="navbar-border" />
+  return (
+    <StyledNavbar>
+      <nav className="navbar">
+        {/* Background with blur and gradient */}
+        <div className="navbar-bg" />
 
-                <div className="navbar-content">
-                    {/* Logo */}
-                    <Link href="/" className="logo-container">
-                        <motion.div
-                            className="logo-icon"
-                            whileHover={{ scale: 1.1, rotate: 5 }}
-                            whileTap={{ scale: 0.95 }}
-                            transition={{ type: 'spring', stiffness: 400 }}
-                        >
-                            <div className="logo-glow" />
-                            <Zap className="logo-zap" />
-                        </motion.div>
-                        <span className="logo-text">Yeison</span>
-                        <span className="logo-badge">AI</span>
-                    </Link>
+        {/* Animated border bottom */}
+        <div className="navbar-border" />
 
-                    {/* Desktop Navigation */}
-                    <div className="nav-links">
-                        {NavLinks.map((link, i) => (
-                            <Link key={i} href={link.href} className="nav-link">
-                                <span className="nav-link-text">{link.label}</span>
-                                <span className="nav-link-indicator" />
-                            </Link>
-                        ))}
-                    </div>
+        <div className="navbar-content">
+          {/* Logo */}
+          <Link href="/" className="logo-container">
+            <motion.div
+              className="logo-icon"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 400 }}
+            >
+              <div className="logo-glow" />
+              <Zap className="logo-zap" />
+            </motion.div>
+            <span className="logo-text">Yeison</span>
+            <span className="logo-badge">AI</span>
+          </Link>
 
-                    {/* CTA Buttons */}
-                    <div className="nav-cta">
-                        <Link href="/login" className="login-btn">
-                            Ingresar
-                        </Link>
-                        <GradientButton href="/login">
-                            Probar Gratis
-                        </GradientButton>
-                    </div>
+          {/* Desktop Navigation */}
+          <div className="nav-links">
+            {NavLinks.map((link, i) => (
+              <Link key={i} href={link.href} className="nav-link">
+                <span className="nav-link-text">{link.label}</span>
+                <span className="nav-link-indicator" />
+              </Link>
+            ))}
+          </div>
 
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="mobile-menu-btn"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    >
-                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+          {/* CTA Buttons */}
+          <div className="nav-cta">
+            <LanguageSwitcher />
+            <Link href="/login" className="login-btn">
+              {t('login')}
+            </Link>
+            <GradientButton href="/login">
+              {t('tryFree')}
+            </GradientButton>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="mobile-menu-btn"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              className="mobile-menu"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {NavLinks.map((link, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="mobile-link"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <div className="mobile-cta">
+                <div className="mobile-lang-switcher">
+                  <LanguageSwitcher />
                 </div>
-
-                {/* Mobile Menu */}
-                <AnimatePresence>
-                    {isMobileMenuOpen && (
-                        <motion.div
-                            className="mobile-menu"
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            {NavLinks.map((link, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: i * 0.1 }}
-                                >
-                                    <Link
-                                        href={link.href}
-                                        className="mobile-link"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                        {link.label}
-                                    </Link>
-                                </motion.div>
-                            ))}
-                            <div className="mobile-cta">
-                                <GradientButton href="/login">
-                                    Probar Gratis
-                                </GradientButton>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </nav>
-        </StyledNavbar>
-    )
+                <GradientButton href="/login">
+                  {t('tryFree')}
+                </GradientButton>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </StyledNavbar>
+  )
 }
 
 const StyledNavbar = styled.header`
@@ -283,20 +290,50 @@ const StyledNavbar = styled.header`
   }
 
   .login-btn {
-    padding: 10px 20px;
-    color: rgba(255, 255, 255, 0.8);
+    position: relative;
+    padding: 10px 24px;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.03);
-    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    background-image: 
+      linear-gradient(rgba(15, 15, 20, 0.9), rgba(15, 15, 20, 0.9)),
+      linear-gradient(135deg, rgba(3, 169, 244, 0.4) 0%, rgba(244, 65, 165, 0.4) 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 0 rgba(3, 169, 244, 0);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(3, 169, 244, 0.1) 0%, rgba(244, 65, 165, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
     &:hover {
       color: white;
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
+      background-image: 
+        linear-gradient(rgba(20, 20, 30, 0.95), rgba(20, 20, 30, 0.95)),
+        linear-gradient(135deg, rgba(3, 169, 244, 0.7) 0%, rgba(244, 65, 165, 0.7) 100%);
+      box-shadow: 
+        0 0 20px rgba(3, 169, 244, 0.2),
+        0 0 40px rgba(244, 65, 165, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 
@@ -356,5 +393,11 @@ const StyledNavbar = styled.header`
     display: flex;
     flex-direction: column;
     gap: 12px;
+  }
+
+  .mobile-lang-switcher {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
   }
 `

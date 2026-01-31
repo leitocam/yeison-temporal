@@ -3,70 +3,72 @@
 import { useState } from "react"
 import { CheckCircle } from "lucide-react"
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import GradientButton from "@/components/ui/GradientButton"
 
 export default function PricingSection() {
+  const t = useTranslations('pricing')
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
 
   const pricingPlans = [
     {
-      name: "Starter",
-      price: billingCycle === 'monthly' ? "Gratis" : "Gratis",
-      period: "Para siempre",
-      description: "Ideal para probar",
+      name: t('plans.starter.name'),
+      price: t('plans.starter.price'),
+      period: t('plans.starter.period'),
+      description: t('plans.starter.description'),
       features: [
-        "Hasta 1 agente",
-        "50 conversaciones/mes",
-        "Soporte comunidad"
+        t('plans.starter.features.0'),
+        t('plans.starter.features.1'),
+        t('plans.starter.features.2')
       ],
-      cta: "Empezar gratis",
+      cta: t('plans.starter.cta'),
       highlight: false
     },
     {
-      name: "Ventas",
-      price: billingCycle === 'monthly' ? "USD 39" : "USD 33",
-      period: billingCycle === 'monthly' ? "/mes" : "/mes (facturado anual)",
-      description: "Agente de ventas completo",
+      name: t('plans.sales.name'),
+      price: billingCycle === 'monthly' ? t('plans.sales.priceMonthly') : t('plans.sales.priceAnnual'),
+      period: billingCycle === 'monthly' ? t('plans.sales.periodMonthly') : t('plans.sales.periodAnnual'),
+      description: t('plans.sales.description'),
       features: [
-        "Agente de ventas por WhatsApp",
-        "Cotizaciones automáticas",
-        "Seguimiento de clientes",
-        "500 conversaciones/mes",
-        "Soporte estándar"
+        t('plans.sales.features.0'),
+        t('plans.sales.features.1'),
+        t('plans.sales.features.2'),
+        t('plans.sales.features.3'),
+        t('plans.sales.features.4')
       ],
-      cta: "Probar ahora",
+      cta: t('plans.sales.cta'),
       highlight: false
     },
     {
-      name: "Ventas + Marketing",
-      price: billingCycle === 'monthly' ? "USD 59" : "USD 49",
-      period: billingCycle === 'monthly' ? "/mes" : "/mes (facturado anual)",
-      description: "La combinación perfecta",
+      name: t('plans.salesMarketing.name'),
+      price: billingCycle === 'monthly' ? t('plans.salesMarketing.priceMonthly') : t('plans.salesMarketing.priceAnnual'),
+      period: billingCycle === 'monthly' ? t('plans.salesMarketing.periodMonthly') : t('plans.salesMarketing.periodAnnual'),
+      description: t('plans.salesMarketing.description'),
       features: [
-        "Todo de Ventas",
-        "Agente de Marketing",
-        "30 contenidos/mes",
-        "1000 conversaciones/mes",
-        "Métricas avanzadas",
-        "Soporte prioritario"
+        t('plans.salesMarketing.features.0'),
+        t('plans.salesMarketing.features.1'),
+        t('plans.salesMarketing.features.2'),
+        t('plans.salesMarketing.features.3'),
+        t('plans.salesMarketing.features.4'),
+        t('plans.salesMarketing.features.5')
       ],
-      cta: "Recomendado",
+      cta: t('plans.salesMarketing.cta'),
       highlight: true
     },
     {
-      name: "Premium",
-      price: billingCycle === 'monthly' ? "USD 99" : "USD 79",
-      period: billingCycle === 'monthly' ? "/mes" : "/mes (facturado anual)",
-      description: "Para equipos grandes",
+      name: t('plans.premium.name'),
+      price: billingCycle === 'monthly' ? t('plans.premium.priceMonthly') : t('plans.premium.priceAnnual'),
+      period: billingCycle === 'monthly' ? t('plans.premium.periodMonthly') : t('plans.premium.periodAnnual'),
+      description: t('plans.premium.description'),
       features: [
-        "Todos los agentes",
-        "Conversaciones ilimitadas",
-        "Soporte prioritario 24/7",
-        "Configuración avanzada",
-        "API acceso completo",
-        "Onboarding personalizado"
+        t('plans.premium.features.0'),
+        t('plans.premium.features.1'),
+        t('plans.premium.features.2'),
+        t('plans.premium.features.3'),
+        t('plans.premium.features.4'),
+        t('plans.premium.features.5')
       ],
-      cta: "Hablar con ventas",
+      cta: t('plans.premium.cta'),
       highlight: false
     }
   ]
@@ -76,39 +78,37 @@ export default function PricingSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4">Planes y Precios</h2>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4">{t('title')}</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Empieza gratis. Escala cuando estés listo.
+            {t('subtitle')}
           </p>
 
           {/* Billing Toggle */}
           <div className="inline-flex items-center gap-4 p-2 glass rounded-full border border-white/10">
             <button
               onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                billingCycle === 'monthly'
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${billingCycle === 'monthly'
                   ? 'bg-gradient-to-r from-primary to-accent text-white'
                   : 'text-muted-foreground hover:text-foreground'
-              }`}
+                }`}
             >
-              Mensual
+              {t('monthly')}
             </button>
             <button
               onClick={() => setBillingCycle('annual')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
-                billingCycle === 'annual'
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${billingCycle === 'annual'
                   ? 'bg-gradient-to-r from-primary to-accent text-white'
                   : 'text-muted-foreground hover:text-foreground'
-              }`}
+                }`}
             >
-              Anual
-              <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">-20%</span>
+              {t('annual')}
+              <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">{t('discount')}</span>
             </button>
           </div>
         </motion.div>
@@ -117,11 +117,10 @@ export default function PricingSection() {
           {pricingPlans.map((plan, i) => (
             <motion.div
               key={i}
-              className={`relative rounded-3xl border-2 transition-all duration-300 ${
-                plan.highlight
+              className={`relative rounded-3xl border-2 transition-all duration-300 ${plan.highlight
                   ? "bg-gradient-to-br from-primary/20 to-accent/10 border-primary/60 lg:scale-105 lg:-my-4"
                   : "glass border-primary/20 hover:border-primary/40"
-              }`}
+                }`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -130,7 +129,7 @@ export default function PricingSection() {
             >
               {plan.highlight && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-accent text-white text-sm font-bold rounded-full shadow-lg">
-                  RECOMENDADO
+                  {t('recommended')}
                 </div>
               )}
               <div className="p-6 h-full flex flex-col">

@@ -1,9 +1,12 @@
 "use client"
 
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { Zap } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export default function Footer() {
+    const t = useTranslations('footer')
+
     return (
         <footer className="border-t border-border/50 py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
@@ -16,7 +19,7 @@ export default function Footer() {
                             <span className="font-bold text-lg">Yeison</span>
                         </div>
                         <p className="text-sm text-muted-foreground mb-4">
-                            Automatización empresarial con IA para el mercado boliviano.
+                            {t('description')}
                         </p>
                         <div className="flex gap-3">
                             <Link href="#" className="w-8 h-8 rounded-full glass border border-white/10 flex items-center justify-center hover:border-primary/50 transition-colors">
@@ -31,50 +34,50 @@ export default function Footer() {
                         </div>
                     </div>
                     <div>
-                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Producto</h4>
+                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">{t('product')}</h4>
                         <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li><Link href="#features" className="hover:text-accent transition">Características</Link></li>
-                            <li><Link href="#pricing" className="hover:text-accent transition">Precios</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Seguridad</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Integraciones</Link></li>
+                            <li><Link href="#features" className="hover:text-accent transition">{t('features')}</Link></li>
+                            <li><Link href="#pricing" className="hover:text-accent transition">{t('pricing')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('security')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('integrations')}</Link></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Empresa</h4>
+                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">{t('company')}</h4>
                         <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li><Link href="#" className="hover:text-accent transition">Nosotros</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Blog</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Carreras</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Prensa</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('about')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('blog')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('careers')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('press')}</Link></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Recursos</h4>
+                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">{t('resources')}</h4>
                         <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li><Link href="#" className="hover:text-accent transition">Documentación</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">API</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Estado del sistema</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Centro de ayuda</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('docs')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('api')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('status')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('help')}</Link></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Legal</h4>
+                        <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">{t('legal')}</h4>
                         <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li><Link href="#" className="hover:text-accent transition">Privacidad</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Términos</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Cookies</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition">Contacto</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('privacy')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('terms')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('cookies')}</Link></li>
+                            <li><Link href="#" className="hover:text-accent transition">{t('contact')}</Link></li>
                         </ul>
                     </div>
                 </div>
                 <div className="border-t border-border/50 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground gap-4">
-                    <p>&copy; 2025 Yeison. Todos los derechos reservados. Hecho con ❤️ en Bolivia.</p>
+                    <p>{t('copyright')}</p>
                     <div className="flex items-center gap-2">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                         </span>
-                        <span>Todos los sistemas operativos</span>
+                        <span>{t('systemStatus')}</span>
                     </div>
                 </div>
             </div>

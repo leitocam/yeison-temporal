@@ -1,0 +1,409 @@
+{
+    "nav": {
+        "product": "Product",
+        "pricing": "Pricing",
+        "testimonials": "Testimonials",
+        "docs": "Documentation",
+        "login": "Login",
+        "tryFree": "Try Free"
+    },
+    "hero": {
+        "badge": "AI Agents in Spanish adapted for the Bolivian market",
+        "title": "Close more sales",
+        "titleHighlight": "without hiring more staff",
+        "description": "Intelligent agents that attend via WhatsApp 24/7, follow up automatically and sell for you.",
+        "descriptionHighlight": "Reduce costs, respond to all your customers and scale your business.",
+        "cta": "Start free",
+        "demo": "View demo",
+        "demoTime": "2 minutes",
+        "noCard": "No card required",
+        "setup": "5 min setup"
+    },
+    "stats": {
+        "trust": "+2,500 Bolivian companies trust intelligent automation",
+        "salesManaged": "In managed sales",
+        "uptime": "Guaranteed uptime",
+        "responseTime": "Response time",
+        "salesIncrease": "Average sales increase"
+    },
+    "value": {
+        "title": "Business automation",
+        "titleHighlight": "without complexity",
+        "description": "Yeison was designed for",
+        "descriptionBold": "Bolivian SMEs",
+        "descriptionEnd": "that need to sell more, serve better and spend less. World-class technology adapted to your reality."
+    },
+    "features": {
+        "title": "Everything you need.",
+        "titleHighlight": "In one place.",
+        "subtitle": "Powerful automation your team will love to use",
+        "whatsapp": {
+            "title": "🤖 WhatsApp Sales Agent",
+            "description": "Automatically attends customers, sends quotes, handles objections and follows up until closing the sale. Works 24 hours, every day."
+        },
+        "analytics": {
+            "title": "📊 Analytics & Tracking",
+            "description": "See how many customers write, how many buy and at what stage they drop off. Clear decisions, no Excel needed."
+        },
+        "marketing": {
+            "title": "📣 Marketing Agent",
+            "description": "Generates posts, promotional texts and keeps your social networks active without hiring a community manager."
+        },
+        "automation": {
+            "title": "⚙️ Automated Workflows",
+            "description": "Follow-ups, reminders, inactive customer recovery and frequent responses without human intervention."
+        },
+        "team": {
+            "title": "👥 Team Control",
+            "description": "Set rules, review conversations and maintain full control. The AI works, you decide."
+        },
+        "security": {
+            "title": "🔒 Enterprise Security",
+            "description": "Secure architecture, access control and protected data. Ready to grow with your company."
+        }
+    },
+    "costs": {
+        "title": "Why keep overpaying?",
+        "subtitle": "Real comparison with Bolivian market costs",
+        "hiringTitle": "💸 Hiring today in Bolivia:",
+        "seller": "Full-time salesperson:",
+        "sellerCost": "Bs. 2,500 – 4,500 / month",
+        "community": "Community Manager:",
+        "communityCost": "Bs. 2,000 – 3,500 / month",
+        "benefits": "+ Benefits, bonuses, vacations...",
+        "benefitsCost": "+35% on top of salary",
+        "yeisonReplaces": "Yeison replaces most of that work",
+        "yeisonPrice": "from Bs. 280 / month",
+        "yeisonBenefits": "No limited hours • No staff turnover • No human errors"
+    },
+    "testimonials": {
+        "title": "What our customers say",
+        "subtitle": "Real companies, real results",
+        "items": [
+            {
+                "quote": "Yeison transformed how we sell. Before we were losing customers by not responding on time, now the agent responds instantly and our sales went up 40%.",
+                "author": "María Fernández",
+                "role": "Commercial Manager",
+                "company": "Tienda El Sol"
+            },
+            {
+                "quote": "ROI was immediate. In the first month we recovered the investment. The marketing agent generates content that really connects with our Bolivian customers.",
+                "author": "Carlos Mamani",
+                "role": "Founder",
+                "company": "TechnoCell Bolivia"
+            },
+            {
+                "quote": "I thought AI would be complicated, but Yeison was set up in minutes. Now we have a tireless salesperson working while we sleep.",
+                "author": "Ana Quispe",
+                "role": "Owner",
+                "company": "Boutique Elegance"
+            },
+            {
+                "quote": "Our team of 3 now performs like 10. Yeison handles all the first line of attention and only passes us customers ready to buy.",
+                "author": "Roberto Flores",
+                "role": "Operations Director",
+                "company": "Distribuidora Oriental"
+            }
+        ]
+    },
+    "pricing": {
+        "title": "Plans and Pricing",
+        "subtitle": "Start free. Scale when you're ready.",
+        "monthly": "Monthly",
+        "annual": "Annual",
+        "discount": "-20%",
+        "recommended": "RECOMMENDED",
+        "plans": {
+            "starter": {
+                "name": "Starter",
+                "price": "Free",
+                "period": "Forever",
+                "description": "Ideal for testing",
+                "features": [
+                    "Up to 1 agent",
+                    "50 conversations/month",
+                    "Community support"
+                ],
+                "cta": "Start free"
+            },
+            "sales": {
+                "name": "Sales",
+                "priceMonthly": "USD 39",
+                "priceAnnual": "USD 33",
+                "periodMonthly": "/month",
+                "periodAnnual": "/month (billed annually)",
+                "description": "Complete sales agent",
+                "features": [
+                    "WhatsApp sales agent",
+                    "Automatic quotes",
+                    "Customer follow-up",
+                    "500 conversations/month",
+                    "Standard support"
+                ],
+                "cta": "Try now"
+            },
+            "salesMarketing": {
+                "name": "Sales + Marketing",
+                "priceMonthly": "USD 59",
+                "priceAnnual": "USD 49",
+                "periodMonthly": "/month",
+                "periodAnnual": "/month (billed annually)",
+                "description": "The perfect combination",
+                "features": [
+                    "Everything in Sales",
+                    "Marketing Agent",
+                    "30 contents/month",
+                    "1000 conversations/month",
+                    "Advanced metrics",
+                    "Priority support"
+                ],
+                "cta": "Recommended"
+            },
+            "premium": {
+                "name": "Premium",
+                "priceMonthly": "USD 99",
+                "priceAnnual": "USD 79",
+                "periodMonthly": "/month",
+                "periodAnnual": "/month (billed annually)",
+                "description": "For large teams",
+                "features": [
+                    "All agents",
+                    "Unlimited conversations",
+                    "24/7 priority support",
+                    "Advanced configuration",
+                    "Full API access",
+                    "Personalized onboarding"
+                ],
+                "cta": "Talk to sales"
+            }
+        }
+    },
+    "cta": {
+        "title": "Automate your business today",
+        "description": "More sales, less costs and total control from a single panel.",
+        "descriptionHighlight": "Join +2,500 companies that already trust Yeison.",
+        "button": "Try free – no card",
+        "buttonSecondary": "Talk to an advisor"
+    },
+    "footer": {
+        "description": "Business automation with AI for the Bolivian market.",
+        "product": "Product",
+        "features": "Features",
+        "pricing": "Pricing",
+        "security": "Security",
+        "integrations": "Integrations",
+        "company": "Company",
+        "about": "About Us",
+        "blog": "Blog",
+        "careers": "Careers",
+        "press": "Press",
+        "resources": "Resources",
+        "docs": "Documentation",
+        "api": "API",
+        "status": "System Status",
+        "help": "Help Center",
+        "legal": "Legal",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "cookies": "Cookies",
+        "contact": "Contact",
+        "copyright": "© 2025 Yeison. All rights reserved. Made with ❤️ in Bolivia.",
+        "systemStatus": "All systems operational"
+    },
+    "login": {
+        "title": "Welcome back",
+        "subtitle": "Access your AI-powered sales panel",
+        "brandTitle": "Automate your sales with artificial intelligence",
+        "brandSubtitle": "Join +2,500 companies that close deals faster with intelligent automation.",
+        "feature1Title": "AI Agents",
+        "feature1Desc": "Work 24/7 on your sales process, never rest",
+        "feature2Title": "WhatsApp Integrated",
+        "feature2Desc": "Attend all your customers automatically",
+        "feature3Title": "Designed for Bolivia",
+        "feature3Desc": "Adapted to the market and local needs",
+        "tagline": "✨ Business automation for Bolivian SMEs",
+        "trustedBy": "Trusted by companies across Bolivia",
+        "noAccount": "Don't have an account?",
+        "startTrial": "Start your free trial",
+        "trialInfo": "All plans include 14-day free trial. No credit card required.",
+        "email": "Email",
+        "emailPlaceholder": "you@company.com",
+        "password": "Password",
+        "passwordPlaceholder": "••••••••",
+        "submit": "Login",
+        "submitting": "Logging in..."
+    },
+    "onboarding": {
+        "stepOf": "Step {current} of {total}",
+        "previous": "Previous",
+        "next": "Next",
+        "finishing": "Finishing...",
+        "saveAndFinish": "Save and Finish",
+        "successMessage": "Information saved successfully! Your AI agents now have the context they need.",
+        "steps": {
+            "1": {
+                "title": "Company",
+                "description": "Basic information"
+            },
+            "2": {
+                "title": "Contact",
+                "description": "Person in charge"
+            },
+            "3": {
+                "title": "Products",
+                "description": "Catalog & inventory"
+            },
+            "4": {
+                "title": "Sales",
+                "description": "Your sales process"
+            },
+            "5": {
+                "title": "Operations",
+                "description": "Hours & more"
+            }
+        },
+        "tips": {
+            "title": "Tip",
+            "step1": "The more detailed your company information, the better our AI agent can represent you.",
+            "step2": "The main contact will receive important notifications about the agent's conversations.",
+            "step3": "Add all your products with stock. The agent will verify availability before offering each product.",
+            "step4": "Well-documented objections help the agent close more sales.",
+            "step5": "This information helps the agent manage expectations and provide accurate information."
+        },
+        "company": {
+            "title": "Company Information",
+            "subtitle": "Tell us about your business so our agents can represent you correctly",
+            "companyName": "Company name",
+            "companyNamePlaceholder": "Ex: Commercial Santa Cruz S.R.L.",
+            "description": "Company Description",
+            "descriptionPlaceholder": "Brief description: Who we are, what we do, what our goal is.",
+            "industry": "Industry / Sector",
+            "selectOption": "Select an option",
+            "industries": {
+                "retail": "Retail / Commerce",
+                "services": "Services",
+                "technology": "Technology",
+                "food": "Food and Beverages",
+                "health": "Health",
+                "education": "Education",
+                "construction": "Construction",
+                "automotive": "Automotive",
+                "realEstate": "Real Estate",
+                "tourism": "Tourism",
+                "other": "Other"
+            },
+            "companySize": "Company size",
+            "sizes": {
+                "1-5": "1-5 employees",
+                "6-20": "6-20 employees",
+                "21-50": "21-50 employees",
+                "51-200": "51-200 employees",
+                "200+": "More than 200"
+            },
+            "website": "Website",
+            "websitePlaceholder": "https://www.yourcompany.com",
+            "location": "Location",
+            "locationPlaceholder": "Ex: Santa Cruz, Bolivia",
+            "yearFounded": "Year founded",
+            "yearFoundedPlaceholder": "Ex: 2015",
+            "saving": "Saving...",
+            "saveProgress": "Save Progress"
+        },
+        "contact": {
+            "title": "Main Contact",
+            "subtitle": "Who will be responsible for managing the agents?",
+            "contactName": "Full name",
+            "contactNamePlaceholder": "Ex: John Doe Smith",
+            "contactRole": "Position / Role",
+            "contactRolePlaceholder": "Ex: Commercial Manager",
+            "email": "Email",
+            "emailPlaceholder": "john@company.com",
+            "phone": "Phone / WhatsApp",
+            "phonePlaceholder": "+591 70000000",
+            "saving": "Saving...",
+            "saveProgress": "Save Progress"
+        },
+        "products": {
+            "title": "Product Catalog",
+            "subtitle": "Add your products with details. This will serve as the basis for your inventory.",
+            "devNote": "Note: This section is under development. Products will not be saved yet.",
+            "productsAdded": "Products added",
+            "addProductBtn": "Add Product",
+            "stock": "Stock",
+            "edit": "Edit",
+            "delete": "Delete",
+            "newProduct": "New Product",
+            "editProduct": "Edit Product",
+            "productName": "Product name",
+            "productNamePlaceholder": "Ex: Premium Ergonomic Chair",
+            "category": "Category",
+            "categoryPlaceholder": "Ex: Office furniture",
+            "description": "Product description",
+            "descriptionPlaceholder": "Describe the product with details the agent can use to sell...",
+            "price": "Price (Bs.)",
+            "unit": "Sales unit",
+            "units": {
+                "unit": "Unit",
+                "kg": "Kilogram",
+                "liter": "Liter",
+                "meter": "Meter",
+                "box": "Box",
+                "package": "Package",
+                "service": "Service",
+                "hour": "Hour"
+            },
+            "sku": "Code/SKU (optional)",
+            "skuPlaceholder": "Ex: CHAIR-PREM-001",
+            "stockLabel": "Available stock",
+            "variants": "Variants (colors, sizes, etc.)",
+            "variantsPlaceholder": "Ex: Black, White, Gray | Small, Medium, Large",
+            "features": "Key features",
+            "featuresPlaceholder": "Ex: Adjustable backrest, rubber wheels, 2-year warranty, lumbar support...",
+            "cancel": "Cancel",
+            "update": "Update",
+            "addProduct": "Add Product",
+            "uniqueSellingPoints": "What differentiates your products from the competition?",
+            "uniqueSellingPointsPlaceholder": "Ex: Extended warranty, 24h delivery, free installation, better materials...",
+            "targetAudience": "Who is your ideal customer?",
+            "targetAudiencePlaceholder": "Ex: Medium-sized companies, independent professionals, families...",
+            "paymentMethods": "Accepted payment methods",
+            "paymentMethodsPlaceholder": "Ex: Cash, Transfer, QR, Cards, Financing"
+        },
+        "sales": {
+            "title": "Sales Process",
+            "subtitle": "Help us understand how you currently sell",
+            "salesProcess": "What is your typical sales process?",
+            "salesProcessPlaceholder": "Describe step by step. Ex: 1) Customer asks via WhatsApp, 2) We send PDF catalog, 3) We quote based on their needs, 4) We schedule showroom visit, 5) We close sale and coordinate delivery...",
+            "commonQuestions": "Frequently asked questions from your customers",
+            "commonQuestionsPlaceholder": "List the most common questions. Ex: Do you have warranty? Do you deliver to the interior? How long does delivery take? Do you have financing? Can I customize colors?...",
+            "objections": "Common objections and how you handle them",
+            "objectionsPlaceholder": "Ex: 'It's too expensive' → We offer financing and our products last twice as long. 'I need to think about it' → We offer a 10% discount if you decide today...",
+            "closingTechniques": "Closing techniques that work",
+            "closingTechniquesPlaceholder": "Ex: Offer limited-time discount, add a free product, show testimonials from other customers...",
+            "saving": "Saving...",
+            "saveProgress": "Save Progress"
+        },
+        "operations": {
+            "title": "Operations and Additional Context",
+            "subtitle": "Operational information and final details",
+            "businessHours": "Business hours",
+            "businessHoursPlaceholder": "Ex: Monday to Friday 8:00-18:00, Saturdays 9:00-13:00",
+            "responseTime": "Expected response time",
+            "select": "Select",
+            "responseTimes": {
+                "immediate": "Immediate (24/7)",
+                "1hour": "Less than 1 hour",
+                "sameDay": "Same day",
+                "businessHours": "Business hours only"
+            },
+            "languages": "Service languages",
+            "languagesPlaceholder": "Ex: Spanish, some English",
+            "competitors": "Main competitors (optional)",
+            "competitorsPlaceholder": "Mention your main competitors and what differentiates you from them...",
+            "additionalContext": "Any other information the agent should know",
+            "additionalContextPlaceholder": "Add any additional context that helps the agent better represent your company...",
+            "saving": "Saving...",
+            "saveProgress": "Save Progress"
+        }
+    }
+}

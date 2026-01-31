@@ -2,11 +2,14 @@
 
 import { ArrowRight } from "lucide-react"
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import GradientButton from "@/components/ui/GradientButton"
 import ShineText from "@/components/ui/ShineText"
 import ParticleBackground from "@/components/ui/ParticleBackground"
 
 export default function CTASection() {
+    const t = useTranslations('cta')
+
     return (
         <section className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
             <ParticleBackground particleCount={30} />
@@ -26,20 +29,20 @@ export default function CTASection() {
                             shineColor="#fde68a"
                             duration={5}
                         >
-                            Automatiza tu negocio hoy
+                            {t('title')}
                         </ShineText>
                     </h2>
                     <p className="text-xl text-muted-foreground mb-8 text-balance max-w-2xl mx-auto">
-                        Más ventas, menos costos y control total desde un solo panel.
-                        <span className="block mt-2 font-medium text-foreground">Únete a +2,500 empresas que ya confían en Yeison.</span>
+                        {t('description')}
+                        <span className="block mt-2 font-medium text-foreground">{t('descriptionHighlight')}</span>
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <GradientButton href="/login">
-                            Probar gratis – sin tarjeta
+                            {t('button')}
                             <ArrowRight className="w-5 h-5" />
                         </GradientButton>
                         <GradientButton href="/contact">
-                            Hablar con un asesor
+                            {t('buttonSecondary')}
                         </GradientButton>
                     </div>
                 </motion.div>

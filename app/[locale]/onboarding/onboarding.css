@@ -92,6 +92,12 @@
     background: var(--secondary);
 }
 
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 /* Progress Container */
 .progress-container {
     max-width: 1200px;

@@ -1,9 +1,12 @@
 "use client"
 
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import ShineText from "@/components/ui/ShineText"
 
 export default function CostComparisonSection() {
+    const t = useTranslations('costs')
+
     return (
         <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none"></div>
@@ -15,10 +18,10 @@ export default function CostComparisonSection() {
                     viewport={{ once: true }}
                 >
                     <h2 className="text-4xl sm:text-5xl font-black mb-4">
-                        ¿Por qué seguir pagando de más?
+                        {t('title')}
                     </h2>
                     <p className="text-xl text-muted-foreground">
-                        Comparación real con costos del mercado boliviano
+                        {t('subtitle')}
                     </p>
                 </motion.div>
 
@@ -29,20 +32,20 @@ export default function CostComparisonSection() {
                     viewport={{ once: true }}
                 >
                     <h3 className="text-xl font-bold mb-6 text-center flex items-center justify-center gap-2">
-                        <span className="text-2xl">💸</span> Contratar hoy en Bolivia:
+                        {t('hiringTitle')}
                     </h3>
                     <div className="grid md:grid-cols-2 gap-4 mb-8">
                         <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30 hover:bg-red-500/15 transition-colors">
-                            <span className="text-muted-foreground">Vendedor tiempo completo:</span>
-                            <span className="font-bold text-red-400">Bs. 2,500 – 4,500 / mes</span>
+                            <span className="text-muted-foreground">{t('seller')}</span>
+                            <span className="font-bold text-red-400">{t('sellerCost')}</span>
                         </div>
                         <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30 hover:bg-red-500/15 transition-colors">
-                            <span className="text-muted-foreground">Community Manager:</span>
-                            <span className="font-bold text-red-400">Bs. 2,000 – 3,500 / mes</span>
+                            <span className="text-muted-foreground">{t('community')}</span>
+                            <span className="font-bold text-red-400">{t('communityCost')}</span>
                         </div>
                         <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30 hover:bg-red-500/15 transition-colors md:col-span-2">
-                            <span className="text-muted-foreground">+ Aportes, aguinaldo, vacaciones...</span>
-                            <span className="font-bold text-red-400">+35% sobre el salario</span>
+                            <span className="text-muted-foreground">{t('benefits')}</span>
+                            <span className="font-bold text-red-400">{t('benefitsCost')}</span>
                         </div>
                     </div>
 
@@ -58,10 +61,10 @@ export default function CostComparisonSection() {
                                 duration={6}
                                 className="mb-2"
                             >
-                                Yeison reemplaza gran parte de ese trabajo
+                                {t('yeisonReplaces')}
                             </ShineText>
-                            <p className="text-4xl font-black text-accent mt-4 mb-2">desde Bs. 280 / mes</p>
-                            <p className="text-muted-foreground">Sin horarios limitados • Sin rotación de personal • Sin errores humanos</p>
+                            <p className="text-4xl font-black text-accent mt-4 mb-2">{t('yeisonPrice')}</p>
+                            <p className="text-muted-foreground">{t('yeisonBenefits')}</p>
                         </div>
                     </div>
                 </motion.div>

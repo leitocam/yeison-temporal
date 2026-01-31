@@ -1,9 +1,12 @@
 "use client"
 
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import ShineText from "@/components/ui/ShineText"
 
 export default function ValueProposition() {
+    const t = useTranslations('value')
+
     return (
         <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
             <div className="max-w-4xl mx-auto text-center">
@@ -13,7 +16,7 @@ export default function ValueProposition() {
                     viewport={{ once: true }}
                 >
                     <h2 className="text-4xl sm:text-5xl font-black mb-6">
-                        Automatización empresarial{" "}
+                        {t('title')}{" "}
                         <ShineText
                             as="span"
                             fontSize="inherit"
@@ -22,12 +25,11 @@ export default function ValueProposition() {
                             shineColor="#f0abfc"
                             duration={4}
                         >
-                            sin complejidad
+                            {t('titleHighlight')}
                         </ShineText>
                     </h2>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                        Yeison fue diseñado para <strong className="text-foreground">PYMEs bolivianas</strong> que necesitan vender más, atender mejor y gastar menos.
-                        Tecnología de clase mundial adaptada a tu realidad.
+                        {t('description')} <strong className="text-foreground">{t('descriptionBold')}</strong> {t('descriptionEnd')}
                     </p>
                 </motion.div>
             </div>

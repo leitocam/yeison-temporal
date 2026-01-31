@@ -3,41 +3,44 @@
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import TestimonialCard from "@/components/ui/TestimonialCard"
 
-const testimonials = [
-    {
-        quote: "Yeison transformó nuestra forma de vender. Antes perdíamos clientes por no responder a tiempo, ahora el agente responde al instante y nuestras ventas subieron un 40%.",
-        author: "María Fernández",
-        role: "Gerente Comercial",
-        company: "Tienda El Sol",
-        rating: 5
-    },
-    {
-        quote: "El ROI fue inmediato. En el primer mes recuperamos la inversión. El agente de marketing nos genera contenido que realmente conecta con nuestros clientes bolivianos.",
-        author: "Carlos Mamani",
-        role: "Fundador",
-        company: "TechnoCell Bolivia",
-        rating: 5
-    },
-    {
-        quote: "Pensé que la IA sería complicada, pero Yeison se configuró en minutos. Ahora tenemos un vendedor incansable que trabaja mientras dormimos.",
-        author: "Ana Quispe",
-        role: "Propietaria",
-        company: "Boutique Elegance",
-        rating: 5
-    },
-    {
-        quote: "Nuestro equipo de 3 personas ahora rinde como si fuera de 10. Yeison maneja toda la primera línea de atención y solo nos pasan los clientes listos para comprar.",
-        author: "Roberto Flores",
-        role: "Director de Operaciones",
-        company: "Distribuidora Oriental",
-        rating: 5
-    }
-]
-
 export default function TestimonialsSection() {
+    const t = useTranslations('testimonials')
     const [currentTestimonial, setCurrentTestimonial] = useState(0)
+
+    // Get testimonials from translations
+    const testimonials = [
+        {
+            quote: t('items.0.quote'),
+            author: t('items.0.author'),
+            role: t('items.0.role'),
+            company: t('items.0.company'),
+            rating: 5
+        },
+        {
+            quote: t('items.1.quote'),
+            author: t('items.1.author'),
+            role: t('items.1.role'),
+            company: t('items.1.company'),
+            rating: 5
+        },
+        {
+            quote: t('items.2.quote'),
+            author: t('items.2.author'),
+            role: t('items.2.role'),
+            company: t('items.2.company'),
+            rating: 5
+        },
+        {
+            quote: t('items.3.quote'),
+            author: t('items.3.author'),
+            role: t('items.3.role'),
+            company: t('items.3.company'),
+            rating: 5
+        }
+    ]
 
     const nextTestimonial = () => {
         setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
@@ -58,10 +61,10 @@ export default function TestimonialsSection() {
                     viewport={{ once: true }}
                 >
                     <h2 className="text-4xl sm:text-5xl font-black mb-4">
-                        Lo que dicen nuestros clientes
+                        {t('title')}
                     </h2>
                     <p className="text-xl text-muted-foreground">
-                        Empresas reales, resultados reales
+                        {t('subtitle')}
                     </p>
                 </motion.div>
 

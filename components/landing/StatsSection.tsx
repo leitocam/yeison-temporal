@@ -1,16 +1,19 @@
 "use client"
 
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import AnimatedCounter from "@/components/ui/AnimatedCounter"
 
-const stats = [
-    { value: 2.5, prefix: "Bs. ", suffix: "M+", label: "En ventas gestionadas", decimals: 1 },
-    { value: 99.9, suffix: "%", label: "Disponibilidad garantizada", decimals: 1 },
-    { value: 100, prefix: "<", suffix: "ms", label: "Tiempo de respuesta", decimals: 0 },
-    { value: 40, suffix: "%", label: "Aumento promedio en ventas", decimals: 0 }
-]
-
 export default function StatsSection() {
+    const t = useTranslations('stats')
+
+    const stats = [
+        { value: 2.5, prefix: "Bs. ", suffix: "M+", label: t('salesManaged'), decimals: 1 },
+        { value: 99.9, suffix: "%", label: t('uptime'), decimals: 1 },
+        { value: 100, prefix: "<", suffix: "ms", label: t('responseTime'), decimals: 0 },
+        { value: 40, suffix: "%", label: t('salesIncrease'), decimals: 0 }
+    ]
+
     return (
         <section className="py-20 border-y border-border/50 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
@@ -21,7 +24,7 @@ export default function StatsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                 >
-                    +2,500 empresas bolivianas confían en automatización inteligente
+                    {t('trust')}
                 </motion.p>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     {stats.map((stat, i) => (
