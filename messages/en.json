@@ -231,7 +231,18 @@
         "password": "Password",
         "passwordPlaceholder": "••••••••",
         "submit": "Login",
-        "submitting": "Logging in..."
+        "submitting": "Logging in...",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot your password?",
+        "orContinueWith": "Or continue with",
+        "googleSignIn": "Continue with Google",
+        "devMode": "Dev mode: Any email/password will work",
+        "highlight1Title": "Easy setup",
+        "highlight1Desc": "Configure your agent in less than 5 minutes",
+        "highlight2Title": "No card required",
+        "highlight2Desc": "Free trial for 14 days, no commitments",
+        "highlight3Title": "Support in Spanish",
+        "highlight3Desc": "Local team ready to help you"
     },
     "onboarding": {
         "stepOf": "Step {current} of {total}",
@@ -240,6 +251,14 @@
         "finishing": "Finishing...",
         "saveAndFinish": "Save and Finish",
         "successMessage": "Information saved successfully! Your AI agents now have the context they need.",
+        "skip": "Skip",
+        "skipModal": {
+            "title": "Skip configuration?",
+            "description": "The AI agent requires this information to function correctly. Without it, automatic responses may not be accurate or personalized for your business.",
+            "info": "You can complete this information later from the settings panel.",
+            "continue": "Continue configuring",
+            "skipAnyway": "Complete later and go to panel"
+        },
         "steps": {
             "1": {
                 "title": "Company",
@@ -404,6 +423,96 @@
             "additionalContextPlaceholder": "Add any additional context that helps the agent better represent your company...",
             "saving": "Saving...",
             "saveProgress": "Save Progress"
+        }
+    },
+    "register": {
+        "title": "Create your account",
+        "subtitle": "Start your 14-day free trial",
+        "brandTitle": "Automate your sales with AI",
+        "brandSubtitle": "Join +2,500 Bolivian companies already selling more with intelligent agents.",
+        "feature1Title": "Easy setup",
+        "feature1Desc": "Configure your agent in less than 5 minutes",
+        "feature2Title": "No card required",
+        "feature2Desc": "Free trial for 14 days, no commitments",
+        "feature3Title": "Support in Spanish",
+        "feature3Desc": "Local team ready to help you",
+        "tagline": "✨ The #1 automation platform in Bolivia",
+        "haveAccount": "Already have an account?",
+        "loginLink": "Sign in",
+        "progress": {
+            "steps": {
+                "form": "Details",
+                "plan": "Plan",
+                "payment": "Payment",
+                "confirmation": "Done"
+            }
+        },
+        "form": {
+            "fullName": "Full name",
+            "fullNamePlaceholder": "Ex: John Doe Smith",
+            "email": "Email address",
+            "emailPlaceholder": "you@company.com",
+            "phone": "Phone / WhatsApp",
+            "phonePlaceholder": "+591 70000000",
+            "password": "Password",
+            "passwordPlaceholder": "Minimum 8 characters",
+            "confirmPassword": "Confirm password",
+            "confirmPasswordPlaceholder": "Repeat your password",
+            "continue": "Continue",
+            "submitting": "Creating account...",
+            "termsPrefix": "By signing up, you agree to our",
+            "terms": "Terms of Service",
+            "and": "and",
+            "privacy": "Privacy Policy",
+            "errors": {
+                "fullNameRequired": "Name is required",
+                "emailRequired": "Email is required",
+                "emailInvalid": "Enter a valid email",
+                "phoneRequired": "Phone is required",
+                "passwordRequired": "Password is required",
+                "passwordLength": "Password must be at least 8 characters",
+                "passwordMismatch": "Passwords do not match"
+            }
+        },
+        "plan": {
+            "title": "Choose your plan",
+            "subtitle": "Select the plan that best fits your business",
+            "select": "Select",
+            "selected": "✓ Selected"
+        },
+        "payment": {
+            "title": "QR Payment",
+            "subtitle": "Scan the QR code with your bank app",
+            "selectedPlan": "Selected plan",
+            "amount": "Amount to pay",
+            "expiresIn": "Expires in",
+            "verifying": "Verifying payment...",
+            "confirmed": "Payment confirmed!",
+            "expired": "QR expired",
+            "refreshQR": "Generate new QR",
+            "instructions": "How to pay?",
+            "step1": "Open your bank app on your phone",
+            "step2": "Select the QR payment option",
+            "step3": "Scan this code and confirm the payment",
+            "acceptedBanks": "Accepted banks",
+            "back": "Back",
+            "confirmPayment": "I already paid"
+        },
+        "confirmation": {
+            "title": "Registration successful!",
+            "subtitle": "Your account has been created successfully",
+            "yourPlan": "Your subscription",
+            "plan": "Plan",
+            "price": "Price",
+            "billing": "Billing",
+            "monthly": "Monthly",
+            "annual": "Annual",
+            "nextSteps": "Next steps",
+            "step1": "Configure your company information",
+            "step2": "Add your products and services",
+            "step3": "Activate your sales agent",
+            "continue": "Set up my company",
+            "setupTime": "⏱️ It will only take 5 minutes"
         }
     }
 }

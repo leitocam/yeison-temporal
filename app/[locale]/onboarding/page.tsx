@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, ArrowLeft, Building2, Users, Package, Target, Clock, Save } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Building2, Users, Package, Target, Clock, Save, X, AlertTriangle, SkipForward } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { motion, AnimatePresence } from 'motion/react'
 import GradientButton from '@/components/ui/GradientButton'
 import { apiClient } from '@/lib/api-client'
 import {
@@ -40,6 +41,7 @@ export default function OnboardingPage() {
     const [saveError, setSaveError] = useState<string | null>(null)
     const [saveSuccess, setSaveSuccess] = useState<string | null>(null)
     const [formData, setFormData] = useState<FormData>(initialFormData)
+    const [showSkipModal, setShowSkipModal] = useState(false)
 
     // Load existing configuration on mount
     useEffect(() => {
@@ -202,6 +204,15 @@ export default function OnboardingPage() {
         }
     }
 
+    const handleSkip = () => {
+        setShowSkipModal(true)
+    }
+
+    const handleSkipConfirm = () => {
+        setShowSkipModal(false)
+        router.push('/dashboard')
+    }
+
     const renderStepContent = () => {
         const stepProps = {
             formData,
@@ -262,6 +273,16 @@ export default function OnboardingPage() {
 
                         <div className="spacer"></div>
 
+                        {/* Skip Button */}
+                        <button
+                            onClick={handleSkip}
+                            className="skip-button"
+                            disabled={isSaving}
+                        >
+                            <SkipForward className="w-4 h-4" />
+                            {t('skip') || 'Omitir'}
+                        </button>
+
                         {currentStep < steps.length ? (
                             <GradientButton onClick={nextStep} disabled={isSaving}>
                                 {t('next')}
@@ -279,6 +300,85 @@ export default function OnboardingPage() {
 
             {/* Tips Section */}
             <OnboardingTips currentStep={currentStep} />
+
+            {/* Skip Warning Modal */}
+            <AnimatePresence>
+                {showSkipModal && (
+                    <motion.div
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        {/* Backdrop */}
+                        <motion.div
+                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowSkipModal(false)}
+                        />
+
+                        {/* Modal */}
+                        <motion.div
+                            className="relative w-full max-w-md bg-card border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        >
+                            {/* Close button */}
+                            <button
+                                onClick={() => setShowSkipModal(false)}
+                                className="absolute top-4 right-4 p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            {/* Content */}
+                            <div className="p-6">
+                                {/* Warning Icon */}
+                                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/20 flex items-center justify-center">
+                                    <AlertTriangle className="w-8 h-8 text-amber-500" />
+                                </div>
+
+                                {/* Title */}
+                                <h3 className="text-xl font-bold text-center mb-2">
+                                    {t('skipModal.title') || '¿Omitir configuración?'}
+                                </h3>
+
+                                {/* Description */}
+                                <p className="text-center text-muted-foreground mb-6 text-sm leading-relaxed">
+                                    {t('skipModal.description') || 'El agente de IA requiere esta información para funcionar correctamente. Sin ella, las respuestas automáticas pueden no ser precisas ni personalizadas para tu negocio.'}
+                                </p>
+
+                                {/* Info Box */}
+                                <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 mb-6">
+                                    <p className="text-xs text-amber-200 text-center">
+                                        {t('skipModal.info') || 'Podrás completar esta información más tarde desde el panel de configuración.'}
+                                    </p>
+                                </div>
+
+                                {/* Buttons */}
+                                <div className="flex flex-col gap-3">
+                                    <GradientButton onClick={() => setShowSkipModal(false)} fullWidth>
+                                        <ArrowLeft className="w-4 h-4" />
+                                        {t('skipModal.continue') || 'Continuar configurando'}
+                                    </GradientButton>
+
+                                    <button
+                                        onClick={handleSkipConfirm}
+                                        className="w-full py-3 px-4 rounded-xl border border-white/10 text-muted-foreground hover:text-foreground hover:bg-white/5 transition-all text-sm font-medium flex items-center justify-center gap-2"
+                                    >
+                                        <SkipForward className="w-4 h-4" />
+                                        {t('skipModal.skipAnyway') || 'Completar luego e ir al panel'}
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     )
 }

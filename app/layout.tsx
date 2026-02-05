@@ -35,5 +35,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return children
+  return (
+    <html lang="es" className={`${geist.variable} ${geistMono.variable} dark scroll-smooth`} suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        {children}
+      </body>
+    </html>
+  )
 }

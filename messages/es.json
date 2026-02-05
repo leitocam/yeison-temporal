@@ -231,7 +231,18 @@
         "password": "Contraseña",
         "passwordPlaceholder": "••••••••",
         "submit": "Ingresar",
-        "submitting": "Ingresando..."
+        "submitting": "Ingresando...",
+        "rememberMe": "Recordarme",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "orContinueWith": "O continúa con",
+        "googleSignIn": "Continuar con Google",
+        "devMode": "Modo desarrollo: Cualquier email/contraseña funcionará",
+        "highlight1Title": "Fácil configuración",
+        "highlight1Desc": "Configura tu agente en menos de 5 minutos",
+        "highlight2Title": "Sin tarjeta requerida",
+        "highlight2Desc": "Prueba gratis por 14 días, sin compromisos",
+        "highlight3Title": "Soporte en español",
+        "highlight3Desc": "Equipo local listo para ayudarte"
     },
     "onboarding": {
         "stepOf": "Paso {current} de {total}",
@@ -240,6 +251,14 @@
         "finishing": "Finalizando...",
         "saveAndFinish": "Guardar y Finalizar",
         "successMessage": "¡Información guardada correctamente! Tus agentes de IA ya tienen el contexto necesario.",
+        "skip": "Omitir",
+        "skipModal": {
+            "title": "¿Omitir configuración?",
+            "description": "El agente de IA requiere esta información para funcionar correctamente. Sin ella, las respuestas automáticas pueden no ser precisas ni personalizadas para tu negocio.",
+            "info": "Podrás completar esta información más tarde desde el panel de configuración.",
+            "continue": "Continuar configurando",
+            "skipAnyway": "Completar luego e ir al panel"
+        },
         "steps": {
             "1": {
                 "title": "Empresa",
@@ -404,6 +423,96 @@
             "additionalContextPlaceholder": "Agrega cualquier contexto adicional que ayude al agente a representar mejor a tu empresa...",
             "saving": "Guardando...",
             "saveProgress": "Guardar Progreso"
+        }
+    },
+    "register": {
+        "title": "Crea tu cuenta",
+        "subtitle": "Comienza tu prueba gratuita de 14 días",
+        "brandTitle": "Automatiza tus ventas con IA",
+        "brandSubtitle": "Únete a +2,500 empresas bolivianas que ya venden más con agentes inteligentes.",
+        "feature1Title": "Fácil configuración",
+        "feature1Desc": "Configura tu agente en menos de 5 minutos",
+        "feature2Title": "Sin tarjeta requerida",
+        "feature2Desc": "Prueba gratis por 14 días, sin compromisos",
+        "feature3Title": "Soporte en español",
+        "feature3Desc": "Equipo local listo para ayudarte",
+        "tagline": "✨ La plataforma #1 de automatización en Bolivia",
+        "haveAccount": "¿Ya tienes una cuenta?",
+        "loginLink": "Inicia sesión",
+        "progress": {
+            "steps": {
+                "form": "Datos",
+                "plan": "Plan",
+                "payment": "Pago",
+                "confirmation": "Listo"
+            }
+        },
+        "form": {
+            "fullName": "Nombre completo",
+            "fullNamePlaceholder": "Ej: Juan Pérez Miranda",
+            "email": "Correo electrónico",
+            "emailPlaceholder": "tu@empresa.com",
+            "phone": "Teléfono / WhatsApp",
+            "phonePlaceholder": "+591 70000000",
+            "password": "Contraseña",
+            "passwordPlaceholder": "Mínimo 8 caracteres",
+            "confirmPassword": "Confirmar contraseña",
+            "confirmPasswordPlaceholder": "Repite tu contraseña",
+            "continue": "Continuar",
+            "submitting": "Creando cuenta...",
+            "termsPrefix": "Al registrarte, aceptas nuestros",
+            "terms": "Términos de servicio",
+            "and": "y",
+            "privacy": "Política de privacidad",
+            "errors": {
+                "fullNameRequired": "El nombre es obligatorio",
+                "emailRequired": "El correo es obligatorio",
+                "emailInvalid": "Ingresa un correo válido",
+                "phoneRequired": "El teléfono es obligatorio",
+                "passwordRequired": "La contraseña es obligatoria",
+                "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+                "passwordMismatch": "Las contraseñas no coinciden"
+            }
+        },
+        "plan": {
+            "title": "Elige tu plan",
+            "subtitle": "Selecciona el plan que mejor se adapte a tu negocio",
+            "select": "Seleccionar",
+            "selected": "✓ Seleccionado"
+        },
+        "payment": {
+            "title": "Pago por QR",
+            "subtitle": "Escanea el código QR con la app de tu banco",
+            "selectedPlan": "Plan seleccionado",
+            "amount": "Monto a pagar",
+            "expiresIn": "Expira en",
+            "verifying": "Verificando pago...",
+            "confirmed": "¡Pago confirmado!",
+            "expired": "QR expirado",
+            "refreshQR": "Generar nuevo QR",
+            "instructions": "¿Cómo pagar?",
+            "step1": "Abre la app de tu banco en tu celular",
+            "step2": "Selecciona la opción de pago por QR",
+            "step3": "Escanea este código y confirma el pago",
+            "acceptedBanks": "Bancos aceptados",
+            "back": "Volver",
+            "confirmPayment": "Ya realicé el pago"
+        },
+        "confirmation": {
+            "title": "¡Registro exitoso!",
+            "subtitle": "Tu cuenta ha sido creada correctamente",
+            "yourPlan": "Tu suscripción",
+            "plan": "Plan",
+            "price": "Precio",
+            "billing": "Facturación",
+            "monthly": "Mensual",
+            "annual": "Anual",
+            "nextSteps": "Próximos pasos",
+            "step1": "Configura la información de tu empresa",
+            "step2": "Agrega tus productos y servicios",
+            "step3": "Activa tu agente de ventas",
+            "continue": "Configurar mi empresa",
+            "setupTime": "⏱️ Solo tomará 5 minutos"
         }
     }
 }
