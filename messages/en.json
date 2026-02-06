@@ -514,5 +514,140 @@
             "continue": "Set up my company",
             "setupTime": "⏱️ It will only take 5 minutes"
         }
+    },
+    "dashboard": {
+        "welcome": "Welcome to Yeison",
+        "subtitle": "Your AI business assistant",
+        "greeting": "Hi! I'm your business assistant. How can I help you today?",
+        "inputPlaceholder": "Type your question or select a suggestion...",
+        "send": "Send",
+        "loading": "Loading dashboard...",
+        "suggestions": {
+            "title": "Suggestions for you",
+            "items": [
+                "How can I increase my sales this month?",
+                "Set up my WhatsApp sales agent",
+                "Activate a digital marketing campaign",
+                "Show me last month's metrics",
+                "What agents do I have available?",
+                "Help me organize my customers"
+            ]
+        },
+        "tabs": {
+            "chat": "Assistant",
+            "agents": "Agents",
+            "metrics": "Metrics"
+        },
+        "header": {
+            "welcomeBack": "Welcome back",
+            "subtitle": "Here's your sales intelligence dashboard",
+            "profile": "Profile",
+            "settings": "Settings",
+            "signOut": "Sign out"
+        },
+        "sidebar": {
+            "dashboard": "Dashboard",
+            "agents": "Agents",
+            "settings": "Settings",
+            "security": "Security",
+            "upgradePlan": "Upgrade Plan",
+            "planExpires": "Your plan expires on",
+            "viewPlans": "View all plans →",
+            "signOut": "Sign out"
+        },
+        "metrics": {
+            "totalRevenue": "Total Revenue",
+            "activeDeals": "Active Deals",
+            "winRate": "Win Rate",
+            "avgDealSize": "Avg Deal Size",
+            "vsLastMonth": "vs last month",
+            "performance": "Performance",
+            "calls": "Calls",
+            "success": "Success",
+            "avgTime": "Avg Time"
+        },
+        "agents": {
+            "title": "Intelligent Agents",
+            "description": "Manage autonomous agents that handle sales processes and customer interactions",
+            "noAgents": "No agents yet",
+            "noAgentsDescription": "Create your first intelligent agent to get started",
+            "createNew": "Create New Agent",
+            "createNewDescription": "Deploy a custom intelligent agent for your specific workflow",
+            "failedToLoad": "Failed to load agents",
+            "retry": "Retry",
+            "active": "Active",
+            "inactive": "Inactive",
+            "training": "Training",
+            "editConfiguration": "Edit Configuration",
+            "cancelEdit": "Cancel Edit",
+            "enable": "Enable",
+            "disable": "Disable",
+            "saveChanges": "Save Changes",
+            "agentTypes": {
+                "leadQualification": "Lead Qualification",
+                "leadQualificationDesc": "Auto-score and route leads",
+                "outreachAgent": "Outreach Agent",
+                "outreachAgentDesc": "Multi-channel engagement",
+                "analyticsAgent": "Analytics Agent",
+                "analyticsAgentDesc": "Advanced deal insights"
+            },
+            "config": {
+                "title": "Sales Agent Configuration",
+                "agentName": "Agent Name",
+                "agentNamePlaceholder": "Enter agent name",
+                "brandVoice": "Brand Voice",
+                "brandVoicePlaceholder": "Describe your brand voice",
+                "tone": "Tone",
+                "tones": {
+                    "cool": "Cool",
+                    "professional": "Professional",
+                    "friendly": "Friendly",
+                    "enthusiastic": "Enthusiastic"
+                },
+                "language": "Language",
+                "languages": {
+                    "es": "Spanish",
+                    "en": "English",
+                    "pt": "Portuguese"
+                },
+                "supervisorNumber": "Supervisor WhatsApp Number",
+                "supervisorNumberPlaceholder": "e.g., 59170123456",
+                "formalityLevel": "Formality Level",
+                "formalityLevels": {
+                    "informal": "Informal",
+                    "semi-formal": "Semi-formal",
+                    "formal": "Formal"
+                },
+                "responseLength": "Response Length",
+                "responseLengths": {
+                    "brief": "Brief",
+                    "concise": "Concise",
+                    "detailed": "Detailed"
+                },
+                "customPhrases": "Custom Phrases",
+                "greeting": "Greeting",
+                "greetingPlaceholder": "e.g., Hi! How can I help you today?",
+                "thanks": "Thanks",
+                "thanksPlaceholder": "e.g., Thank you for your interest!",
+                "farewell": "Farewell",
+                "farewellPlaceholder": "e.g., See you soon! I'm here if you need me.",
+                "characters": "characters",
+                "salesProcess": "Sales Process",
+                "qrPayment": "QR Payment",
+                "physicalPayment": "Physical Payment"
+            }
+        },
+        "chat": {
+            "thinking": "Yeison is thinking...",
+            "errorMessage": "There was an error processing your message. Please try again.",
+            "tryAgain": "Try again",
+            "responses": {
+                "sales": "To improve your sales, I recommend setting up the **WhatsApp Sales Agent**. This agent can:\n\n• Attend customers 24/7\n• Send automatic quotes\n• Follow up on leads\n• Close sales for you\n\nWould you like me to help you set it up?",
+                "marketing": "Great idea! To activate a marketing campaign, we can use the **Marketing Agent**. It can:\n\n• Generate social media content\n• Create promotional texts\n• Schedule posts\n\nWould you like to see the available campaign options?",
+                "agents": "You currently have access to the following agents based on your plan:\n\n• 🤖 **Sales Agent** - Attention and closing via WhatsApp\n• 📣 **Marketing Agent** - Content and social media\n• 📊 **Analytics Agent** - Metrics and insights\n\nGo to the 'Agents' tab to configure them.",
+                "metrics": "Here's a summary of your metrics for the month:\n\n• 💰 Revenue: Growing\n• 📈 Win rate: Stable\n• 👥 New customers: Increasing\n\nYou can see more details in the 'Metrics' tab.",
+                "default": "I understand your question. As Yeison's assistant, I can help you with:\n\n• Configure and optimize your AI agents\n• Analyze your business metrics\n• Suggest sales and marketing strategies\n\nWhich of these areas would you like to explore?"
+            }
+        }
     }
 }

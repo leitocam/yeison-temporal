@@ -514,5 +514,140 @@
             "continue": "Configurar mi empresa",
             "setupTime": "⏱️ Solo tomará 5 minutos"
         }
+    },
+    "dashboard": {
+        "welcome": "Bienvenido a Yeison",
+        "subtitle": "Tu asistente de negocios con IA",
+        "greeting": "¡Hola! Soy tu asistente empresarial. ¿En qué puedo ayudarte hoy?",
+        "inputPlaceholder": "Escribe tu pregunta o selecciona una sugerencia...",
+        "send": "Enviar",
+        "loading": "Cargando dashboard...",
+        "suggestions": {
+            "title": "Sugerencias para ti",
+            "items": [
+                "¿Cómo puedo aumentar mis ventas este mes?",
+                "Configura mi agente de ventas para WhatsApp",
+                "Activa una campaña de marketing digital",
+                "Muéstrame las métricas del último mes",
+                "¿Qué agentes tengo disponibles?",
+                "Ayúdame a organizar mis clientes"
+            ]
+        },
+        "tabs": {
+            "chat": "Asistente",
+            "agents": "Agentes",
+            "metrics": "Métricas"
+        },
+        "header": {
+            "welcomeBack": "Bienvenido de nuevo",
+            "subtitle": "Aquí está tu panel de inteligencia comercial",
+            "profile": "Perfil",
+            "settings": "Configuración",
+            "signOut": "Cerrar sesión"
+        },
+        "sidebar": {
+            "dashboard": "Panel",
+            "agents": "Agentes",
+            "settings": "Configuración",
+            "security": "Seguridad",
+            "upgradePlan": "Mejorar Plan",
+            "planExpires": "Tu plan expira el",
+            "viewPlans": "Ver todos los planes →",
+            "signOut": "Cerrar sesión"
+        },
+        "metrics": {
+            "totalRevenue": "Ingresos Totales",
+            "activeDeals": "Negocios Activos",
+            "winRate": "Tasa de Éxito",
+            "avgDealSize": "Tamaño Promedio",
+            "vsLastMonth": "vs mes anterior",
+            "performance": "Rendimiento",
+            "calls": "Llamadas",
+            "success": "Éxito",
+            "avgTime": "Tiempo Prom."
+        },
+        "agents": {
+            "title": "Agentes Inteligentes",
+            "description": "Gestiona agentes autónomos que manejan procesos de ventas e interacciones con clientes",
+            "noAgents": "Sin agentes aún",
+            "noAgentsDescription": "Crea tu primer agente inteligente para comenzar",
+            "createNew": "Crear Nuevo Agente",
+            "createNewDescription": "Despliega un agente personalizado para tu flujo de trabajo específico",
+            "failedToLoad": "Error al cargar agentes",
+            "retry": "Reintentar",
+            "active": "Activo",
+            "inactive": "Inactivo",
+            "training": "Entrenando",
+            "editConfiguration": "Editar Configuración",
+            "cancelEdit": "Cancelar Edición",
+            "enable": "Activar",
+            "disable": "Desactivar",
+            "saveChanges": "Guardar Cambios",
+            "agentTypes": {
+                "leadQualification": "Calificación de Leads",
+                "leadQualificationDesc": "Califica y enruta leads automáticamente",
+                "outreachAgent": "Agente de Contacto",
+                "outreachAgentDesc": "Engagement multicanal",
+                "analyticsAgent": "Agente de Análisis",
+                "analyticsAgentDesc": "Insights avanzados de negocios"
+            },
+            "config": {
+                "title": "Configuración del Agente de Ventas",
+                "agentName": "Nombre del Agente",
+                "agentNamePlaceholder": "Ingrese el nombre del agente",
+                "brandVoice": "Voz de Marca",
+                "brandVoicePlaceholder": "Describe la voz de tu marca",
+                "tone": "Tono",
+                "tones": {
+                    "cool": "Fresco",
+                    "professional": "Profesional",
+                    "friendly": "Amigable",
+                    "enthusiastic": "Entusiasta"
+                },
+                "language": "Idioma",
+                "languages": {
+                    "es": "Español",
+                    "en": "Inglés",
+                    "pt": "Portugués"
+                },
+                "supervisorNumber": "Número de WhatsApp del Supervisor",
+                "supervisorNumberPlaceholder": "ej., 59170123456",
+                "formalityLevel": "Nivel de Formalidad",
+                "formalityLevels": {
+                    "informal": "Informal",
+                    "semi-formal": "Semi-formal",
+                    "formal": "Formal"
+                },
+                "responseLength": "Longitud de Respuesta",
+                "responseLengths": {
+                    "brief": "Breve",
+                    "concise": "Concisa",
+                    "detailed": "Detallada"
+                },
+                "customPhrases": "Frases Personalizadas",
+                "greeting": "Saludo",
+                "greetingPlaceholder": "ej., ¡Hola! ¿Cómo puedo ayudarte hoy?",
+                "thanks": "Agradecimiento",
+                "thanksPlaceholder": "ej., ¡Gracias por tu interés!",
+                "farewell": "Despedida",
+                "farewellPlaceholder": "ej., ¡Hasta pronto! Estoy aquí si me necesitas.",
+                "characters": "caracteres",
+                "salesProcess": "Proceso de Ventas",
+                "qrPayment": "Pago con QR",
+                "physicalPayment": "Pago Físico"
+            }
+        },
+        "chat": {
+            "thinking": "Yeison está pensando...",
+            "errorMessage": "Hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.",
+            "tryAgain": "Intentar de nuevo",
+            "responses": {
+                "sales": "Para mejorar tus ventas, te recomiendo configurar el **Agente de Ventas por WhatsApp**. Este agente puede:\n\n• Atender clientes 24/7\n• Enviar cotizaciones automáticas\n• Hacer seguimiento de leads\n• Cerrar ventas por ti\n\n¿Te gustaría que te ayude a configurarlo?",
+                "marketing": "¡Excelente idea! Para activar una campaña de marketing, podemos usar el **Agente de Marketing**. Este puede:\n\n• Generar contenido para redes sociales\n• Crear textos promocionales\n• Programar publicaciones\n\n¿Quieres ver las opciones de campaña disponibles?",
+                "agents": "Actualmente tienes acceso a los siguientes agentes según tu plan:\n\n• 🤖 **Agente de Ventas** - Atención y cierre por WhatsApp\n• 📣 **Agente de Marketing** - Contenido y redes sociales\n• 📊 **Agente de Análisis** - Métricas e insights\n\nVe a la pestaña 'Agentes' para configurarlos.",
+                "metrics": "Aquí tienes un resumen de tus métricas del mes:\n\n• 💰 Ingresos: En crecimiento\n• 📈 Tasa de éxito: Estable\n• 👥 Nuevos clientes: Aumentando\n\nPuedes ver más detalles en la pestaña 'Métricas'.",
+                "default": "Entiendo tu consulta. Como asistente de Yeison, puedo ayudarte con:\n\n• Configurar y optimizar tus agentes de IA\n• Analizar métricas de tu negocio\n• Sugerir estrategias de ventas y marketing\n\n¿En cuál de estas áreas te gustaría profundizar?"
+            }
+        }
     }
 }
