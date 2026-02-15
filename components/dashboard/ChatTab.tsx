@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import { useTranslations } from "next-intl"
+import { ChatMessage } from "@/lib/api-client"
+import { useChatbot } from "@/hooks/useChatbot"
 import {
     Bot,
     Send,
@@ -14,7 +16,9 @@ import {
     Mic,
     Paperclip,
     Image as ImageIcon,
-    MoreHorizontal
+    MoreHorizontal,
+    MessageCircle,
+    RefreshCw
 } from "lucide-react"
 
 interface Message {
@@ -25,7 +29,7 @@ interface Message {
 }
 
 interface ChatTabProps {
-    onTabChange?: (tab: string) => void
+    onTabChange?: (tab: "executive" | "agents" | "metrics" | "chat") => void
 }
 
 export default function ChatTab({ onTabChange }: ChatTabProps) {
@@ -33,8 +37,12 @@ export default function ChatTab({ onTabChange }: ChatTabProps) {
     const [messages, setMessages] = useState<Message[]>([])
     const [inputValue, setInputValue] = useState("")
     const [isTyping, setIsTyping] = useState(false)
+    const [sessionId, setSessionId] = useState<string | null>(null)
+    const [isLoadingHistory, setIsLoadingHistory] = useState(false)
     const messagesEndRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLTextAreaElement>(null)
+    
+    const { sendMessage, getConversationHistory, listConversations, error: apiError } = useChatbot()
 
     const suggestions = [
         { icon: TrendingUp, text: t("suggestions.items.0"), keyword: "ventas", color: "from-emerald-500/20 to-teal-500/20 border-emerald-500/20" },
@@ -60,20 +68,43 @@ export default function ChatTab({ onTabChange }: ChatTabProps) {
         scrollToBottom()
     }, [messages])
 
-    const getAIResponse = (userMessage: string): string => {
-        const lowerMessage = userMessage.toLowerCase()
+    // Load conversation history on mount
+    useEffect(() => {
+        loadExistingConversation()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-        if (lowerMessage.includes("venta") || lowerMessage.includes("sales")) {
-            return t("chat.responses.sales")
-        } else if (lowerMessage.includes("marketing") || lowerMessage.includes("campaña")) {
-            return t("chat.responses.marketing")
-        } else if (lowerMessage.includes("agente") || lowerMessage.includes("agent")) {
-            return t("chat.responses.agents")
-        } else if (lowerMessage.includes("métrica") || lowerMessage.includes("metric") || lowerMessage.includes("dato")) {
-            return t("chat.responses.metrics")
+    const loadExistingConversation = async () => {
+        setIsLoadingHistory(true)
+        try {
+            // Get the tenant's conversation (single conversation per tenant)
+            const conversations = await listConversations()
+            if (conversations && conversations.length > 0) {
+                const conversation = conversations[0]
+                setSessionId(conversation.session_id)
+                
+                // Load conversation history
+                const historyData = await getConversationHistory(conversation.session_id)
+                
+                // Handle the response - it could be an array or an object with messages
+                const messagesArray = Array.isArray(historyData) 
+                    ? historyData 
+                    : (historyData.messages || [])
+                
+                const loadedMessages: Message[] = messagesArray.map((msg: ChatMessage, idx: number) => ({
+                    id: `${conversation.session_id}-${idx}`,
+                    type: msg.role === 'user' ? 'user' : 'assistant',
+                    content: msg.content,
+                    timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date(),
+                }))
+                setMessages(loadedMessages)
+            }
+        } catch (err) {
+            console.error('Error loading conversation:', err)
+            // No conversation exists yet, that's ok
+        } finally {
+            setIsLoadingHistory(false)
         }
-
-        return t("chat.responses.default")
     }
 
     const handleSend = async () => {
@@ -87,24 +118,78 @@ export default function ChatTab({ onTabChange }: ChatTabProps) {
         }
 
         setMessages((prev) => [...prev, userMessage])
+        const messageContent = inputValue.trim()
         setInputValue("")
         setIsTyping(true)
 
-        setTimeout(() => {
+        try {
+            const response = await sendMessage(messageContent, sessionId || undefined)
+
+            // Store session ID for future messages
+            if (!sessionId && response.session_id) {
+                setSessionId(response.session_id)
+            }
+
             const aiResponse: Message = {
                 id: (Date.now() + 1).toString(),
                 type: "assistant",
-                content: getAIResponse(userMessage.content),
+                content: response.response,
                 timestamp: new Date(),
             }
             setMessages((prev) => [...prev, aiResponse])
+        } catch (err: any) {
+            // Add error message to chat
+            const errorMessage: Message = {
+                id: (Date.now() + 1).toString(),
+                type: "assistant",
+                content: "Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta nuevamente.",
+                timestamp: new Date(),
+            }
+            setMessages((prev) => [...prev, errorMessage])
+        } finally {
             setIsTyping(false)
-        }, 1000 + Math.random() * 1000)
+        }
     }
 
     const handleSuggestionClick = (suggestion: string) => {
         setInputValue(suggestion)
         inputRef.current?.focus()
+    }
+
+    const handleNewConversation = () => {
+        setMessages([])
+        setSessionId(null)
+        // Optionally could delete the conversation from backend here
+    }
+
+    const loadConversationHistory = async () => {
+        if (!sessionId) {
+            // If no session ID, try to load existing conversation
+            await loadExistingConversation()
+            return
+        }
+        
+        setIsLoadingHistory(true)
+        try {
+            const historyData = await getConversationHistory(sessionId)
+            
+            // Handle the response - it could be an array or an object with messages
+            const messagesArray = Array.isArray(historyData) 
+                ? historyData 
+                : (historyData.messages || [])
+            
+            const loadedMessages: Message[] = messagesArray.map((msg: ChatMessage, idx: number) => ({
+                id: `${sessionId}-${idx}`,
+                type: msg.role === 'user' ? 'user' : 'assistant',
+                content: msg.content,
+                timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date(),
+            }))
+            setMessages(loadedMessages)
+        } catch (err) {
+            console.error('Error loading conversation history:', err)
+        } finally {
+            setIsLoadingHistory(false)
+        }
     }
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -123,30 +208,60 @@ export default function ChatTab({ onTabChange }: ChatTabProps) {
 
     return (
         <div className="flex flex-col h-[calc(100vh-10rem)]">
-            {/* Quick Stats Bar */}
-            <div className="flex-shrink-0 flex items-center gap-4 p-4 mb-4 rounded-2xl bg-primary/5 border border-primary/10">
-                <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                    <span className="text-xs font-medium text-muted-foreground">Contexto en tiempo real</span>
+                {/* Quick Stats Bar */}
+                <div className="flex-shrink-0 flex items-center gap-4 p-4 mb-4 rounded-2xl bg-primary/5 border border-primary/10">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                        <span className="text-xs font-medium text-muted-foreground">Contexto en tiempo real</span>
+                    </div>
+                    <div className="flex-1 flex items-center justify-center gap-6">
+                        {quickStats.map((stat, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                                <span className="text-xs text-muted-foreground">{stat.label}:</span>
+                                <span className="text-sm font-bold">{stat.value}</span>
+                                <span className={`text-[10px] font-medium ${stat.positive ? "text-emerald-500" : "text-red-500"}`}>
+                                    {stat.change}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                        {sessionId && (
+                            <>
+                                <button
+                                    onClick={loadConversationHistory}
+                                    disabled={isLoadingHistory}
+                                    className="text-[10px] text-primary hover:underline font-medium flex items-center gap-1 disabled:opacity-50"
+                                    title="Recargar historial"
+                                >
+                                    <RefreshCw className={`w-3 h-3 ${isLoadingHistory ? 'animate-spin' : ''}`} />
+                                    Recargar
+                                </button>
+                                <button
+                                    onClick={handleNewConversation}
+                                    className="text-[10px] text-primary hover:underline font-medium flex items-center gap-1"
+                                    title="Nueva conversación"
+                                >
+                                    <MessageCircle className="w-3 h-3" />
+                                    Nueva
+                                </button>
+                            </>
+                        )}
+                        <button
+                            onClick={() => onTabChange?.("executive")}
+                            className="text-[10px] text-primary hover:underline font-medium"
+                        >
+                            Ver dashboard
+                        </button>
+                    </div>
                 </div>
-                <div className="flex-1 flex items-center justify-center gap-6">
-                    {quickStats.map((stat, i) => (
-                        <div key={i} className="flex items-center gap-2">
-                            <span className="text-xs text-muted-foreground">{stat.label}:</span>
-                            <span className="text-sm font-bold">{stat.value}</span>
-                            <span className={`text-[10px] font-medium ${stat.positive ? "text-emerald-500" : "text-red-500"}`}>
-                                {stat.change}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-                <button
-                    onClick={() => onTabChange?.("executive")}
-                    className="text-[10px] text-primary hover:underline font-medium"
-                >
-                    Ver dashboard
-                </button>
-            </div>
+
+                {/* Error Display */}
+                {apiError && (
+                    <div className="flex-shrink-0 mx-4 mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-500">
+                        {apiError}
+                    </div>
+                )}
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">

@@ -88,6 +88,34 @@ export interface AgentInstance {
   updated_at?: string;
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp?: string;
+}
+
+export interface SendMessageRequest {
+  message: string;
+  session_id?: string;
+}
+
+export interface SendMessageResponse {
+  response: string;
+  session_id: string;
+}
+
+export interface ConversationHistory {
+  session_id: string;
+  messages: ChatMessage[];
+}
+
+export interface Conversation {
+  session_id: string;
+  created_at: string;
+  last_message_at: string;
+  message_count: number;
+}
+
 // ============================================
 // Configuration
 // ============================================
@@ -464,6 +492,26 @@ class ApiClient {
       status: 401,
       code: 'INVALID_CREDENTIALS',
     } as ApiError;
+  }
+
+  // ============================================
+  // Chatbot Endpoints
+  // ============================================
+
+  async sendMessage(data: SendMessageRequest): Promise<SendMessageResponse> {
+    return this.post<SendMessageResponse>('/chatbot/message', data);
+  }
+
+  async getConversationHistory(sessionId: string): Promise<ConversationHistory> {
+    return this.get<ConversationHistory>(`/chatbot/history/${sessionId}`);
+  }
+
+  async listConversations(): Promise<Conversation[]> {
+    return this.get<Conversation[]>('/chatbot/conversations');
+  }
+
+  async deleteConversation(sessionId: string): Promise<void> {
+    return this.delete<void>(`/chatbot/conversations/${sessionId}`);
   }
 }
 
