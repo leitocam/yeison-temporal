@@ -197,12 +197,25 @@ export default function AgentsTab() {
                                         <div className="flex gap-3">
                                             <button
                                                 onClick={() => {
+                                                    if (!isExpanded) {
+                                                        setExpandedAgent(agent.id)
+                                                    }
                                                     if (editingAgent === agent.id) {
                                                         setEditingAgent(null)
                                                         setConfigForm({})
                                                     } else {
+                                                        const normalizedConfig = {
+                                                            ...agent.instance.configuration,
+                                                            personality: {
+                                                                ...agent.instance.configuration?.personality,
+                                                                formality_level:
+                                                                    agent.instance.configuration?.personality?.formality_level ||
+                                                                    (agent.instance.configuration?.personality as any)?.["formality level"] ||
+                                                                    "",
+                                                            },
+                                                        }
                                                         setEditingAgent(agent.id)
-                                                        setConfigForm(agent.instance.configuration || {})
+                                                        setConfigForm(normalizedConfig || {})
                                                     }
                                                 }}
                                                 className="flex-1 py-3 rounded-lg font-semibold transition-all duration-300 bg-primary/30 hover:bg-primary/40 flex items-center justify-center gap-2"
@@ -225,8 +238,8 @@ export default function AgentsTab() {
                                             </button>
                                         </div>
 
-                                        {/* Configuration Form for Ventas type */}
-                                        {editingAgent === agent.id && agent.type?.toLowerCase() === "ventas" && (
+                                        {/* Configuration Form */}
+                                        {editingAgent === agent.id && (
                                             <div className="space-y-4 pt-4 border-t border-primary/20">
                                                 <div className="flex items-center justify-between mb-4">
                                                     <h4 className="text-lg font-bold">{t("agents.config.title")}</h4>
@@ -263,7 +276,7 @@ export default function AgentsTab() {
                                                             ...configForm,
                                                             personality: { ...configForm.personality, brand_voice: e.target.value }
                                                         })}
-                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors min-h-[100px]"
+                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors min-h-25"
                                                         placeholder={t("agents.config.brandVoicePlaceholder")}
                                                     />
                                                 </div>
@@ -302,6 +315,348 @@ export default function AgentsTab() {
                                                         <option value="pt">{t("agents.config.languages.pt")}</option>
                                                     </select>
                                                 </div>
+
+                                                {/* Emoji Usage */}
+                                                <div>
+                                                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.emojiUsage")}</label>
+                                                    <select
+                                                        value={configForm?.personality?.emoji_usage || "moderate"}
+                                                        onChange={(e) => setConfigForm({
+                                                            ...configForm,
+                                                            personality: { ...configForm.personality, emoji_usage: e.target.value }
+                                                        })}
+                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                    >
+                                                        <option value="none">None</option>
+                                                        <option value="low">Low</option>
+                                                        <option value="moderate">Moderate</option>
+                                                        <option value="high">High</option>
+                                                    </select>
+                                                </div>
+
+                                                {/* Greeting Style */}
+                                                <div>
+                                                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.greetingStyle")}</label>
+                                                    <input
+                                                        type="text"
+                                                        value={configForm?.personality?.greeting_style || ""}
+                                                        onChange={(e) => setConfigForm({
+                                                            ...configForm,
+                                                            personality: { ...configForm.personality, greeting_style: e.target.value }
+                                                        })}
+                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                        placeholder={t("agents.config.greetingStylePlaceholder")}
+                                                    />
+                                                </div>
+
+                                                {/* Formality Level */}
+                                                <div>
+                                                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.formalityLevel")}</label>
+                                                    <select
+                                                        value={configForm?.personality?.formality_level || "formal"}
+                                                        onChange={(e) => setConfigForm({
+                                                            ...configForm,
+                                                            personality: { ...configForm.personality, formality_level: e.target.value }
+                                                        })}
+                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                    >
+                                                        <option value="informal">{t("agents.config.formalityLevels.informal")}</option>
+                                                        <option value="semi-formal">{t("agents.config.formalityLevels.semi-formal")}</option>
+                                                        <option value="formal">{t("agents.config.formalityLevels.formal")}</option>
+                                                        <option value="casual">Casual</option>
+                                                    </select>
+                                                </div>
+
+                                                {/* Response Length */}
+                                                <div>
+                                                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.responseLength")}</label>
+                                                    <select
+                                                        value={configForm?.personality?.response_length || "concise"}
+                                                        onChange={(e) => setConfigForm({
+                                                            ...configForm,
+                                                            personality: { ...configForm.personality, response_length: e.target.value }
+                                                        })}
+                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                    >
+                                                        <option value="brief">{t("agents.config.responseLengths.brief")}</option>
+                                                        <option value="concise">{t("agents.config.responseLengths.concise")}</option>
+                                                        <option value="detailed">{t("agents.config.responseLengths.detailed")}</option>
+                                                    </select>
+                                                </div>
+
+                                                {/* Custom Phrases */}
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                                    <div>
+                                                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.greeting")}</label>
+                                                        <input
+                                                            type="text"
+                                                            value={configForm?.personality?.custom_phrases?.greeting || ""}
+                                                            onChange={(e) => setConfigForm({
+                                                                ...configForm,
+                                                                personality: {
+                                                                    ...configForm.personality,
+                                                                    custom_phrases: {
+                                                                        ...configForm.personality?.custom_phrases,
+                                                                        greeting: e.target.value
+                                                                    }
+                                                                }
+                                                            })}
+                                                            className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            placeholder={t("agents.config.greetingPlaceholder")}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.thanks")}</label>
+                                                        <input
+                                                            type="text"
+                                                            value={configForm?.personality?.custom_phrases?.thanks || ""}
+                                                            onChange={(e) => setConfigForm({
+                                                                ...configForm,
+                                                                personality: {
+                                                                    ...configForm.personality,
+                                                                    custom_phrases: {
+                                                                        ...configForm.personality?.custom_phrases,
+                                                                        thanks: e.target.value
+                                                                    }
+                                                                }
+                                                            })}
+                                                            className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            placeholder={t("agents.config.thanksPlaceholder")}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.farewell")}</label>
+                                                        <input
+                                                            type="text"
+                                                            value={configForm?.personality?.custom_phrases?.farewell || ""}
+                                                            onChange={(e) => setConfigForm({
+                                                                ...configForm,
+                                                                personality: {
+                                                                    ...configForm.personality,
+                                                                    custom_phrases: {
+                                                                        ...configForm.personality?.custom_phrases,
+                                                                        farewell: e.target.value
+                                                                    }
+                                                                }
+                                                            })}
+                                                            className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            placeholder={t("agents.config.farewellPlaceholder")}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* Supervisor Number */}
+                                                <div>
+                                                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.supervisorNumber")}</label>
+                                                    <input
+                                                        type="text"
+                                                        value={configForm?.integrations?.supervisor_number || ""}
+                                                        onChange={(e) => setConfigForm({
+                                                            ...configForm,
+                                                            integrations: { ...configForm.integrations, supervisor_number: e.target.value }
+                                                        })}
+                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                        placeholder={t("agents.config.supervisorNumberPlaceholder")}
+                                                    />
+                                                </div>
+
+                                                {/* Sales Process */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-semibold text-muted-foreground block">{t("agents.config.qrPayment")}</label>
+                                                        <label className="flex items-center gap-2 text-sm">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!configForm?.sales_process?.QR_payment}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    sales_process: { ...configForm.sales_process, QR_payment: e.target.checked }
+                                                                })}
+                                                            />
+                                                            {t("agents.config.qrPayment")}
+                                                        </label>
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-semibold text-muted-foreground block">{t("agents.config.physicalPayment")}</label>
+                                                        <label className="flex items-center gap-2 text-sm">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!configForm?.sales_process?.physical_payment}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    sales_process: { ...configForm.sales_process, physical_payment: e.target.checked }
+                                                                })}
+                                                            />
+                                                            {t("agents.config.physicalPayment")}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.qrImage")}</label>
+                                                    <input
+                                                        type="text"
+                                                        value={configForm?.sales_process?.QR_image || ""}
+                                                        onChange={(e) => setConfigForm({
+                                                            ...configForm,
+                                                            sales_process: { ...configForm.sales_process, QR_image: e.target.value }
+                                                        })}
+                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                        placeholder="https://..."
+                                                    />
+                                                </div>
+
+                                                {/* Response Settings */}
+                                                <div className="space-y-3">
+                                                    <h5 className="text-sm font-semibold text-muted-foreground">{t("agents.config.responseSettings")}</h5>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                        <label className="flex items-center gap-2 text-sm">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!configForm?.response_settings?.include_pricing}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    response_settings: { ...configForm.response_settings, include_pricing: e.target.checked }
+                                                                })}
+                                                            />
+                                                            {t("agents.config.includePricing")}
+                                                        </label>
+                                                        <label className="flex items-center gap-2 text-sm">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!configForm?.response_settings?.show_availability}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    response_settings: { ...configForm.response_settings, show_availability: e.target.checked }
+                                                                })}
+                                                            />
+                                                            {t("agents.config.showAvailability")}
+                                                        </label>
+                                                        <label className="flex items-center gap-2 text-sm">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!configForm?.response_settings?.include_product_images}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    response_settings: { ...configForm.response_settings, include_product_images: e.target.checked }
+                                                                })}
+                                                            />
+                                                            {t("agents.config.includeProductImages")}
+                                                        </label>
+                                                    </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                        <div>
+                                                            <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.maxResponseLength")}</label>
+                                                            <input
+                                                                type="number"
+                                                                value={configForm?.response_settings?.max_response_length || 0}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    response_settings: {
+                                                                        ...configForm.response_settings,
+                                                                        max_response_length: Number(e.target.value)
+                                                                    }
+                                                                })}
+                                                                className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.responseDelaySeconds")}</label>
+                                                            <input
+                                                                type="number"
+                                                                value={configForm?.response_settings?.response_delay_seconds || 0}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    response_settings: {
+                                                                        ...configForm.response_settings,
+                                                                        response_delay_seconds: Number(e.target.value)
+                                                                    }
+                                                                })}
+                                                                className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.typingIndicatorDuration")}</label>
+                                                            <input
+                                                                type="number"
+                                                                value={configForm?.response_settings?.typing_indicator_duration || 0}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    response_settings: {
+                                                                        ...configForm.response_settings,
+                                                                        typing_indicator_duration: Number(e.target.value)
+                                                                    }
+                                                                })}
+                                                                className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Conversation Settings */}
+                                                <div className="space-y-3">
+                                                    <h5 className="text-sm font-semibold text-muted-foreground">{t("agents.config.conversationSettings")}</h5>
+                                                    <label className="flex items-center gap-2 text-sm">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={!!configForm?.conversation_settings?.auto_handoff_enabled}
+                                                            onChange={(e) => setConfigForm({
+                                                                ...configForm,
+                                                                conversation_settings: { ...configForm.conversation_settings, auto_handoff_enabled: e.target.checked }
+                                                            })}
+                                                        />
+                                                        {t("agents.config.autoHandoffEnabled")}
+                                                    </label>
+                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                                        <div>
+                                                            <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.contextMessagesLimit")}</label>
+                                                            <input
+                                                                type="number"
+                                                                value={configForm?.conversation_settings?.context_messages_limit || 0}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    conversation_settings: {
+                                                                        ...configForm.conversation_settings,
+                                                                        context_messages_limit: Number(e.target.value)
+                                                                    }
+                                                                })}
+                                                                className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.sessionTimeoutMinutes")}</label>
+                                                            <input
+                                                                type="number"
+                                                                value={configForm?.conversation_settings?.session_timeout_minutes || 0}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    conversation_settings: {
+                                                                        ...configForm.conversation_settings,
+                                                                        session_timeout_minutes: Number(e.target.value)
+                                                                    }
+                                                                })}
+                                                                className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.handoffKeywords")}</label>
+                                                            <input
+                                                                type="text"
+                                                                value={(configForm?.conversation_settings?.handoff_to_human_keywords || []).join(", ")}
+                                                                onChange={(e) => setConfigForm({
+                                                                    ...configForm,
+                                                                    conversation_settings: {
+                                                                        ...configForm.conversation_settings,
+                                                                        handoff_to_human_keywords: e.target.value
+                                                                            .split(",")
+                                                                            .map((value) => value.trim())
+                                                                            .filter(Boolean)
+                                                                    }
+                                                                })}
+                                                                className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -316,7 +671,7 @@ export default function AgentsTab() {
             {/* Agent Configuration Card */}
             <div className="fade-in-up glass rounded-2xl p-8 border-2 border-primary/20 hover:border-primary/40 transition-all duration-300">
                 <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-xl bg-linear-to-br from-primary/30 to-accent/30 flex items-center justify-center">
                         <Bot className="w-8 h-8 text-primary" />
                     </div>
                     <div className="flex-1">

@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import {
     ArrowUpRight,
@@ -9,14 +10,13 @@ import {
     Target,
     DollarSign,
     MessageSquare,
-    BarChart3,
-    Calendar,
     Filter,
     Download,
     RefreshCw,
     ChevronDown
 } from "lucide-react"
-import { useState } from "react"
+import { apiClient, DashboardMetricsResponse } from "@/lib/api-client"
+import { useApi } from "@/hooks/useApi"
 
 // Chart components
 function LineChart({ data, color, height = 120 }: { data: number[], color: string, height?: number }) {
@@ -54,29 +54,9 @@ function LineChart({ data, color, height = 120 }: { data: number[], color: strin
     )
 }
 
-function BarChartHorizontal({ data }: { data: { label: string, value: number, color: string }[] }) {
-    const max = Math.max(...data.map(d => d.value))
-
-    return (
-        <div className="space-y-3">
-            {data.map((item, index) => (
-                <div key={index} className="flex items-center gap-3">
-                    <span className="text-xs text-muted-foreground w-20 truncate">{item.label}</span>
-                    <div className="flex-1 h-2 bg-primary/10 rounded-full overflow-hidden">
-                        <div
-                            className={`h-full rounded-full ${item.color} transition-all duration-1000`}
-                            style={{ width: `${(item.value / max) * 100}%` }}
-                        />
-                    </div>
-                    <span className="text-xs font-bold w-12 text-right">{item.value}%</span>
-                </div>
-            ))}
-        </div>
-    )
-}
-
 function DonutChart({ value, total, color }: { value: number, total: number, color: string }) {
-    const percentage = (value / total) * 100
+    const safeTotal = total || 1
+    const percentage = Math.min((value / safeTotal) * 100, 100)
     const strokeWidth = 8
     const radius = 40
     const circumference = 2 * Math.PI * radius
@@ -120,56 +100,84 @@ export default function MetricsTab() {
     const t = useTranslations("dashboard")
     const [timeRange, setTimeRange] = useState("7d")
 
-    // Mock data
-    const leadsTrend = [120, 145, 132, 168, 185, 172, 198, 215, 245, 267, 289, 312]
-    const conversionsTrend = [8, 12, 10, 15, 18, 14, 22, 25, 28, 32, 35, 38]
-    const revenueTrend = [4500, 5200, 4800, 6100, 6800, 7200, 7800, 8500, 9200, 10000, 11200, 12500]
+    const { data: metrics, isLoading, error, execute } = useApi<DashboardMetricsResponse>(
+        () => apiClient.get("/dashboard/metrics")
+    )
 
-    const channelPerformance = [
-        { label: "WhatsApp", value: 68, color: "bg-emerald-500" },
-        { label: "Web Chat", value: 52, color: "bg-blue-500" },
-        { label: "Instagram", value: 34, color: "bg-pink-500" },
-        { label: "Email", value: 28, color: "bg-amber-500" },
-    ]
+    useEffect(() => {
+        execute()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    const metrics = [
-        {
-            title: "Total Leads",
-            value: "1,247",
-            change: "+23.5%",
-            positive: true,
-            icon: Users,
-            color: "from-blue-500 to-cyan-500",
-            trend: leadsTrend
-        },
-        {
-            title: "Conversiones",
-            value: "312",
-            change: "+18.2%",
-            positive: true,
-            icon: Target,
-            color: "from-emerald-500 to-teal-500",
-            trend: conversionsTrend
-        },
-        {
-            title: "Ingresos",
-            value: "$84,500",
-            change: "+31.4%",
-            positive: true,
-            icon: DollarSign,
-            color: "from-purple-500 to-pink-500",
-            trend: revenueTrend
-        },
-        {
-            title: "Tasa Respuesta",
-            value: "94.2%",
-            change: "+5.1%",
-            positive: true,
-            icon: MessageSquare,
-            color: "from-orange-500 to-red-500",
-            trend: [85, 87, 88, 89, 90, 91, 92, 92, 93, 93, 94, 94]
+    const buildTrend = (value: number, changePercent?: number, points: number = 12) => {
+        if (!Number.isFinite(value) || points < 2) return [value]
+        const prev = changePercent !== undefined
+            ? value / (1 + changePercent / 100)
+            : value
+        return Array.from({ length: points }, (_, index) => {
+            const ratio = index / (points - 1)
+            return Math.round(prev + (value - prev) * ratio)
+        })
+    }
+
+    const formatCurrency = (value: number) => {
+        return `$${Math.round(value).toLocaleString()}`
+    }
+
+    const formatChange = (change?: number) => {
+        if (change === undefined || change === null || Number.isNaN(change)) {
+            return "0.0%"
         }
-    ]
+        return `${change >= 0 ? "+" : ""}${change.toFixed(1)}%`
+    }
+
+    const topMetrics = useMemo(() => {
+        if (!metrics) return []
+
+        return [
+            {
+                title: t("kpis.leadsToday"),
+                value: metrics.leads_entrantes_hoy.value.toLocaleString(),
+                change: formatChange(metrics.leads_entrantes_hoy.change_percent),
+                positive: (metrics.leads_entrantes_hoy.change_percent ?? 0) >= 0,
+                icon: Users,
+                color: "from-blue-500 to-cyan-500",
+                trend: buildTrend(metrics.leads_entrantes_hoy.value, metrics.leads_entrantes_hoy.change_percent)
+            },
+            {
+                title: t("kpis.activeConversations"),
+                value: metrics.conversaciones_activas.value.toLocaleString(),
+                change: formatChange(metrics.conversaciones_activas.change_percent),
+                positive: (metrics.conversaciones_activas.change_percent ?? 0) >= 0,
+                icon: MessageSquare,
+                color: "from-emerald-500 to-teal-500",
+                trend: buildTrend(metrics.conversaciones_activas.value, metrics.conversaciones_activas.change_percent)
+            },
+            {
+                title: t("kpis.closedSales"),
+                value: metrics.ventas_cerradas_hoy.value.toLocaleString(),
+                change: formatChange(metrics.ventas_cerradas_hoy.change_percent),
+                positive: (metrics.ventas_cerradas_hoy.change_percent ?? 0) >= 0,
+                icon: Target,
+                color: "from-purple-500 to-pink-500",
+                trend: buildTrend(metrics.ventas_cerradas_hoy.value, metrics.ventas_cerradas_hoy.change_percent)
+            },
+            {
+                title: t("kpis.salesValueToday"),
+                value: formatCurrency(metrics.valor_ventas_hoy.value),
+                change: formatChange(metrics.valor_ventas_hoy.change_percent),
+                positive: (metrics.valor_ventas_hoy.change_percent ?? 0) >= 0,
+                icon: DollarSign,
+                color: "from-orange-500 to-red-500",
+                trend: buildTrend(metrics.valor_ventas_hoy.value, metrics.valor_ventas_hoy.change_percent)
+            }
+        ]
+    }, [metrics, t])
+
+    const pipelineTrend = useMemo(() => {
+        if (!metrics) return []
+        return buildTrend(metrics.valor_pipeline)
+    }, [metrics])
 
     return (
         <div className="space-y-6">
@@ -207,15 +215,30 @@ export default function MetricsTab() {
                         Exportar
                     </button>
 
-                    <button className="p-2 rounded-xl bg-background/50 border border-primary/10 hover:bg-primary/10 transition-colors">
+                    <button
+                        onClick={() => execute()}
+                        className="p-2 rounded-xl bg-background/50 border border-primary/10 hover:bg-primary/10 transition-colors"
+                    >
                         <RefreshCw className="w-4 h-4 text-muted-foreground" />
                     </button>
                 </div>
             </div>
 
+            {isLoading && (
+                <div className="rounded-2xl border border-primary/10 bg-primary/5 p-4 text-sm text-muted-foreground">
+                    {t("loading")}
+                </div>
+            )}
+
+            {error && (
+                <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-4 text-sm text-red-500">
+                    {t("metrics.fetchError")}
+                </div>
+            )}
+
             {/* Main Metrics with Charts */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {metrics.map((metric, index) => {
+                {topMetrics.map((metric, index) => {
                     const Icon = metric.icon
                     return (
                         <div
@@ -223,7 +246,7 @@ export default function MetricsTab() {
                             className="p-5 rounded-2xl bg-primary/5 border border-primary/10 hover:border-primary/30 transition-all"
                         >
                             <div className="flex items-start justify-between mb-4">
-                                <div className={`p-2 rounded-xl bg-gradient-to-br ${metric.color} bg-opacity-20`}>
+                                <div className={`p-2 rounded-xl bg-linear-to-br ${metric.color} bg-opacity-20`}>
                                     <Icon className="w-4 h-4 text-white" />
                                 </div>
                                 <div className={`flex items-center gap-1 text-xs font-bold ${metric.positive ? "text-emerald-500" : "text-red-500"}`}>
@@ -252,7 +275,7 @@ export default function MetricsTab() {
                     <div className="flex items-center justify-between mb-6">
                         <div>
                             <h3 className="font-bold">Evolución de Pipeline</h3>
-                            <p className="text-xs text-muted-foreground">Ingresos y conversiones en el tiempo</p>
+                            <p className="text-xs text-muted-foreground">{t("kpis.pipelineValue")}</p>
                         </div>
                         <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-background/50 border border-primary/10 text-xs">
                             Ingresos
@@ -261,37 +284,30 @@ export default function MetricsTab() {
                     </div>
 
                     <div className="h-64">
-                        <LineChart data={revenueTrend} color="#8b5cf6" height={250} />
+                        <LineChart data={pipelineTrend} color="#8b5cf6" height={250} />
                     </div>
 
                     {/* Chart Legend */}
                     <div className="flex items-center justify-center gap-6 mt-4">
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-primary" />
-                            <span className="text-xs text-muted-foreground">Ingresos</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                            <span className="text-xs text-muted-foreground">Conversiones</span>
+                            <span className="text-xs text-muted-foreground">Pipeline</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Right - Channel Performance & Donut */}
+                {/* Right - Lead Quality */}
                 <div className="space-y-6">
-                    {/* Channel Performance */}
-                    <div className="p-5 rounded-2xl bg-primary/5 border border-primary/10">
-                        <h3 className="font-bold mb-1">Rendimiento por Canal</h3>
-                        <p className="text-xs text-muted-foreground mb-4">Tasa de conversión por fuente</p>
-                        <BarChartHorizontal data={channelPerformance} />
-                    </div>
-
                     {/* Lead Quality */}
                     <div className="p-5 rounded-2xl bg-primary/5 border border-primary/10">
                         <h3 className="font-bold mb-1">Calidad de Leads</h3>
                         <p className="text-xs text-muted-foreground mb-4">Leads calificados vs total</p>
                         <div className="flex items-center justify-center">
-                            <DonutChart value={312} total={1247} color="#10b981" />
+                            <DonutChart
+                                value={metrics?.leads_calificados_hoy.value || 0}
+                                total={metrics?.leads_entrantes_hoy.value || 0}
+                                color="#10b981"
+                            />
                         </div>
                         <div className="flex items-center justify-center gap-4 mt-4">
                             <div className="flex items-center gap-2">
@@ -307,26 +323,47 @@ export default function MetricsTab() {
                 </div>
             </div>
 
-            {/* Bottom Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                    { label: "Tiempo Promedio de Respuesta", value: "1.8 min", icon: MessageSquare, color: "text-blue-500" },
-                    { label: "Leads por Agente", value: "52", icon: Users, color: "text-purple-500" },
-                    { label: "Valor Ticket Promedio", value: "$2,450", icon: DollarSign, color: "text-emerald-500" },
-                    { label: "Tasa de Cierre", value: "25%", icon: Target, color: "text-orange-500" },
-                ].map((stat, i) => {
-                    const Icon = stat.icon
-                    return (
-                        <div key={i} className="p-4 rounded-2xl bg-primary/5 border border-primary/10">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Icon className={`w-4 h-4 ${stat.color}`} />
-                                <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{stat.label}</span>
+            {metrics && (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[
+                        {
+                            label: t("kpis.pipelineValue"),
+                            value: formatCurrency(metrics.valor_pipeline),
+                            icon: TrendingUp,
+                            color: "text-emerald-500"
+                        },
+                        {
+                            label: t("kpis.salesValueToday"),
+                            value: formatCurrency(metrics.valor_ventas_hoy.value),
+                            icon: DollarSign,
+                            color: "text-blue-500"
+                        },
+                        {
+                            label: t("kpis.closedSales"),
+                            value: metrics.ventas_cerradas_hoy.value.toLocaleString(),
+                            icon: Target,
+                            color: "text-orange-500"
+                        },
+                        {
+                            label: t("kpis.qualifiedLeads"),
+                            value: metrics.leads_calificados_hoy.value.toLocaleString(),
+                            icon: Users,
+                            color: "text-purple-500"
+                        },
+                    ].map((stat, i) => {
+                        const Icon = stat.icon
+                        return (
+                            <div key={i} className="p-4 rounded-2xl bg-primary/5 border border-primary/10">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <Icon className={`w-4 h-4 ${stat.color}`} />
+                                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{stat.label}</span>
+                                </div>
+                                <p className="text-xl font-black">{stat.value}</p>
                             </div>
-                            <p className="text-xl font-black">{stat.value}</p>
-                        </div>
-                    )
-                })}
-            </div>
+                        )
+                    })}
+                </div>
+            )}
         </div>
     )
 }

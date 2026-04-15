@@ -29,7 +29,7 @@ interface Message {
 }
 
 interface ChatTabProps {
-    onTabChange?: (tab: "executive" | "agents" | "metrics" | "chat") => void
+    onTabChange?: (tab: "executive" | "agents" | "metrics" | "chat" | "inventory") => void
 }
 
 export default function ChatTab({ onTabChange }: ChatTabProps) {

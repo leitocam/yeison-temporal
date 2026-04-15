@@ -12,6 +12,7 @@ import {
   Lock,
   MessageSquare,
   BarChart3,
+  Boxes,
   Zap,
   Crown,
   HelpCircle,
@@ -24,8 +25,8 @@ import { useAuth } from "@/hooks/useAuth"
 interface DashboardSidebarProps {
   open: boolean
   setOpen: (open: boolean) => void
-  activeTab?: "executive" | "chat" | "agents" | "metrics"
-  onTabChange?: (tab: "executive" | "chat" | "agents" | "metrics") => void
+  activeTab?: "executive" | "chat" | "agents" | "metrics" | "inventory"
+  onTabChange?: (tab: "executive" | "chat" | "agents" | "metrics" | "inventory") => void
 }
 
 export default function DashboardSidebar({ open, setOpen, activeTab = "executive", onTabChange }: DashboardSidebarProps) {
@@ -42,6 +43,7 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
     { icon: MessageSquare, label: t("tabs.chat"), id: "chat" as const, color: "from-blue-500 to-cyan-500" },
     { icon: Bot, label: t("tabs.agents"), id: "agents" as const, color: "from-purple-500 to-pink-500" },
     { icon: BarChart3, label: t("tabs.metrics"), id: "metrics" as const, color: "from-orange-500 to-red-500" },
+    { icon: Boxes, label: t("tabs.inventory"), id: "inventory" as const, color: "from-amber-500 to-yellow-500" },
   ]
 
   const settingsItems = [
@@ -50,7 +52,7 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
     { icon: HelpCircle, label: "Ayuda", href: "/help" },
   ]
 
-  const handleItemClick = (id: "executive" | "chat" | "agents" | "metrics") => {
+  const handleItemClick = (id: "executive" | "chat" | "agents" | "metrics" | "inventory") => {
     if (onTabChange) {
       onTabChange(id)
     }
@@ -69,20 +71,20 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-gradient-to-b from-background via-background to-background/95 
+        className={`fixed left-0 top-0 h-screen bg-linear-to-b from-background via-background to-background/95 
                             backdrop-blur-xl border-r border-primary/10 transition-all duration-300 z-40 
                             ${open ? "w-64" : "w-20"} 
                             ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
       >
         {/* Decorative gradient line on the right edge */}
-        <div className="absolute right-0 top-0 h-full w-[1px] bg-gradient-to-b from-primary/40 via-accent/20 to-transparent" />
+        <div className="absolute right-0 top-0 h-full w-px bg-linear-to-b from-primary/40 via-accent/20 to-transparent" />
 
         <div className="h-full flex flex-col relative">
           {/* Header with Logo */}
           <div className={`p-4 border-b border-primary/10 flex items-center ${open ? "justify-between" : "justify-center"}`}>
             <Link href="/dashboard" className="flex items-center gap-3 group">
               <div className="relative">
-                <div className="w-11 h-11 bg-gradient-to-br from-primary via-accent to-primary rounded-xl flex items-center justify-center 
+                <div className="w-11 h-11 bg-linear-to-br from-primary via-accent to-primary rounded-xl flex items-center justify-center 
                                               shadow-lg shadow-primary/30 group-hover:shadow-xl group-hover:shadow-primary/40 
                                               transition-all duration-300 group-hover:scale-105">
                   <Zap className="w-6 h-6 text-white" />
@@ -92,7 +94,7 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
               </div>
               {open && (
                 <div className="overflow-hidden">
-                  <span className="text-xl font-black block bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">Yeison</span>
+                  <span className="text-xl font-black block bg-linear-to-r from-foreground to-foreground/70 bg-clip-text">Yeison</span>
                   <span className="text-[10px] uppercase tracking-widest text-primary/80 font-semibold">AI Platform</span>
                 </div>
               )}
@@ -122,14 +124,14 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
                   onClick={() => handleItemClick(item.id)}
                   className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group relative
                                                ${isActive
-                      ? "bg-gradient-to-r from-primary/15 via-accent/10 to-transparent text-foreground"
+                      ? "bg-linear-to-r from-primary/15 via-accent/10 to-transparent text-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                     }
                                                ${!open ? "justify-center" : ""}`}
                 >
                   {/* Active indicator */}
                   {isActive && (
-                    <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b ${item.color} rounded-r-full`} />
+                    <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-linear-to-b ${item.color} rounded-r-full`} />
                   )}
 
                   <div className={`relative flex items-center justify-center ${isActive ? "text-primary" : ""}`}>
@@ -213,15 +215,15 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
             <div className="p-3">
               <div
                 onClick={() => setExpandUpgrade(!expandUpgrade)}
-                className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-accent/5 to-transparent 
+                className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary/10 via-accent/5 to-transparent 
                                           border border-primary/20 p-4 cursor-pointer group hover:border-primary/40 transition-all duration-300"
               >
                 {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl" />
-                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-accent/20 to-transparent rounded-full blur-2xl" />
+                <div className="absolute top-0 right-0 w-20 h-20 bg-linear-to-br from-primary/20 to-transparent rounded-full blur-2xl" />
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-linear-to-tr from-accent/20 to-transparent rounded-full blur-2xl" />
 
                 <div className="relative flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
+                  <div className="w-8 h-8 rounded-lg bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
                     <Crown className="w-4 h-4 text-white" />
                   </div>
                   <div>

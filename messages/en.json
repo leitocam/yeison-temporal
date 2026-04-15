@@ -536,7 +536,8 @@
         "tabs": {
             "chat": "Assistant",
             "agents": "Agents",
-            "metrics": "Metrics"
+            "metrics": "Metrics",
+            "inventory": "Inventory"
         },
         "header": {
             "welcomeBack": "Welcome back",
@@ -564,7 +565,66 @@
             "performance": "Performance",
             "calls": "Calls",
             "success": "Success",
-            "avgTime": "Avg Time"
+            "avgTime": "Avg Time",
+            "fetchError": "Failed to load metrics."
+        },
+        "kpis": {
+            "leadsToday": "Leads Today",
+            "activeConversations": "Active Conversations",
+            "qualifiedLeads": "Qualified Leads",
+            "pipelineValue": "Pipeline Value",
+            "closedSales": "Closed Sales Today",
+            "salesValueToday": "Sales Value Today"
+        },
+        "inventory": {
+            "title": "Inventory",
+            "subtitle": "Manage your catalog and stock levels",
+            "newItem": "New Item",
+            "searchPlaceholder": "Search products...",
+            "lowStock": "Low stock",
+            "loading": "Loading inventory...",
+            "fetchError": "Failed to load inventory.",
+            "empty": "No inventory items yet",
+            "emptyHint": "Create your first product to get started",
+            "active": "Active",
+            "inactive": "Inactive",
+            "noDescription": "No description provided",
+            "adjust": "Adjust",
+            "trackStockOn": "Track stock",
+            "trackStockOff": "No stock",
+            "yes": "Yes",
+            "no": "No",
+            "edit": "Edit",
+            "delete": "Delete",
+            "editItem": "Edit item",
+            "cancel": "Cancel",
+            "create": "Create item",
+            "update": "Update item",
+            "confirmDelete": "Do you want to delete this item?",
+            "stats": {
+                "totalItems": "Total items",
+                "activeItems": "Active items",
+                "totalUnits": "Total units",
+                "lowStock": "Low stock"
+            },
+            "table": {
+                "product": "Product",
+                "price": "Price",
+                "quantity": "Quantity",
+                "track": "Track stock",
+                "actions": "Actions"
+            },
+            "form": {
+                "name": "Product name",
+                "namePlaceholder": "Example: Premium Office Chair",
+                "price": "Price",
+                "quantity": "Quantity",
+                "trackStock": "Track stock",
+                "description": "Description",
+                "image": "Image URL",
+                "reducedName": "Short name",
+                "reducedDescription": "Short description"
+            }
         },
         "agents": {
             "title": "Intelligent Agents",
@@ -624,6 +684,9 @@
                     "concise": "Concise",
                     "detailed": "Detailed"
                 },
+                "emojiUsage": "Emoji usage",
+                "greetingStyle": "Greeting style",
+                "greetingStylePlaceholder": "e.g., warm",
                 "customPhrases": "Custom Phrases",
                 "greeting": "Greeting",
                 "greetingPlaceholder": "e.g., Hi! How can I help you today?",
@@ -634,7 +697,20 @@
                 "characters": "characters",
                 "salesProcess": "Sales Process",
                 "qrPayment": "QR Payment",
-                "physicalPayment": "Physical Payment"
+                "physicalPayment": "Physical Payment",
+                "qrImage": "QR image URL",
+                "responseSettings": "Response settings",
+                "conversationSettings": "Conversation settings",
+                "includePricing": "Include pricing",
+                "showAvailability": "Show availability",
+                "maxResponseLength": "Max response length",
+                "includeProductImages": "Include product images",
+                "responseDelaySeconds": "Response delay (seconds)",
+                "typingIndicatorDuration": "Typing indicator duration (seconds)",
+                "autoHandoffEnabled": "Auto handoff enabled",
+                "contextMessagesLimit": "Context messages limit",
+                "sessionTimeoutMinutes": "Session timeout (minutes)",
+                "handoffKeywords": "Handoff keywords"
             }
         },
         "chat": {

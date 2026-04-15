@@ -536,7 +536,8 @@
         "tabs": {
             "chat": "Asistente",
             "agents": "Agentes",
-            "metrics": "Métricas"
+            "metrics": "Métricas",
+            "inventory": "Inventario"
         },
         "header": {
             "welcomeBack": "Bienvenido de nuevo",
@@ -564,7 +565,66 @@
             "performance": "Rendimiento",
             "calls": "Llamadas",
             "success": "Éxito",
-            "avgTime": "Tiempo Prom."
+            "avgTime": "Tiempo Prom.",
+            "fetchError": "No se pudieron cargar las métricas."
+        },
+        "kpis": {
+            "leadsToday": "Leads Entrantes Hoy",
+            "activeConversations": "Conversaciones Activas",
+            "qualifiedLeads": "Leads Calificados",
+            "pipelineValue": "Valor del Pipeline",
+            "closedSales": "Ventas Cerradas Hoy",
+            "salesValueToday": "Valor de Ventas Hoy"
+        },
+        "inventory": {
+            "title": "Inventario",
+            "subtitle": "Gestiona tu catálogo y niveles de stock",
+            "newItem": "Nuevo producto",
+            "searchPlaceholder": "Buscar productos...",
+            "lowStock": "Bajo stock",
+            "loading": "Cargando inventario...",
+            "fetchError": "No se pudo cargar el inventario.",
+            "empty": "Aún no hay productos",
+            "emptyHint": "Crea tu primer producto para comenzar",
+            "active": "Activo",
+            "inactive": "Inactivo",
+            "noDescription": "Sin descripción",
+            "adjust": "Ajuste",
+            "trackStockOn": "Control stock",
+            "trackStockOff": "Sin stock",
+            "yes": "Sí",
+            "no": "No",
+            "edit": "Editar",
+            "delete": "Eliminar",
+            "editItem": "Editar producto",
+            "cancel": "Cancelar",
+            "create": "Crear producto",
+            "update": "Actualizar producto",
+            "confirmDelete": "¿Deseas eliminar este producto?",
+            "stats": {
+                "totalItems": "Productos",
+                "activeItems": "Activos",
+                "totalUnits": "Unidades",
+                "lowStock": "Bajo stock"
+            },
+            "table": {
+                "product": "Producto",
+                "price": "Precio",
+                "quantity": "Cantidad",
+                "track": "Control de stock",
+                "actions": "Acciones"
+            },
+            "form": {
+                "name": "Nombre del producto",
+                "namePlaceholder": "Ej: Silla de Oficina Premium",
+                "price": "Precio",
+                "quantity": "Cantidad",
+                "trackStock": "Controlar stock",
+                "description": "Descripción",
+                "image": "URL de imagen",
+                "reducedName": "Nombre corto",
+                "reducedDescription": "Descripción corta"
+            }
         },
         "agents": {
             "title": "Agentes Inteligentes",
@@ -624,6 +684,9 @@
                     "concise": "Concisa",
                     "detailed": "Detallada"
                 },
+                "emojiUsage": "Uso de emojis",
+                "greetingStyle": "Estilo de saludo",
+                "greetingStylePlaceholder": "Ej: cálido",
                 "customPhrases": "Frases Personalizadas",
                 "greeting": "Saludo",
                 "greetingPlaceholder": "ej., ¡Hola! ¿Cómo puedo ayudarte hoy?",
@@ -634,7 +697,20 @@
                 "characters": "caracteres",
                 "salesProcess": "Proceso de Ventas",
                 "qrPayment": "Pago con QR",
-                "physicalPayment": "Pago Físico"
+                "physicalPayment": "Pago Físico",
+                "qrImage": "URL de imagen QR",
+                "responseSettings": "Configuración de respuesta",
+                "conversationSettings": "Configuración de conversación",
+                "includePricing": "Incluir precios",
+                "showAvailability": "Mostrar disponibilidad",
+                "maxResponseLength": "Longitud máxima de respuesta",
+                "includeProductImages": "Incluir imágenes del producto",
+                "responseDelaySeconds": "Retraso de respuesta (segundos)",
+                "typingIndicatorDuration": "Duración del indicador de escritura (segundos)",
+                "autoHandoffEnabled": "Derivación automática",
+                "contextMessagesLimit": "Límite de mensajes de contexto",
+                "sessionTimeoutMinutes": "Tiempo de sesión (minutos)",
+                "handoffKeywords": "Palabras clave de derivación"
             }
         },
         "chat": {

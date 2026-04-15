@@ -2,6 +2,7 @@
 export { default as ChatTab } from "./ChatTab"
 export { default as AgentsTab } from "./AgentsTab"
 export { default as MetricsTab } from "./MetricsTab"
+export { default as InventoryTab } from "./InventoryTab"
 export { default as SystemHealthBar } from "./SystemHealthBar"
 export { default as KPIGrid } from "./KPIGrid"
 export { default as ActivityFeed } from "./ActivityFeed"

@@ -116,11 +116,41 @@ export interface Conversation {
   message_count: number;
 }
 
+export interface DashboardMetricValue {
+  value: number;
+  change_percent: number;
+}
+
+export interface DashboardMetricsResponse {
+  leads_entrantes_hoy: DashboardMetricValue;
+  conversaciones_activas: DashboardMetricValue;
+  valor_pipeline: number;
+  ventas_cerradas_hoy: DashboardMetricValue;
+  valor_ventas_hoy: DashboardMetricValue;
+  leads_calificados_hoy: DashboardMetricValue;
+}
+
+export interface InventoryItem {
+  id: number;
+  tenant_id: number;
+  product_name: string;
+  price: number;
+  quantity: number | null;
+  description: string;
+  image: string | null;
+  reduced_name: string | null;
+  reduced_description: string | null;
+  track_stock: boolean;
+  created_at: string;
+  last_update: string;
+  active: boolean;
+}
+
 // ============================================
 // Configuration
 // ============================================
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8070/api/v1';
 const API_TIMEOUT = Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 30000;
 
 // Mock auth is enabled when:

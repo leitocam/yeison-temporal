@@ -1,13 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 import { useAuth } from "@/hooks/useAuth"
+import { useApi } from "@/hooks/useApi"
 import DashboardSidebar from "@/components/dashboard-sidebar"
 import {
     ChatTab,
     AgentsTab,
     MetricsTab,
+    InventoryTab,
     SystemHealthBar,
     KPIGrid,
     ActivityFeed,
@@ -20,6 +22,7 @@ import {
     MessageSquare,
     Bot,
     BarChart3,
+    Boxes,
     Bell,
     Settings,
     User,
@@ -27,28 +30,122 @@ import {
     Search,
     Sparkles,
     Command,
-    LayoutDashboard
+    LayoutDashboard,
+    Users,
+    DollarSign,
+    Target,
+    TrendingUp
 } from "lucide-react"
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher"
+import { apiClient, DashboardMetricsResponse } from "@/lib/api-client"
 
 export default function DashboardPage() {
     const t = useTranslations("dashboard")
     const [sidebarOpen, setSidebarOpen] = useState(true)
-    const [activeTab, setActiveTab] = useState<"executive" | "chat" | "agents" | "metrics">("executive")
+    const [activeTab, setActiveTab] = useState<"executive" | "chat" | "agents" | "metrics" | "inventory">("executive")
     const [showProfile, setShowProfile] = useState(false)
     const [showNotifications, setShowNotifications] = useState(false)
     const { user, isLoading, logout } = useAuth()
 
+    const { data: dashboardMetrics, error: metricsError, execute: loadMetrics } = useApi<DashboardMetricsResponse>(
+        () => apiClient.get("/dashboard/metrics")
+    )
+
     const handleLogout = async () => {
         await logout()
     }
+
+    useEffect(() => {
+        loadMetrics()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const tabs = [
         { id: "executive" as const, label: "Inicio", icon: LayoutDashboard, color: "from-emerald-500 to-teal-500" },
         { id: "chat" as const, label: t("tabs.chat"), icon: MessageSquare, color: "from-blue-500 to-cyan-500" },
         { id: "agents" as const, label: t("tabs.agents"), icon: Bot, color: "from-purple-500 to-pink-500" },
         { id: "metrics" as const, label: t("tabs.metrics"), icon: BarChart3, color: "from-orange-500 to-red-500" },
+        { id: "inventory" as const, label: t("tabs.inventory"), icon: Boxes, color: "from-amber-500 to-yellow-500" },
     ]
+    const computePreviousValue = (value: number, changePercent?: number | null) => {
+        if (changePercent === null || changePercent === undefined) return undefined
+        const factor = 1 + changePercent / 100
+        if (factor === 0) return undefined
+        return Math.round(value / factor)
+    }
+
+    const kpis = dashboardMetrics
+        ? [
+            {
+                id: "leads",
+                label: t("kpis.leadsToday"),
+                value: dashboardMetrics.leads_entrantes_hoy.value,
+                previousValue: computePreviousValue(
+                    dashboardMetrics.leads_entrantes_hoy.value,
+                    dashboardMetrics.leads_entrantes_hoy.change_percent
+                ),
+                format: "number" as const,
+                icon: Users,
+                color: "bg-blue-500/20 text-blue-500",
+            },
+            {
+                id: "conversations",
+                label: t("kpis.activeConversations"),
+                value: dashboardMetrics.conversaciones_activas.value,
+                previousValue: computePreviousValue(
+                    dashboardMetrics.conversaciones_activas.value,
+                    dashboardMetrics.conversaciones_activas.change_percent
+                ),
+                format: "number" as const,
+                icon: MessageSquare,
+                color: "bg-emerald-500/20 text-emerald-500",
+            },
+            {
+                id: "qualified",
+                label: t("kpis.qualifiedLeads"),
+                value: dashboardMetrics.leads_calificados_hoy.value,
+                previousValue: computePreviousValue(
+                    dashboardMetrics.leads_calificados_hoy.value,
+                    dashboardMetrics.leads_calificados_hoy.change_percent
+                ),
+                format: "number" as const,
+                icon: Target,
+                color: "bg-purple-500/20 text-purple-500",
+            },
+            {
+                id: "pipeline",
+                label: t("kpis.pipelineValue"),
+                value: dashboardMetrics.valor_pipeline,
+                format: "currency" as const,
+                icon: DollarSign,
+                color: "bg-amber-500/20 text-amber-500",
+            },
+            {
+                id: "closed",
+                label: t("kpis.closedSales"),
+                value: dashboardMetrics.ventas_cerradas_hoy.value,
+                previousValue: computePreviousValue(
+                    dashboardMetrics.ventas_cerradas_hoy.value,
+                    dashboardMetrics.ventas_cerradas_hoy.change_percent
+                ),
+                format: "number" as const,
+                icon: BarChart3,
+                color: "bg-primary/20 text-primary",
+            },
+            {
+                id: "salesValue",
+                label: t("kpis.salesValueToday"),
+                value: dashboardMetrics.valor_ventas_hoy.value,
+                previousValue: computePreviousValue(
+                    dashboardMetrics.valor_ventas_hoy.value,
+                    dashboardMetrics.valor_ventas_hoy.change_percent
+                ),
+                format: "currency" as const,
+                icon: TrendingUp,
+                color: "bg-emerald-500/20 text-emerald-500",
+            },
+        ]
+        : undefined
 
     const notifications = [
         { id: 1, title: "Lead caliente detectado", desc: "Juan Pérez - 78% probabilidad", time: "hace 3 min", unread: true },
@@ -61,10 +158,10 @@ export default function DashboardPage() {
             <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
                     <div className="relative">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-primary to-accent flex items-center justify-center">
                             <Loader2 className="w-8 h-8 animate-spin text-white" />
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-2xl blur-xl opacity-50 animate-pulse" />
+                        <div className="absolute inset-0 bg-linear-to-br from-primary to-accent rounded-2xl blur-xl opacity-50 animate-pulse" />
                     </div>
                     <p className="text-muted-foreground font-medium">{t("loading")}</p>
                 </div>
@@ -86,8 +183,8 @@ export default function DashboardPage() {
                         backgroundSize: '60px 60px'
                     }}
                 />
-                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
-                <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]" />
+                <div className="absolute top-0 left-1/4 w-125 h-125 bg-primary/5 rounded-full blur-[120px]" />
+                <div className="absolute bottom-0 right-1/4 w-100 h-100 bg-accent/5 rounded-full blur-[100px]" />
             </div>
 
             <DashboardSidebar open={sidebarOpen} setOpen={setSidebarOpen} activeTab={activeTab} onTabChange={setActiveTab} />
@@ -135,7 +232,7 @@ export default function DashboardPage() {
                                             }`}
                                     >
                                         {isActive && (
-                                            <div className={`absolute inset-0 bg-gradient-to-r ${tab.color} opacity-15 rounded-lg`} />
+                                            <div className={`absolute inset-0 bg-linear-to-r ${tab.color} opacity-15 rounded-lg`} />
                                         )}
                                         {isActive && (
                                             <div className="absolute inset-0 bg-white/10 rounded-lg backdrop-blur-sm" />
@@ -209,7 +306,7 @@ export default function DashboardPage() {
                                              hover:bg-white/10 hover:border-primary/20 transition-all duration-300"
                                 >
                                     <div className="relative">
-                                        <div className="w-8 h-8 bg-gradient-to-br from-primary via-accent to-primary rounded-lg 
+                                        <div className="w-8 h-8 bg-linear-to-br from-primary via-accent to-primary rounded-lg 
                                                       flex items-center justify-center shadow-lg shadow-primary/20">
                                             <User className="w-4 h-4 text-white" />
                                         </div>
@@ -225,9 +322,9 @@ export default function DashboardPage() {
                                 {showProfile && (
                                     <div className="absolute right-0 mt-2 w-56 bg-background/95 backdrop-blur-xl border border-primary/20 
                                                   rounded-2xl shadow-2xl shadow-black/20 overflow-hidden z-50">
-                                        <div className="p-4 border-b border-primary/10 bg-gradient-to-r from-primary/5 to-accent/5">
+                                        <div className="p-4 border-b border-primary/10 bg-linear-to-r from-primary/5 to-accent/5">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
+                                                <div className="w-10 h-10 bg-linear-to-br from-primary to-accent rounded-xl flex items-center justify-center">
                                                     <User className="w-5 h-5 text-white" />
                                                 </div>
                                                 <div>
@@ -276,7 +373,7 @@ export default function DashboardPage() {
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    className={`flex-shrink-0 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium 
+                                    className={`shrink-0 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium 
                                                transition-all duration-300 ${isActive ? "bg-white/10 text-foreground" : "text-muted-foreground"
                                         }`}
                                 >
@@ -299,7 +396,13 @@ export default function DashboardPage() {
                             <SystemHealthBar />
 
                             {/* KPIs */}
-                            <KPIGrid />
+                            <KPIGrid kpis={kpis} />
+
+                            {metricsError && (
+                                <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-4 text-sm text-red-500">
+                                    {t("metrics.fetchError")}
+                                </div>
+                            )}
 
                             {/* Two Column Layout */}
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -319,6 +422,7 @@ export default function DashboardPage() {
                     {activeTab === "chat" && <ChatTab onTabChange={setActiveTab} />}
                     {activeTab === "agents" && <AgentsTab />}
                     {activeTab === "metrics" && <MetricsTab />}
+                    {activeTab === "inventory" && <InventoryTab />}
                 </div>
             </main>
 
