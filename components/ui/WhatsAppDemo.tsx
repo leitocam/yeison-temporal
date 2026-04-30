@@ -3,28 +3,35 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'motion/react'
-import { CheckCheck, Phone, Video, MoreVertical, Smile, Paperclip, Mic, ArrowLeft, Wifi, Signal, Battery } from 'lucide-react'
+import { CheckCheck, Phone, Video, MoreVertical, Smile, Paperclip, Mic, ArrowLeft } from 'lucide-react'
 
 interface Message {
   id: number
   text: string
   sender: 'user' | 'bot'
   time: string
+  kind?: 'text' | 'qr' | 'receipt'
 }
 
-const WhatsAppDemo: React.FC = () => {
+interface WhatsAppDemoProps {
+  compact?: boolean
+}
+
+const WhatsAppDemo: React.FC<WhatsAppDemoProps> = ({ compact = false }) => {
   const [messages, setMessages] = useState<Message[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTyping, setIsTyping] = useState(false)
-  const [currentTime, setCurrentTime] = useState('10:30')
+  const [currentTime, setCurrentTime] = useState('10:42')
 
   const conversation: Message[] = [
-    { id: 1, text: "Hola, me interesa el producto X que vi en su página 👋", sender: 'user', time: '10:30' },
-    { id: 2, text: "¡Hola! 👋 Soy el asistente virtual de Ventas. Me encanta que te interese nuestro producto X.\n\nTiene estas características:\n✅ Alta durabilidad\n✅ Garantía de 2 años\n✅ Envío gratis en Santa Cruz", sender: 'bot', time: '10:30' },
-    { id: 3, text: "¿Cuál es el precio? 💰", sender: 'user', time: '10:31' },
-    { id: 4, text: "El precio es Bs. 350 💵\n\n🚚 Tenemos stock disponible y podemos enviártelo hoy mismo.\n\n¿Te preparo la cotización formal? 📋", sender: 'bot', time: '10:31' },
-    { id: 5, text: "Sí, por favor! 🙌", sender: 'user', time: '10:32' },
-    { id: 6, text: "¡Perfecto! 🎉\n\nTe envío la cotización al instante.\n\n¿Prefieres pagar con:\n💳 QR\n🏦 Transferencia\n💵 Efectivo contra entrega?", sender: 'bot', time: '10:32' },
+    { id: 1, text: "Hola Yeison 👋 vi su anuncio de lentes Blue Light. ¿Me orientas con opciones?", sender: 'user', time: '10:42' },
+    { id: 2, text: "¡Hola, Carla! Claro que sí 😊\nPara oficina te recomiendo estas dos:\n• Blue Light Essential: Bs. 290\n• Blue Light Pro Antirreflejo: Bs. 390\n\nAmbas incluyen estuche y ajuste.", sender: 'bot', time: '10:42' },
+    { id: 3, text: "Buenísimo. Estoy en Cochabamba, ¿llegaría hoy?", sender: 'user', time: '10:43' },
+    { id: 4, text: "Sí, llegamos hoy entre 16:00 y 20:00 ✅\nSi te parece, te reservo el Pro y te mando la cotización por aquí.", sender: 'bot', time: '10:43' },
+    { id: 5, text: "Dale, reservame el Pro. ¿Puedo pagar por QR?", sender: 'user', time: '10:44' },
+    { id: 6, text: "Perfecto 🙌\nTe envío el QR oficial de pago ahora mismo.", sender: 'bot', time: '10:44', kind: 'qr' },
+    { id: 7, text: "Listo, te envío mi comprobante ✅", sender: 'user', time: '10:45', kind: 'receipt' },
+    { id: 8, text: "¡Recibido, Carla! Ya quedó confirmado 🎉\nPedido #A-2487 en preparación.\nTe aviso cuando salga el repartidor.", sender: 'bot', time: '10:45' },
   ]
 
   useEffect(() => {
@@ -32,7 +39,7 @@ const WhatsAppDemo: React.FC = () => {
       const resetTimeout = setTimeout(() => {
         setMessages([])
         setCurrentIndex(0)
-      }, 5000)
+      }, 4500)
       return () => clearTimeout(resetTimeout)
     }
 
@@ -40,12 +47,13 @@ const WhatsAppDemo: React.FC = () => {
 
     if (nextMessage.sender === 'bot') {
       setIsTyping(true)
+      const typingDelay = Math.min(2800, 900 + nextMessage.text.length * 14)
       const typingTimeout = setTimeout(() => {
         setIsTyping(false)
         setMessages(prev => [...prev, nextMessage])
         setCurrentIndex(prev => prev + 1)
         setCurrentTime(nextMessage.time)
-      }, 2000 + Math.random() * 1000)
+      }, typingDelay)
       return () => clearTimeout(typingTimeout)
     } else {
       const messageTimeout = setTimeout(() => {
@@ -58,7 +66,7 @@ const WhatsAppDemo: React.FC = () => {
   }, [currentIndex, conversation.length])
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className={compact ? 'compact' : ''}>
       {/* Glow Effect Behind Phone */}
       <div className="phone-glow" />
       <div className="phone-glow secondary" />
@@ -141,7 +149,7 @@ const WhatsAppDemo: React.FC = () => {
                 </div>
               </div>
               <div className="header-info">
-                <span className="name">Yeison AI</span>
+                <span className="name">Yeison</span>
                 <span className="status">en línea</span>
               </div>
             </div>
@@ -173,7 +181,25 @@ const WhatsAppDemo: React.FC = () => {
                   className={`message ${msg.sender}`}
                 >
                   <div className="message-bubble">
-                    <span className="message-text">{msg.text}</span>
+                    {msg.kind === 'qr' ? (
+                      <div className="attachment-block">
+                        <div className="qr-card">
+                          <div className="qr-grid" />
+                          <div className="qr-caption">QR de pago • Bs. 390</div>
+                        </div>
+                        <span className="message-text">{msg.text}</span>
+                      </div>
+                    ) : msg.kind === 'receipt' ? (
+                      <div className="attachment-block">
+                        <div className="receipt-card">
+                          <div className="receipt-title">Comprobante_2487.jpg</div>
+                          <div className="receipt-subtitle">Banco Unión • Transferencia exitosa</div>
+                        </div>
+                        <span className="message-text">{msg.text}</span>
+                      </div>
+                    ) : (
+                      <span className="message-text">{msg.text}</span>
+                    )}
                     <span className="message-meta">
                       <span className="message-time">{msg.time}</span>
                       {msg.sender === 'user' && <CheckCheck className="read-icon" size={16} />}
@@ -239,7 +265,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     width: 200px;
     height: 400px;
-    background: radial-gradient(ellipse, rgba(3, 169, 244, 0.3) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(163, 255, 0, 0.25) 0%, transparent 70%);
     filter: blur(40px);
     top: 50%;
     left: 50%;
@@ -249,7 +275,7 @@ const StyledWrapper = styled.div`
   }
   
   .phone-glow.secondary {
-    background: radial-gradient(ellipse, rgba(244, 65, 165, 0.2) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(196, 255, 77, 0.16) 0%, transparent 70%);
     width: 300px;
     height: 300px;
     animation: pulse-glow 4s ease-in-out infinite;
@@ -293,7 +319,7 @@ const StyledWrapper = styled.div`
   .iphone-frame:hover {
     transform: rotateY(0deg) rotateX(0deg) scale(1.02);
     box-shadow: 
-      0 60px 120px -20px rgba(3, 169, 244, 0.3),
+      0 60px 120px -20px rgba(163, 255, 0, 0.2),
       0 40px 80px -10px rgba(0, 0, 0, 0.5),
       inset 0 2px 4px rgba(255, 255, 255, 0.15),
       inset 0 -2px 4px rgba(0, 0, 0, 0.3),
@@ -605,7 +631,7 @@ const StyledWrapper = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #03a9f4 0%, #f441a5 100%);
+    background: linear-gradient(135deg, #a3ff00 0%, #c4ff4d 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -613,7 +639,7 @@ const StyledWrapper = styled.div`
     color: white;
     font-size: 17px;
     position: relative;
-    box-shadow: 0 2px 8px rgba(3, 169, 244, 0.3);
+    box-shadow: 0 2px 8px rgba(163, 255, 0, 0.28);
   }
   
   .avatar-ring {
@@ -621,7 +647,7 @@ const StyledWrapper = styled.div`
     inset: -2px;
     border-radius: 50%;
     border: 2px solid transparent;
-    background: linear-gradient(135deg, #03a9f4, #f441a5) border-box;
+    background: linear-gradient(135deg, #a3ff00, #c4ff4d) border-box;
     mask: 
       linear-gradient(#fff 0 0) padding-box, 
       linear-gradient(#fff 0 0);
@@ -709,9 +735,9 @@ const StyledWrapper = styled.div`
   .pattern-overlay {
     position: absolute;
     inset: 0;
-    background-image: 
-      radial-gradient(circle at 20% 30%, rgba(3, 169, 244, 0.03) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(244, 65, 165, 0.03) 0%, transparent 40%),
+      background-image: 
+      radial-gradient(circle at 20% 30%, rgba(163, 255, 0, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(196, 255, 77, 0.03) 0%, transparent 40%),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 5L35 15L45 15L37 23L40 33L30 27L20 33L23 23L15 15L25 15Z' fill='%23ffffff' opacity='0.01'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
@@ -776,6 +802,57 @@ const StyledWrapper = styled.div`
     line-height: 1.4;
     white-space: pre-line;
     word-break: break-word;
+  }
+
+  .attachment-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .qr-card {
+    background: #f5f7f9;
+    border-radius: 10px;
+    padding: 8px;
+    color: #0a0a0a;
+  }
+
+  .qr-grid {
+    height: 110px;
+    border-radius: 8px;
+    background:
+      linear-gradient(90deg, #111 10%, transparent 10%) 0 0/10px 10px,
+      linear-gradient(#111 10%, transparent 10%) 0 0/10px 10px,
+      linear-gradient(90deg, transparent 50%, #111 50%) 0 0/20px 20px,
+      linear-gradient(transparent 50%, #111 50%) 0 0/20px 20px,
+      #fff;
+    border: 1px solid #cfd6db;
+  }
+
+  .qr-caption {
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #263238;
+  }
+
+  .receipt-card {
+    background: linear-gradient(180deg, #2b3a31 0%, #212f27 100%);
+    border: 1px solid rgba(163, 255, 0, 0.3);
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+
+  .receipt-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #dfffc1;
+  }
+
+  .receipt-subtitle {
+    margin-top: 3px;
+    font-size: 10.5px;
+    color: #b9c5bd;
   }
 
   .message-meta {
@@ -912,6 +989,79 @@ const StyledWrapper = styled.div`
     background: rgba(255, 255, 255, 0.25);
     border-radius: 3px;
     margin: 8px auto 6px;
+  }
+
+  &.compact {
+    width: 100%;
+
+    .phone-glow,
+    .titanium-texture,
+    .frame-highlight,
+    .dynamic-island,
+    .side-button,
+    .screen-edge,
+    .home-indicator {
+      display: none;
+    }
+
+    .iphone-frame {
+      width: 100%;
+      height: 480px;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .screen-content {
+      border-radius: 20px;
+      border: 1px solid rgba(163, 255, 0, 0.25);
+      box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(163, 255, 0, 0.08) inset;
+    }
+
+    .status-bar {
+      padding: 12px 16px 8px;
+    }
+
+    .whatsapp-header {
+      padding: 10px 12px;
+      background: linear-gradient(180deg, #121f18 0%, #101a15 100%);
+      border-bottom: 1px solid rgba(163, 255, 0, 0.15);
+    }
+
+    .messages-area {
+      padding: 10px 12px;
+    }
+
+    .message {
+      max-width: 90%;
+    }
+
+    .input-area {
+      padding: 8px 10px 10px;
+    }
+
+    .message-input {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .iphone-frame {
+      width: 250px;
+      height: 510px;
+      transform: none;
+    }
+
+    &.compact {
+      .iphone-frame {
+        width: 100%;
+        height: 450px;
+      }
+    }
   }
 `
 

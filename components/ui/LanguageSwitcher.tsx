@@ -176,7 +176,11 @@ const StyledSwitcher = styled.div`
     }
 
     &.active {
-      background: linear-gradient(135deg, rgba(3, 169, 244, 0.15) 0%, rgba(244, 65, 165, 0.15) 100%);
+      background: linear-gradient(
+        135deg,
+        rgba(var(--brand-cyan-rgb), 0.15) 0%,
+        rgba(var(--brand-magenta-rgb), 0.15) 100%
+      );
       color: white;
     }
 
@@ -190,7 +194,7 @@ const StyledSwitcher = styled.div`
     }
 
     .check {
-      color: #03a9f4;
+      color: var(--brand-cyan);
       font-size: 12px;
       font-weight: bold;
     }

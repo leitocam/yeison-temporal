@@ -59,8 +59,8 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
     padding: 0.75em 1.25em;
     border-radius: 0.75em;
     border: none;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--background);
+    color: var(--foreground);
     cursor: pointer;
     box-shadow: 2px 2px 3px #000000b4;
     font-weight: 600;
@@ -84,7 +84,7 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   .container {
     position: relative;
     padding: 3px;
-    background: linear-gradient(90deg, #03a9f4, #f441a5);
+    background: linear-gradient(90deg, var(--brand-cyan), var(--brand-magenta));
     border-radius: 1em;
     transition: all 0.4s ease;
     width: 100%;
@@ -102,7 +102,7 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   }
 
   .container:hover::before {
-    background: linear-gradient(90deg, #03a9f4, #f441a5);
+    background: linear-gradient(90deg, var(--brand-cyan), var(--brand-magenta));
     filter: blur(1.2em);
   }
 

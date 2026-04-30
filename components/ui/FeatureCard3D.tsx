@@ -18,8 +18,8 @@ const FeatureCard3D: React.FC<FeatureCard3DProps> = ({
     icon: Icon,
     title,
     description,
-    gradientFrom = '#03a9f4',
-    gradientTo = '#f441a5',
+    gradientFrom = 'var(--brand-cyan)',
+    gradientTo = 'var(--brand-magenta)',
     index = 0
 }) => {
     const cardRef = useRef<HTMLDivElement>(null)
@@ -115,11 +115,11 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   .card-content {
     position: relative;
     z-index: 1;
-    background: rgba(12, 12, 20, 0.95);
+    background: rgba(10, 10, 10, 0.96);
     backdrop-filter: blur(20px);
     padding: 32px;
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(163, 255, 0, 0.14);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -128,7 +128,7 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   }
 
   .feature-card:hover .card-content {
-    background: rgba(20, 20, 35, 0.98);
+    background: rgba(15, 15, 15, 0.98);
     border-color: transparent;
   }
 
@@ -168,23 +168,24 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   }
 
   .title {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 700;
     color: white;
     margin: 0;
     transform: translateZ(10px);
+    line-height: 1.25;
   }
 
   .description {
     font-size: 15px;
-    line-height: 1.7;
-    color: #8b8b9e;
+    line-height: 1.6;
+    color: #adadad;
     margin: 0;
     transform: translateZ(5px);
   }
 
   .feature-card:hover .description {
-    color: #a0a0b5;
+    color: #d1d1d1;
   }
 `
 
