@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'motion/react'
 import { CheckCheck, Phone, Video, MoreVertical, Smile, Paperclip, Mic, ArrowLeft } from 'lucide-react'
@@ -17,33 +17,62 @@ interface WhatsAppDemoProps {
   compact?: boolean
 }
 
+const DEMO_CONVERSATION: Message[] = [
+  { id: 1, text: "Hola Yeison 👋 vi su anuncio de lentes Blue Light. ¿Me orientas con opciones?", sender: 'user', time: '10:42' },
+  { id: 2, text: "¡Hola, Carla! Claro que sí 😊\nPara oficina te recomiendo estas dos:\n• Blue Light Essential: Bs. 290\n• Blue Light Pro Antirreflejo: Bs. 390\n\nAmbas incluyen estuche y ajuste.", sender: 'bot', time: '10:42' },
+  { id: 3, text: "Buenísimo. Estoy en Cochabamba, ¿llegaría hoy?", sender: 'user', time: '10:43' },
+  { id: 4, text: "Sí, llegamos hoy entre 16:00 y 20:00 ✅\nSi te parece, te reservo el Pro y te mando la cotización por aquí.", sender: 'bot', time: '10:43' },
+  { id: 5, text: "Dale, reservame el Pro. ¿Puedo pagar por QR?", sender: 'user', time: '10:44' },
+  { id: 6, text: "Perfecto 🙌\nTe envío el QR oficial de pago ahora mismo.", sender: 'bot', time: '10:44', kind: 'qr' },
+  { id: 7, text: "Listo, te envío mi comprobante ✅", sender: 'user', time: '10:45', kind: 'receipt' },
+  { id: 8, text: "¡Recibido, Carla! Ya quedó confirmado 🎉\nPedido #A-2487 en preparación.\nTe aviso cuando salga el repartidor.", sender: 'bot', time: '10:45' },
+]
+
 const WhatsAppDemo: React.FC<WhatsAppDemoProps> = ({ compact = false }) => {
   const [messages, setMessages] = useState<Message[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTyping, setIsTyping] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
   const [currentTime, setCurrentTime] = useState('10:42')
+  const messagesAreaRef = useRef<HTMLDivElement>(null)
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const conversation: Message[] = [
-    { id: 1, text: "Hola Yeison 👋 vi su anuncio de lentes Blue Light. ¿Me orientas con opciones?", sender: 'user', time: '10:42' },
-    { id: 2, text: "¡Hola, Carla! Claro que sí 😊\nPara oficina te recomiendo estas dos:\n• Blue Light Essential: Bs. 290\n• Blue Light Pro Antirreflejo: Bs. 390\n\nAmbas incluyen estuche y ajuste.", sender: 'bot', time: '10:42' },
-    { id: 3, text: "Buenísimo. Estoy en Cochabamba, ¿llegaría hoy?", sender: 'user', time: '10:43' },
-    { id: 4, text: "Sí, llegamos hoy entre 16:00 y 20:00 ✅\nSi te parece, te reservo el Pro y te mando la cotización por aquí.", sender: 'bot', time: '10:43' },
-    { id: 5, text: "Dale, reservame el Pro. ¿Puedo pagar por QR?", sender: 'user', time: '10:44' },
-    { id: 6, text: "Perfecto 🙌\nTe envío el QR oficial de pago ahora mismo.", sender: 'bot', time: '10:44', kind: 'qr' },
-    { id: 7, text: "Listo, te envío mi comprobante ✅", sender: 'user', time: '10:45', kind: 'receipt' },
-    { id: 8, text: "¡Recibido, Carla! Ya quedó confirmado 🎉\nPedido #A-2487 en preparación.\nTe aviso cuando salga el repartidor.", sender: 'bot', time: '10:45' },
-  ]
+  const handleUserInteraction = useCallback(() => {
+    setIsTyping(false)
+    setIsPaused(true)
+
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current)
+    }
+
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false)
+    }, 15000)
+  }, [])
 
   useEffect(() => {
-    if (currentIndex >= conversation.length) {
+    return () => {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isPaused) {
+      return
+    }
+
+    if (currentIndex >= DEMO_CONVERSATION.length) {
       const resetTimeout = setTimeout(() => {
         setMessages([])
         setCurrentIndex(0)
-      }, 4500)
+        setCurrentTime(DEMO_CONVERSATION[0]?.time ?? '10:42')
+      }, 9000)
       return () => clearTimeout(resetTimeout)
     }
 
-    const nextMessage = conversation[currentIndex]
+    const nextMessage = DEMO_CONVERSATION[currentIndex]
 
     if (nextMessage.sender === 'bot') {
       setIsTyping(true)
@@ -60,10 +89,20 @@ const WhatsAppDemo: React.FC<WhatsAppDemoProps> = ({ compact = false }) => {
         setMessages(prev => [...prev, nextMessage])
         setCurrentIndex(prev => prev + 1)
         setCurrentTime(nextMessage.time)
-      }, 1200)
+      }, 1200 + Math.floor(Math.random() * 500))
       return () => clearTimeout(messageTimeout)
     }
-  }, [currentIndex, conversation.length])
+  }, [currentIndex, isPaused])
+
+  useEffect(() => {
+    const container = messagesAreaRef.current
+    if (!container) return
+
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: 'smooth',
+    })
+  }, [messages, isTyping])
 
   return (
     <StyledWrapper className={compact ? 'compact' : ''}>
@@ -107,7 +146,11 @@ const WhatsAppDemo: React.FC<WhatsAppDemoProps> = ({ compact = false }) => {
         </div>
 
         {/* Screen Content */}
-        <div className="screen-content">
+        <div
+          className="screen-content"
+          onPointerDown={handleUserInteraction}
+          onTouchStart={handleUserInteraction}
+        >
           {/* Realistic Screen Edge */}
           <div className="screen-edge" />
 
@@ -161,7 +204,11 @@ const WhatsAppDemo: React.FC<WhatsAppDemoProps> = ({ compact = false }) => {
           </div>
 
           {/* Messages Area */}
-          <div className="messages-area">
+          <div
+            className="messages-area"
+            ref={messagesAreaRef}
+            onWheel={handleUserInteraction}
+          >
             {/* Decorative Pattern Overlay */}
             <div className="pattern-overlay" />
 
@@ -169,6 +216,12 @@ const WhatsAppDemo: React.FC<WhatsAppDemoProps> = ({ compact = false }) => {
             <div className="date-chip">
               <span>Hoy</span>
             </div>
+
+            {isPaused && (
+              <div className="pause-chip">
+                <span>Demo en pausa (15s)</span>
+              </div>
+            )}
 
             <AnimatePresence>
               {messages.map((msg) => (
@@ -730,6 +783,28 @@ const StyledWrapper = styled.div`
       linear-gradient(180deg, #0a1014 0%, #0d1418 50%, #0a1014 100%);
     position: relative;
   }
+
+  .messages-area::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .messages-area::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .messages-area::-webkit-scrollbar-thumb {
+    background: rgba(163, 255, 0, 0.3);
+    border-radius: 999px;
+  }
+
+  .messages-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(163, 255, 0, 0.5);
+  }
+
+  .messages-area {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(163, 255, 0, 0.3) transparent;
+  }
   
   /* Decorative pattern overlay */
   .pattern-overlay {
@@ -759,6 +834,22 @@ const StyledWrapper = styled.div`
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 500;
+  }
+
+  .pause-chip {
+    align-self: center;
+    background: rgba(163, 255, 0, 0.14);
+    border: 1px solid rgba(163, 255, 0, 0.35);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+    z-index: 1;
+  }
+
+  .pause-chip span {
+    color: #d7ff9a;
+    font-size: 11px;
+    font-weight: 600;
   }
 
   /* Message Bubbles */
