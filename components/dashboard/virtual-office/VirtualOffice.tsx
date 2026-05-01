@@ -317,13 +317,13 @@ export default function VirtualOffice() {
 
             {/* MAIN AREA */}
             <div className="flex-1 flex flex-col h-full relative z-10 overflow-hidden">
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                     <motion.div 
                         key={activeTeamId}
-                        initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.98 }}
-                        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                        initial={{ opacity: 0, filter: "blur(4px)" }}
+                        animate={{ opacity: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, filter: "blur(4px)" }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="flex-1 flex flex-col h-full w-full absolute inset-0"
                     >
                         {/* Header */}
