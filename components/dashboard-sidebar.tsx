@@ -1,6 +1,8 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { useTranslations } from "next-intl"
 import {
   LayoutDashboard,
@@ -22,15 +24,18 @@ import {
 import { useState } from "react"
 import { useAuth } from "@/hooks/useAuth"
 
+// Import logos
+import Logo from "@/components/Logos/Logo.png"
+import LogoHorizontal from "@/components/Logos/LogoHorizontal.png"
+
 interface DashboardSidebarProps {
   open: boolean
   setOpen: (open: boolean) => void
-  activeTab?: "executive" | "chat" | "agents" | "metrics" | "inventory"
-  onTabChange?: (tab: "executive" | "chat" | "agents" | "metrics" | "inventory") => void
 }
 
-export default function DashboardSidebar({ open, setOpen, activeTab = "executive", onTabChange }: DashboardSidebarProps) {
+export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProps) {
   const t = useTranslations("dashboard")
+  const pathname = usePathname()
   const [expandUpgrade, setExpandUpgrade] = useState(false)
   const { logout } = useAuth()
 
@@ -38,25 +43,25 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
     await logout()
   }
 
+  // Helper to check if a route is active
+  const isActiveRoute = (path: string) => {
+    // pathname usually includes locale like /es/dashboard/chat
+    return pathname.endsWith(path) || (path === "/dashboard" && pathname.endsWith("/dashboard"))
+  }
+
   const mainMenuItems = [
-    { icon: Home, label: "Inicio", id: "executive" as const, color: "from-emerald-500 to-teal-500" },
-    { icon: MessageSquare, label: t("tabs.chat"), id: "chat" as const, color: "from-blue-500 to-cyan-500" },
-    { icon: Bot, label: t("tabs.agents"), id: "agents" as const, color: "from-purple-500 to-pink-500" },
-    { icon: BarChart3, label: t("tabs.metrics"), id: "metrics" as const, color: "from-orange-500 to-red-500" },
-    { icon: Boxes, label: t("tabs.inventory"), id: "inventory" as const, color: "from-amber-500 to-yellow-500" },
+    { icon: Home, label: "Inicio", href: "/dashboard", color: "from-emerald-500 to-teal-500" },
+    { icon: MessageSquare, label: t("tabs.chat"), href: "/dashboard/chat", color: "from-blue-500 to-cyan-500" },
+    { icon: Bot, label: t("tabs.agents"), href: "/dashboard/agents", color: "from-purple-500 to-pink-500" },
+    { icon: BarChart3, label: t("tabs.metrics"), href: "/dashboard/metrics", color: "from-orange-500 to-red-500" },
+    { icon: Boxes, label: t("tabs.inventory"), href: "/dashboard/inventory", color: "from-amber-500 to-yellow-500" },
   ]
 
   const settingsItems = [
-    { icon: Settings, label: t("sidebar.settings"), href: "/settings" },
-    { icon: Lock, label: t("sidebar.security"), href: "/security" },
-    { icon: HelpCircle, label: "Ayuda", href: "/help" },
+    { icon: Settings, label: t("sidebar.settings"), href: "/dashboard/settings" },
+    { icon: Lock, label: t("sidebar.security"), href: "/dashboard/security" },
+    { icon: HelpCircle, label: "Ayuda", href: "/dashboard/help" },
   ]
-
-  const handleItemClick = (id: "executive" | "chat" | "agents" | "metrics" | "inventory") => {
-    if (onTabChange) {
-      onTabChange(id)
-    }
-  }
 
   return (
     <>
@@ -81,30 +86,24 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
 
         <div className="h-full flex flex-col relative">
           {/* Header with Logo */}
-          <div className={`p-4 border-b border-primary/10 flex items-center ${open ? "justify-between" : "justify-center"}`}>
-            <Link href="/dashboard" className="flex items-center gap-3 group">
-              <div className="relative">
-                <div className="w-11 h-11 bg-linear-to-br from-primary via-accent to-primary rounded-xl flex items-center justify-center 
-                                              shadow-lg shadow-primary/30 group-hover:shadow-xl group-hover:shadow-primary/40 
-                                              transition-all duration-300 group-hover:scale-105">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                {/* Online indicator */}
-                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-background" />
-              </div>
-              {open && (
-                <div className="overflow-hidden">
-                  <span className="text-xl font-black block bg-linear-to-r from-foreground to-foreground/70 bg-clip-text">Yeison</span>
-                  <span className="text-[10px] uppercase tracking-widest text-primary/80 font-semibold">AI Platform</span>
-                </div>
-              )}
+          <div className={`p-4 border-b border-primary/10 flex items-center ${open ? "justify-between" : "justify-center"} h-20`}>
+            <Link href="/dashboard" className="flex items-center gap-3 group w-full">
+                {open ? (
+                    <div className="relative w-44 h-12 ml-2 transition-transform duration-300 group-hover:scale-105">
+                        <Image src={LogoHorizontal} alt="Yeison Logo" fill className="object-contain" priority />
+                    </div>
+                ) : (
+                    <div className="relative w-10 h-10 mx-auto transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_10px_rgba(163,255,0,0.5)]">
+                        <Image src={Logo} alt="Yeison Logo" fill className="object-contain" priority />
+                    </div>
+                )}
             </Link>
 
             {/* Collapse Button - Desktop */}
             <button
               onClick={() => setOpen(!open)}
-              className={`hidden lg:flex p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 
-                                       ${open ? "" : "absolute -right-3 top-6 bg-background border border-primary/20 shadow-lg"}`}
+              className={`hidden lg:flex p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 z-10
+                                       ${open ? "" : "absolute -right-3 top-7 bg-background border border-primary/20 shadow-lg"}`}
             >
               <ChevronLeft className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${!open ? "rotate-180" : ""}`} />
             </button>
@@ -117,11 +116,11 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
             </div>
 
             {mainMenuItems.map((item, index) => {
-              const isActive = activeTab === item.id
+              const isActive = isActiveRoute(item.href)
               return (
-                <button
-                  key={item.id}
-                  onClick={() => handleItemClick(item.id)}
+                <Link
+                  key={item.href}
+                  href={item.href}
                   className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group relative
                                                ${isActive
                       ? "bg-linear-to-r from-primary/15 via-accent/10 to-transparent text-foreground"
@@ -158,7 +157,7 @@ export default function DashboardSidebar({ open, setOpen, activeTab = "executive
                       {item.label}
                     </div>
                   )}
-                </button>
+                </Link>
               )
             })}
 

@@ -202,12 +202,12 @@ export default function VirtualOffice() {
     }
 
     return (
-        <div className="flex h-[calc(100vh-10rem)] bg-background/50 rounded-3xl border border-border overflow-hidden relative shadow-2xl">
+        <div className="flex h-[calc(100vh-7rem)] bg-black/90 rounded-xl border border-white/5 overflow-hidden relative shadow-[0_0_50px_rgba(0,0,0,0.5)]">
             
             {/* Background elements for depth */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-                <div className={`absolute -top-40 -right-40 w-96 h-96 rounded-full blur-[100px] opacity-20 bg-gradient-to-br ${activeTeam.bgGradient} transition-colors duration-1000`}></div>
-                <div className={`absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-[100px] opacity-10 bg-gradient-to-tr ${activeTeam.bgGradient} transition-colors duration-1000`}></div>
+                <div className={`absolute -top-40 -right-40 w-96 h-96 rounded-full blur-[100px] opacity-10 bg-gradient-to-br ${activeTeam.bgGradient} transition-colors duration-1000`}></div>
+                <div className={`absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-[100px] opacity-5 bg-gradient-to-tr ${activeTeam.bgGradient} transition-colors duration-1000`}></div>
                 <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
             </div>
 
@@ -226,7 +226,7 @@ export default function VirtualOffice() {
                         initial={{ x: -300 }}
                         animate={{ x: 0 }}
                         exit={{ x: -300 }}
-                        className={`absolute lg:relative z-40 w-72 h-full bg-card/60 backdrop-blur-2xl border-r border-border flex flex-col transition-all shadow-xl`}
+                        className={`absolute lg:relative z-40 w-72 h-full bg-black/60 backdrop-blur-2xl border-r border-white/5 flex flex-col transition-all shadow-2xl`}
                     >
                         <div className="lg:hidden p-4 flex justify-end border-b border-border">
                             <button onClick={() => setIsMobileSidebarOpen(false)} className="p-2 rounded-lg hover:bg-white/5">
@@ -327,7 +327,7 @@ export default function VirtualOffice() {
                         className="flex-1 flex flex-col h-full w-full absolute inset-0"
                     >
                         {/* Header */}
-                        <header className={`flex-shrink-0 px-6 lg:px-10 py-5 border-b border-border flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 bg-card/40 backdrop-blur-md transition-colors duration-500`}>
+                        <header className={`flex-shrink-0 px-6 lg:px-10 py-5 border-b border-white/5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 bg-black/40 backdrop-blur-md transition-colors duration-500`}>
                     <div className="flex items-center gap-4 pl-10 lg:pl-0">
                         <div className={`relative`}>
                             <div className={`w-14 h-14 rounded-full overflow-hidden border-2 ${activeTeam.borderColor} flex items-center justify-center shadow-[0_0_20px_rgba(var(--brand-cyan-rgb),0.15)]`}>
@@ -392,7 +392,7 @@ export default function VirtualOffice() {
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={activeTeam.avatarImage} alt="Escribiendo" className="w-full h-full object-cover" />
                             </div>
-                            <div className="bg-card/50 backdrop-blur-md border border-border rounded-2xl rounded-bl-sm px-5 py-4">
+                            <div className="bg-black/60 backdrop-blur-xl border border-white/5 rounded-2xl rounded-bl-sm px-5 py-4">
                                 <div className="flex gap-1.5">
                                     <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
                                     <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -423,13 +423,13 @@ export default function VirtualOffice() {
 
                 {/* Input Area */}
                 <div className="flex-shrink-0 p-6 pt-2">
-                    <div className={`relative rounded-3xl border border-border bg-black/40 backdrop-blur-2xl focus-within:bg-black/60 focus-within:border-primary/50 focus-within:shadow-[0_0_30px_rgba(var(--brand-cyan-rgb),0.1)] transition-all duration-300`}>
-                        <div className={`absolute inset-0 bg-gradient-to-r ${activeTeam.bgGradient} opacity-5 rounded-3xl pointer-events-none transition-opacity duration-500`} />
+                    <div className={`relative rounded-xl border border-border bg-black/40 backdrop-blur-2xl focus-within:bg-black/60 focus-within:border-primary/50 focus-within:shadow-[0_0_30px_rgba(var(--brand-cyan-rgb),0.1)] transition-all duration-300`}>
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 pointer-events-none" />
                         
                         <div className="flex items-end gap-3 p-3 relative z-10">
                             <div className="flex items-center gap-1 pb-1.5 text-muted-foreground">
-                                <button className="p-2.5 rounded-xl hover:bg-white/10 hover:text-foreground transition-colors"><Paperclip className="w-4 h-4" /></button>
-                                <button className="p-2.5 rounded-xl hover:bg-white/10 hover:text-foreground transition-colors"><ImageIcon className="w-4 h-4" /></button>
+                                <button className="p-2.5 rounded-lg hover:bg-white/10 hover:text-foreground transition-colors"><Paperclip className="w-4 h-4" /></button>
+                                <button className="p-2.5 rounded-lg hover:bg-white/10 hover:text-foreground transition-colors"><ImageIcon className="w-4 h-4" /></button>
                             </div>
 
                             <textarea
