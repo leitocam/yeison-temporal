@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { Bot, Settings, Play, BarChart3, Users, MessageSquare, TrendingUp, AlertCircle, Loader2, ChevronDown, Edit, Power, Save, X } from "lucide-react"
 import { useApi } from "@/hooks/useApi"
 import { apiClient, AgentInstance } from "@/lib/api-client"
+import QRUploader from "./QRUploader"
 
 interface Agent {
     id: string
@@ -493,16 +494,7 @@ export default function AgentsTab() {
                                                 </div>
                                                 <div>
                                                     <label className="text-sm font-semibold text-muted-foreground mb-2 block">{t("agents.config.qrImage")}</label>
-                                                    <input
-                                                        type="text"
-                                                        value={configForm?.sales_process?.QR_image || ""}
-                                                        onChange={(e) => setConfigForm({
-                                                            ...configForm,
-                                                            sales_process: { ...configForm.sales_process, QR_image: e.target.value }
-                                                        })}
-                                                        className="w-full px-4 py-2 bg-white/10 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/40 transition-colors"
-                                                        placeholder="https://..."
-                                                    />
+                                                    <QRUploader agentId={agent.id} />
                                                 </div>
 
                                                 {/* Response Settings */}

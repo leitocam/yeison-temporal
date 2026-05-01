@@ -70,6 +70,7 @@ export interface AgentConfiguration {
   sales_process?: {
     QR_payment?: boolean;
     physical_payment?: boolean;
+    QR_code?: string;
     [key: string]: any;
   };
   lead_management?: Record<string, any>;
@@ -352,6 +353,74 @@ class ApiClient {
   // DELETE request
   async delete<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: 'DELETE' });
+  }
+
+  // Multipart upload (file)
+  // Reuses bearer-token + 401 redirect logic; does NOT set Content-Type so the
+  // browser injects the correct multipart boundary.
+  private async upload<T>(endpoint: string, formData: FormData): Promise<T> {
+    const url = `${this.baseUrl}${endpoint}`;
+    const token = tokenStorage.getAccessToken();
+
+    const headers: HeadersInit = {};
+    if (token) {
+      (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: formData,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const error: ApiError = {
+          message: errorData.message || errorData.detail || `HTTP ${response.status}`,
+          status: response.status,
+          code: errorData.code,
+          details: errorData.details,
+        };
+
+        if (response.status === 401) {
+          tokenStorage.clearAll();
+          if (typeof window !== 'undefined') {
+            window.location.href = '/login';
+          }
+        }
+
+        throw error;
+      }
+
+      return response.json();
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw { message: 'Request timeout', status: 408, code: 'TIMEOUT' } as ApiError;
+      }
+      throw error;
+    }
+  }
+
+  // ============================================
+  // Agent QR endpoints
+  // ============================================
+
+  async uploadAgentQR(agentId: string | number, file: File): Promise<AgentInstance> {
+    const form = new FormData();
+    form.append('file', file);
+    return this.upload<AgentInstance>(`/agents/${agentId}/qr-upload`, form);
+  }
+
+  async getAgentQRUrl(agentId: string | number): Promise<{ url: string | null; object_key: string | null }> {
+    return this.get<{ url: string | null; object_key: string | null }>(`/agents/${agentId}/qr-url`);
   }
 
   // ============================================
