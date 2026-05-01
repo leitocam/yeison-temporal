@@ -89,7 +89,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
           <div className={`p-4 border-b border-primary/10 flex items-center ${open ? "justify-between" : "justify-center"} h-20`}>
             <Link href="/dashboard" className="flex items-center gap-3 group w-full">
                 {open ? (
-                    <div className="relative w-44 h-12 ml-2 transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative w-48 h-[60px] ml-1 transition-transform duration-300 group-hover:scale-105">
                         <Image src={LogoHorizontal} alt="Yeison Logo" fill className="object-contain" priority />
                     </div>
                 ) : (

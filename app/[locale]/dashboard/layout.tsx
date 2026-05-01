@@ -3,6 +3,7 @@
 import { useState } from "react"
 import DashboardSidebar from "@/components/dashboard-sidebar"
 import Topbar from "@/components/dashboard-layout/Topbar"
+import { OnboardingAlert } from "@/components/dashboard"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -29,6 +30,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <main className={`relative z-10 transition-all duration-300 ${sidebarOpen ? "lg:ml-64" : "lg:ml-20"}`}>
         <Topbar />
+        <OnboardingAlert />
         
         {/* Tab Content */}
         <div className="p-4 lg:p-6">

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { useAuth } from "@/hooks/useAuth"
 import {
@@ -152,14 +153,14 @@ export default function Topbar() {
                   </div>
                 </div>
                 <div className="p-2">
-                  <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-xl hover:bg-white/10 transition-colors text-left">
+                  <Link href="/onboarding" className="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-xl hover:bg-white/10 transition-colors text-left">
                     <User className="w-4 h-4 text-muted-foreground" />
                     {t("header.profile")}
-                  </button>
-                  <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-xl hover:bg-white/10 transition-colors text-left">
+                  </Link>
+                  <Link href="/dashboard/settings" className="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-xl hover:bg-white/10 transition-colors text-left">
                     <Settings className="w-4 h-4 text-muted-foreground" />
                     {t("header.settings")}
-                  </button>
+                  </Link>
                   <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-xl hover:bg-white/10 transition-colors text-left">
                     <Sparkles className="w-4 h-4 text-amber-500" />
                     <span>Mejorar a Premium</span>

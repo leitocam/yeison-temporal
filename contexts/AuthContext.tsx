@@ -67,7 +67,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
             const response = await apiClient.login(credentials);
             setUser(response.user);
-            router.push('/dashboard');
+            
+            // Check onboarding status
+            try {
+                const config = await apiClient.get<any>('/configurations/current-or-create');
+                if (config && config.is_completed === false) {
+                    router.push('/onboarding');
+                } else {
+                    router.push('/dashboard');
+                }
+            } catch (configErr) {
+                console.error("Error checking configuration:", configErr);
+                // Fallback to dashboard if config check fails
+                router.push('/dashboard');
+            }
+            
             return true;
         } catch (err) {
             const apiError = err as ApiError;
