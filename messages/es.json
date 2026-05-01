@@ -5,80 +5,109 @@
         "testimonials": "Testimonios",
         "docs": "Documentación",
         "login": "Ingresar",
-        "tryFree": "Probar Gratis"
+        "tryFree": "Comienza Ahora"
     },
     "hero": {
-        "badge": "Agentes en Español adaptados al mercado boliviano",
-        "title": "Cierra más ventas",
-        "titleHighlight": "sin contratar más personal",
-        "description": "Agentes inteligentes que atienden por WhatsApp 24/7, hacen seguimiento automático y venden por ti.",
-        "descriptionHighlight": "Reduce costos, responde a todos tus clientes y escala tu negocio.",
-        "cta": "Comenzar gratis",
+        "badge": "Sistema operativo empresarial con IA",
+        "title": "Tu empresa funcionando",
+        "titleHighlight": "24/7",
+        "description": "Agentes de IA que ejecutan tareas dentro de tu empresa automáticamente. Ventas, marketing, inventarios y más — sin contratar más personal.",
+        "descriptionHighlight": "No contrates más personas. Compra más tiempo.",
+        "cta": "Comienza ahora",
         "demo": "Ver demo",
         "demoTime": "2 minutos",
         "demoModalTitle": "Demo de Yeison AI",
         "demoModalUnavailable": "Estamos preparando el video demo final. Mientras tanto, te podemos mostrar una demo guiada con un asesor.",
         "demoModalAction": "Hablar con un asesor",
         "demoModalClose": "Cerrar modal",
-        "noCard": "Sin tarjeta requerida",
+        "noCard": "Operativo en menos de 72 horas",
         "setup": "Implementación guiada por expertos"
     },
     "stats": {
-        "trust": "+2,500 empresas bolivianas confían en automatización inteligente",
-        "salesManaged": "En ventas gestionadas",
-        "uptime": "Disponibilidad garantizada",
+        "trust": "Tecnología de clase mundial adaptada al mercado boliviano",
         "responseTime": "Tiempo de respuesta",
-        "salesIncrease": "Aumento promedio en ventas"
+        "uptime": "Disponibilidad",
+        "setupTime": "Tiempo de activación",
+        "agentsAvailable": "Tipos de agentes"
     },
     "value": {
-        "title": "Automatización empresarial",
-        "titleHighlight": "sin complejidad",
-        "description": "Yeison fue diseñado para",
-        "descriptionBold": "PYMEs bolivianas",
-        "descriptionEnd": "que necesitan vender más, atender mejor y gastar menos. Tecnología de clase mundial adaptada a tu realidad."
+        "title": "El problema no es vender.",
+        "titleHighlight": "Es sostener la operación.",
+        "problems": [
+            { "icon": "🔥", "text": "Pierdes clientes por no responder rápido" },
+            { "icon": "📋", "text": "Equipo saturado en tareas repetitivas" },
+            { "icon": "❌", "text": "Procesos manuales = errores constantes" },
+            { "icon": "📈", "text": "Crecer significa más caos, no más orden" }
+        ]
     },
     "features": {
-        "title": "Todo lo que necesitas.",
-        "titleHighlight": "En un solo lugar.",
-        "subtitle": "Automatización poderosa que tu equipo amará usar",
-        "whatsapp": {
-            "title": "🤖 Agente de Ventas por WhatsApp",
-            "description": "Atiende clientes automáticamente, envía cotizaciones, responde objeciones y hace seguimiento hasta cerrar la venta. Funciona las 24 horas, todos los días."
-        },
-        "analytics": {
-            "title": "📊 Análisis y Seguimiento",
-            "description": "Visualiza cuántos clientes escriben, cuántos compran y en qué etapa se pierden. Decisiones claras, sin Excel."
+        "title": "Tu equipo completo",
+        "titleHighlight": "de agentes IA.",
+        "subtitle": "No es un chatbot. Es un ecosistema de agentes que ejecutan tareas reales en tu empresa.",
+        "ventas": {
+            "title": "🤖 Agente de Ventas",
+            "description": "Responde, cotiza y cierra ventas por WhatsApp 24/7. Hace seguimiento automático hasta convertir cada lead."
         },
         "marketing": {
             "title": "📣 Agente de Marketing",
-            "description": "Genera publicaciones, textos promocionales y mantiene activas tus redes sociales sin contratar un community manager."
+            "description": "Genera contenido, campañas y mantiene activas tus redes sociales sin contratar un community manager."
         },
-        "automation": {
-            "title": "⚙️ Flujos Automatizados",
-            "description": "Seguimientos, recordatorios, recuperación de clientes inactivos y respuestas frecuentes sin intervención humana."
+        "rrhh": {
+            "title": "👥 Agente de RRHH",
+            "description": "Gestión de personal, procesos internos y comunicación con tu equipo de forma automatizada."
         },
-        "team": {
-            "title": "👥 Control para tu Equipo",
-            "description": "Define reglas, revisa conversaciones y mantén control total. La IA trabaja, tú decides."
+        "inventarios": {
+            "title": "📦 Agente de Inventarios",
+            "description": "Control de stock en tiempo real, alertas de reposición y seguimiento de movimientos de productos."
         },
-        "security": {
-            "title": "🔒 Seguridad Empresarial",
-            "description": "Arquitectura segura, control de accesos y datos protegidos. Preparado para crecer con tu empresa."
+        "contabilidad": {
+            "title": "📊 Agente de Contabilidad",
+            "description": "Registros, reportes financieros y control contable automatizado para tu empresa."
+        },
+        "automatizacion": {
+            "title": "⚙️ Agente de Automatización",
+            "description": "Flujos, seguimientos, recordatorios y respuestas frecuentes sin intervención humana."
+        },
+        "specializedTitle": "Agentes Especializados",
+        "specializedSubtitle": "Soluciones específicas para industrias clave",
+        "specializedBadge": "PRÓXIMAMENTE",
+        "specialized": {
+            "inmobiliario": {
+                "title": "🏠 Inmobiliario",
+                "description": "Gestión de propiedades, seguimiento de clientes y cierre de operaciones inmobiliarias.",
+                "price": "Bs. 1,200 – 1,500/mes"
+            },
+            "seguros": {
+                "title": "🛡️ Seguros",
+                "description": "Cotización, seguimiento de pólizas y atención de reclamos automatizada.",
+                "price": "Bs. 1,000 – 1,300/mes"
+            },
+            "legal": {
+                "title": "⚖️ Legal / Normativo",
+                "description": "Gestión documental, seguimiento de casos y consultas legales automatizadas.",
+                "price": "Bs. 1,500 – 1,800/mes"
+            }
         }
     },
     "costs": {
-        "title": "¿Por qué seguir pagando de más?",
-        "subtitle": "Comparación real con costos del mercado boliviano",
-        "hiringTitle": "💸 Contratar hoy en Bolivia:",
-        "seller": "Vendedor tiempo completo:",
-        "sellerCost": "Bs. 2,500 – 4,500 / mes",
-        "community": "Community Manager:",
-        "communityCost": "Bs. 2,000 – 3,500 / mes",
-        "benefits": "+ Aportes, aguinaldo, vacaciones...",
-        "benefitsCost": "+35% sobre el salario",
-        "yeisonReplaces": "Yeison reemplaza gran parte de ese trabajo",
-        "yeisonPrice": "desde Bs. 280 / mes",
-        "yeisonBenefits": "Sin horarios limitados • Sin rotación de personal • Sin errores humanos"
+        "title": "No compites con software.",
+        "subtitle": "Compites con empleados.",
+        "tableTitle": "Empleado vs YEISON",
+        "headers": {
+            "aspect": "Aspecto",
+            "employee": "Empleado",
+            "yeison": "YEISON"
+        },
+        "rows": [
+            { "aspect": "Horario", "employee": "8h/día", "yeison": "24/7" },
+            { "aspect": "Costo mensual", "employee": "Bs. 3,500+ con beneficios", "yeison": "Desde Bs. 900/mes" },
+            { "aspect": "Errores", "employee": "Frecuentes", "yeison": "Consistente" },
+            { "aspect": "Escalabilidad", "employee": "Contratar más", "yeison": "Ilimitada" },
+            { "aspect": "Disponibilidad", "employee": "Vacaciones, enfermedad", "yeison": "Sin interrupciones" },
+            { "aspect": "Capacitación", "employee": "Semanas/meses", "yeison": "< 72 horas" }
+        ],
+        "insight": "5 agentes cuestan menos que 1 empleado",
+        "insightPrice": "Bs. 2,500/mes vs Bs. 3,500+ con beneficios"
     },
     "testimonials": {
         "title": "Lo que dicen nuestros clientes",
@@ -112,82 +141,160 @@
     },
     "pricing": {
         "title": "Planes y Precios",
-        "subtitle": "Empieza gratis. Escala cuando estés listo.",
+        "subtitle": "Elige tu plan. Escala cuando estés listo.",
         "monthly": "Mensual",
         "annual": "Anual",
-        "discount": "-20%",
-        "recommended": "RECOMENDADO",
+        "discount": "-8%",
+        "recommended": "MÁS POPULAR",
+        "agentsLabel": "agente",
+        "agentsLabelPlural": "agentes",
+        "perMonth": "/mes",
+        "perMonthAnnual": "/mes (facturado anual)",
         "plans": {
             "starter": {
                 "name": "Starter",
-                "price": "Gratis",
-                "period": "Para siempre",
-                "description": "Ideal para probar",
+                "priceMonthly": "Bs. 900",
+                "priceAnnual": "Bs. 828",
+                "description": "Ideal para empezar",
+                "agents": "1",
                 "features": [
-                    "Hasta 1 agente",
-                    "50 conversaciones/mes",
-                    "Soporte comunidad"
+                    "1 agente a elección",
+                    "Conversaciones ilimitadas",
+                    "Soporte estándar",
+                    "Configuración guiada"
                 ],
-                "cta": "Empezar gratis"
+                "cta": "Comienza ahora"
             },
-            "sales": {
-                "name": "Ventas",
-                "priceMonthly": "USD 39",
-                "priceAnnual": "USD 33",
-                "periodMonthly": "/mes",
-                "periodAnnual": "/mes (facturado anual)",
-                "description": "Agente de ventas completo",
+            "duo": {
+                "name": "Duo",
+                "priceMonthly": "Bs. 1,300",
+                "priceAnnual": "Bs. 1,196",
+                "description": "Duplica tu capacidad",
+                "agents": "2",
                 "features": [
-                    "Agente de ventas por WhatsApp",
-                    "Cotizaciones automáticas",
-                    "Seguimiento de clientes",
-                    "500 conversaciones/mes",
-                    "Soporte estándar"
+                    "2 agentes a elección",
+                    "Conversaciones ilimitadas",
+                    "Soporte prioritario",
+                    "Métricas básicas"
                 ],
-                "cta": "Probar ahora"
+                "cta": "Comienza ahora"
             },
-            "salesMarketing": {
-                "name": "Ventas + Marketing",
-                "priceMonthly": "USD 59",
-                "priceAnnual": "USD 49",
-                "periodMonthly": "/mes",
-                "periodAnnual": "/mes (facturado anual)",
-                "description": "La combinación perfecta",
+            "pro": {
+                "name": "Pro",
+                "priceMonthly": "Bs. 1,700",
+                "priceAnnual": "Bs. 1,564",
+                "description": "Para empresas en crecimiento",
+                "agents": "3",
                 "features": [
-                    "Todo de Ventas",
-                    "Agente de Marketing",
-                    "30 contenidos/mes",
-                    "1000 conversaciones/mes",
+                    "3 agentes a elección",
+                    "Conversaciones ilimitadas",
+                    "Soporte prioritario",
                     "Métricas avanzadas",
-                    "Soporte prioritario"
+                    "Integraciones"
                 ],
-                "cta": "Recomendado"
+                "cta": "Comienza ahora"
             },
-            "premium": {
-                "name": "Premium",
-                "priceMonthly": "USD 99",
-                "priceAnnual": "USD 79",
-                "periodMonthly": "/mes",
-                "periodAnnual": "/mes (facturado anual)",
-                "description": "Para equipos grandes",
+            "full": {
+                "name": "Full",
+                "priceMonthly": "Bs. 2,200",
+                "priceAnnual": "Bs. 2,024",
+                "description": "Automatización completa",
+                "agents": "4",
                 "features": [
-                    "Todos los agentes",
+                    "4 agentes a elección",
                     "Conversaciones ilimitadas",
                     "Soporte prioritario 24/7",
-                    "Configuración avanzada",
+                    "Métricas avanzadas",
+                    "API acceso completo"
+                ],
+                "cta": "Comienza ahora"
+            },
+            "max": {
+                "name": "Max",
+                "priceMonthly": "Bs. 2,500",
+                "priceAnnual": "Bs. 2,300",
+                "description": "Máximo rendimiento",
+                "agents": "5",
+                "features": [
+                    "5 agentes a elección",
+                    "Conversaciones ilimitadas",
+                    "Soporte prioritario 24/7",
+                    "Métricas avanzadas",
                     "API acceso completo",
                     "Onboarding personalizado"
                 ],
-                "cta": "Hablar con ventas"
+                "cta": "Comienza ahora"
             }
-        }
+        },
+        "insightText": "5 agentes cuestan menos que 1 empleado",
+        "specializedTitle": "Agentes Especializados",
+        "specializedSubtitle": "Soluciones a medida para industrias específicas"
     },
     "cta": {
-        "title": "Automatiza tu negocio hoy",
-        "description": "Más ventas, menos costos y control total desde un solo panel.",
-        "descriptionHighlight": "Únete a +2,500 empresas que ya confían en Yeison.",
-        "button": "Probar gratis – sin tarjeta",
+        "title": "Tu empresa funcionando 24/7",
+        "description": "Automatiza lo operativo, enfócate en crecer.",
+        "descriptionHighlight": "Menos esfuerzo, más ejecución.",
+        "button": "Comienza ahora",
         "buttonSecondary": "Hablar con un asesor"
+    },
+    "solution": {
+        "title": "La solución:",
+        "titleHighlight": "Agentes de IA que trabajan por ti",
+        "description": "No es un chatbot. No es software genérico. Son agentes inteligentes que ejecutan tareas reales dentro de tu empresa, automáticamente.",
+        "subtitle": "Operativo en menos de 72 horas",
+        "pillars": [
+            { "icon": "🤖", "title": "Ejecución real", "description": "No solo responden preguntas. Ejecutan procesos de venta, marketing y operaciones completas." },
+            { "icon": "⏰", "title": "Operación 24/7", "description": "Sin horarios limitados. Tus agentes trabajan mientras tú descansas." },
+            { "icon": "📈", "title": "Escalabilidad", "description": "Crece sin contratar. Agrega agentes según tu necesidad, sin aumentar tu planilla." },
+            { "icon": "🎯", "title": "Adaptado a Bolivia", "description": "No es IA genérica. Diseñado para el mercado boliviano y latinoamericano." }
+        ]
+    },
+    "howItWorks": {
+        "title": "Activa tus agentes",
+        "titleHighlight": "en 5 pasos",
+        "subtitle": "⏱️ Operativo en menos de 72 horas",
+        "steps": [
+            { "number": 1, "title": "Conecta tu negocio", "description": "Integra WhatsApp Business, tus sistemas y fuentes de datos en minutos." },
+            { "number": 2, "title": "Configura tus agentes", "description": "Elige qué agentes necesitas: ventas, marketing, inventarios y más." },
+            { "number": 3, "title": "Entrénalos con tu info", "description": "Los agentes aprenden tu catálogo, precios, procesos y tono de comunicación." },
+            { "number": 4, "title": "Empiezan a trabajar", "description": "Tus agentes operan 24/7 de forma autónoma, atendiendo clientes y ejecutando tareas." },
+            { "number": 5, "title": "Se optimizan solos", "description": "Mejoran con cada interacción. Más conversiones, menos errores, mejor servicio." }
+        ]
+    },
+    "differentiator": {
+        "title": "¿Por qué YEISON",
+        "titleHighlight": "y no otra IA?",
+        "description": "No somos un chatbot genérico de Silicon Valley. Somos ejecución real para empresas reales.",
+        "features": [
+            "Adaptado a Bolivia y LATAM",
+            "Ejecución real, no solo respuestas",
+            "Múltiples agentes, no una sola función",
+            "Soporte en español por equipo local",
+            "Precios en bolivianos",
+            "Integración con WhatsApp Business"
+        ],
+        "footer": "No usamos IA para probar. La usamos para operar."
+    },
+    "sitePages": {
+        "badge": "Yeison AI",
+        "box1Title": "Lo que ofrecemos",
+        "box2Title": "Por qué elegirnos",
+        "pages": {
+            "docs": { "title": "Documentación", "description": "Guías, tutoriales y referencia técnica para sacar el máximo provecho de Yeison.", "box1": "Documentación completa con ejemplos paso a paso para configurar cada agente.", "box2": "Actualizada constantemente con las últimas funcionalidades y mejores prácticas." },
+            "security": { "title": "Seguridad", "description": "Tu información protegida con los más altos estándares de seguridad empresarial.", "box1": "Encriptación de extremo a extremo, control de accesos y auditoría completa.", "box2": "Cumplimiento de normativas de protección de datos y seguridad empresarial." },
+            "integrations": { "title": "Integraciones", "description": "Conecta Yeison con las herramientas que ya usas en tu empresa.", "box1": "WhatsApp Business, CRMs, sistemas contables y más integraciones disponibles.", "box2": "API abierta para desarrollar integraciones personalizadas." },
+            "about": { "title": "Nosotros", "description": "Conoce al equipo detrás de Yeison y nuestra misión de automatizar Bolivia.", "box1": "Equipo local con experiencia en IA, ventas y operaciones empresariales.", "box2": "Comprometidos con el crecimiento de las PYMEs bolivianas a través de la tecnología." },
+            "blog": { "title": "Blog", "description": "Artículos, guías y casos de estudio sobre automatización empresarial con IA.", "box1": "Contenido práctico sobre ventas, marketing y operaciones con inteligencia artificial.", "box2": "Casos de éxito de empresas bolivianas que ya usan Yeison." },
+            "careers": { "title": "Carreras", "description": "Únete a nuestro equipo y ayuda a construir el futuro de la automatización en Bolivia.", "box1": "Posiciones abiertas en desarrollo, ventas, soporte y marketing.", "box2": "Cultura de innovación, crecimiento profesional y trabajo remoto." },
+            "press": { "title": "Prensa", "description": "Noticias, comunicados y recursos para medios de comunicación.", "box1": "Kit de prensa, logos y material para publicaciones.", "box2": "Contacto directo con nuestro equipo de comunicaciones." },
+            "api-docs": { "title": "API", "description": "Documentación técnica de la API de Yeison para desarrolladores.", "box1": "Endpoints, autenticación, webhooks y ejemplos de integración.", "box2": "SDKs disponibles y soporte técnico para integraciones personalizadas." },
+            "status": { "title": "Estado del Sistema", "description": "Monitoreo en tiempo real de todos los servicios de Yeison.", "box1": "Historial de disponibilidad y tiempos de respuesta.", "box2": "Notificaciones automáticas ante cualquier incidencia." },
+            "help-center": { "title": "Centro de Ayuda", "description": "Encuentra respuestas rápidas a las preguntas más frecuentes.", "box1": "Base de conocimiento con guías paso a paso.", "box2": "Soporte en español por chat, email y WhatsApp." },
+            "privacy": { "title": "Privacidad", "description": "Política de privacidad y protección de datos de Yeison.", "box1": "Cómo recolectamos, usamos y protegemos tu información.", "box2": "Tus derechos como usuario y cómo ejercerlos." },
+            "terms": { "title": "Términos de Servicio", "description": "Términos y condiciones de uso de la plataforma Yeison.", "box1": "Condiciones generales de uso, pagos y cancelaciones.", "box2": "Responsabilidades y limitaciones del servicio." },
+            "cookies": { "title": "Cookies", "description": "Política de cookies y tecnologías de seguimiento.", "box1": "Qué cookies usamos y para qué.", "box2": "Cómo gestionar tus preferencias de cookies." },
+            "contact": { "title": "Contacto", "description": "Ponte en contacto con nuestro equipo. Estamos para ayudarte.", "box1": "WhatsApp: +591 64973066 | Email: hola@yeison.ai", "box2": "Respuesta garantizada en menos de 24 horas." }
+        }
     },
     "footer": {
         "description": "Automatización empresarial con IA para el mercado boliviano.",

@@ -37,7 +37,7 @@ export default function CTASection() {
                         <span className="block mt-2 font-medium text-primary">{t('descriptionHighlight')}</span>
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <GradientButton href="/login">
+                        <GradientButton href="/register">
                             {t('button')}
                             <ArrowRight className="w-5 h-5" />
                         </GradientButton>

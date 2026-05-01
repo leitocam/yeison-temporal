@@ -7,10 +7,7 @@ import { routing } from './i18n/routing';
 // Route Configuration
 // ============================================
 
-// Routes that require authentication
 const protectedRoutes = ['/dashboard', '/settings', '/profile', '/agents'];
-
-// Routes only accessible when NOT authenticated
 const authRoutes = ['/login', '/register'];
 
 // ============================================
@@ -20,10 +17,10 @@ const authRoutes = ['/login', '/register'];
 const intlMiddleware = createMiddleware(routing);
 
 // ============================================
-// Combined Middleware
+// Proxy Handler
 // ============================================
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Skip static files and API routes
@@ -90,13 +87,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        /*
-         * Match all request paths except:
-         * - api routes
-         * - static files
-         * - images
-         * - favicon
-         */
         '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
     ],
 };

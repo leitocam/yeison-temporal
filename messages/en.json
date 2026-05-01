@@ -5,80 +5,109 @@
         "testimonials": "Testimonials",
         "docs": "Documentation",
         "login": "Login",
-        "tryFree": "Try Free"
+        "tryFree": "Get Started"
     },
     "hero": {
-        "badge": "AI Agents in Spanish adapted for the Bolivian market",
-        "title": "Close more sales",
-        "titleHighlight": "without hiring more staff",
-        "description": "Intelligent agents that attend via WhatsApp 24/7, follow up automatically and sell for you.",
-        "descriptionHighlight": "Reduce costs, respond to all your customers and scale your business.",
-        "cta": "Start free",
+        "badge": "Enterprise operating system with AI",
+        "title": "Your business running",
+        "titleHighlight": "24/7",
+        "description": "AI agents that execute tasks inside your company automatically. Sales, marketing, inventory and more — without hiring more staff.",
+        "descriptionHighlight": "Don't hire more people. Buy more time.",
+        "cta": "Get started",
         "demo": "View demo",
         "demoTime": "2 minutes",
         "demoModalTitle": "Yeison AI Demo",
         "demoModalUnavailable": "We're preparing the final demo video. In the meantime, we can show you a guided demo with an advisor.",
         "demoModalAction": "Talk to an advisor",
         "demoModalClose": "Close modal",
-        "noCard": "No card required",
+        "noCard": "Operational in less than 72 hours",
         "setup": "Expert-guided implementation"
     },
     "stats": {
-        "trust": "+2,500 Bolivian companies trust intelligent automation",
-        "salesManaged": "In managed sales",
-        "uptime": "Guaranteed uptime",
+        "trust": "World-class technology adapted to the Bolivian market",
         "responseTime": "Response time",
-        "salesIncrease": "Average sales increase"
+        "uptime": "Availability",
+        "setupTime": "Activation time",
+        "agentsAvailable": "Agent types"
     },
     "value": {
-        "title": "Business automation",
-        "titleHighlight": "without complexity",
-        "description": "Yeison was designed for",
-        "descriptionBold": "Bolivian SMEs",
-        "descriptionEnd": "that need to sell more, serve better and spend less. World-class technology adapted to your reality."
+        "title": "The problem isn't selling.",
+        "titleHighlight": "It's sustaining operations.",
+        "problems": [
+            { "icon": "🔥", "text": "You lose customers by not responding fast enough" },
+            { "icon": "📋", "text": "Team overwhelmed with repetitive tasks" },
+            { "icon": "❌", "text": "Manual processes = constant errors" },
+            { "icon": "📈", "text": "Growth means more chaos, not more order" }
+        ]
     },
     "features": {
-        "title": "Everything you need.",
-        "titleHighlight": "In one place.",
-        "subtitle": "Powerful automation your team will love to use",
-        "whatsapp": {
-            "title": "🤖 WhatsApp Sales Agent",
-            "description": "Automatically attends customers, sends quotes, handles objections and follows up until closing the sale. Works 24 hours, every day."
-        },
-        "analytics": {
-            "title": "📊 Analytics & Tracking",
-            "description": "See how many customers write, how many buy and at what stage they drop off. Clear decisions, no Excel needed."
+        "title": "Your complete team",
+        "titleHighlight": "of AI agents.",
+        "subtitle": "Not a chatbot. An ecosystem of agents that execute real tasks in your company.",
+        "ventas": {
+            "title": "🤖 Sales Agent",
+            "description": "Responds, quotes and closes sales via WhatsApp 24/7. Follows up automatically until converting each lead."
         },
         "marketing": {
             "title": "📣 Marketing Agent",
-            "description": "Generates posts, promotional texts and keeps your social networks active without hiring a community manager."
+            "description": "Generates content, campaigns and keeps your social media active without hiring a community manager."
         },
-        "automation": {
-            "title": "⚙️ Automated Workflows",
-            "description": "Follow-ups, reminders, inactive customer recovery and frequent responses without human intervention."
+        "rrhh": {
+            "title": "👥 HR Agent",
+            "description": "Staff management, internal processes and team communication automated."
         },
-        "team": {
-            "title": "👥 Team Control",
-            "description": "Set rules, review conversations and maintain full control. The AI works, you decide."
+        "inventarios": {
+            "title": "📦 Inventory Agent",
+            "description": "Real-time stock control, replenishment alerts and product movement tracking."
         },
-        "security": {
-            "title": "🔒 Enterprise Security",
-            "description": "Secure architecture, access control and protected data. Ready to grow with your company."
+        "contabilidad": {
+            "title": "📊 Accounting Agent",
+            "description": "Records, financial reports and automated accounting control for your business."
+        },
+        "automatizacion": {
+            "title": "⚙️ Automation Agent",
+            "description": "Workflows, follow-ups, reminders and frequent responses without human intervention."
+        },
+        "specializedTitle": "Specialized Agents",
+        "specializedSubtitle": "Specific solutions for key industries",
+        "specializedBadge": "COMING SOON",
+        "specialized": {
+            "inmobiliario": {
+                "title": "🏠 Real Estate",
+                "description": "Property management, client follow-up and real estate deal closing.",
+                "price": "Bs. 1,200 – 1,500/mo"
+            },
+            "seguros": {
+                "title": "🛡️ Insurance",
+                "description": "Quoting, policy tracking and automated claims handling.",
+                "price": "Bs. 1,000 – 1,300/mo"
+            },
+            "legal": {
+                "title": "⚖️ Legal / Regulatory",
+                "description": "Document management, case tracking and automated legal consultations.",
+                "price": "Bs. 1,500 – 1,800/mo"
+            }
         }
     },
     "costs": {
-        "title": "Why keep overpaying?",
-        "subtitle": "Real comparison with Bolivian market costs",
-        "hiringTitle": "💸 Hiring today in Bolivia:",
-        "seller": "Full-time salesperson:",
-        "sellerCost": "Bs. 2,500 – 4,500 / month",
-        "community": "Community Manager:",
-        "communityCost": "Bs. 2,000 – 3,500 / month",
-        "benefits": "+ Benefits, bonuses, vacations...",
-        "benefitsCost": "+35% on top of salary",
-        "yeisonReplaces": "Yeison replaces most of that work",
-        "yeisonPrice": "from Bs. 280 / month",
-        "yeisonBenefits": "No limited hours • No staff turnover • No human errors"
+        "title": "You're not competing with software.",
+        "subtitle": "You're competing with employees.",
+        "tableTitle": "Employee vs YEISON",
+        "headers": {
+            "aspect": "Aspect",
+            "employee": "Employee",
+            "yeison": "YEISON"
+        },
+        "rows": [
+            { "aspect": "Schedule", "employee": "8h/day", "yeison": "24/7" },
+            { "aspect": "Monthly cost", "employee": "Bs. 3,500+ with benefits", "yeison": "From Bs. 900/mo" },
+            { "aspect": "Errors", "employee": "Frequent", "yeison": "Consistent" },
+            { "aspect": "Scalability", "employee": "Hire more", "yeison": "Unlimited" },
+            { "aspect": "Availability", "employee": "Vacations, sick days", "yeison": "No interruptions" },
+            { "aspect": "Training", "employee": "Weeks/months", "yeison": "< 72 hours" }
+        ],
+        "insight": "5 agents cost less than 1 employee",
+        "insightPrice": "Bs. 2,500/mo vs Bs. 3,500+ with benefits"
     },
     "testimonials": {
         "title": "What our customers say",
@@ -112,82 +141,160 @@
     },
     "pricing": {
         "title": "Plans and Pricing",
-        "subtitle": "Start free. Scale when you're ready.",
+        "subtitle": "Choose your plan. Scale when you're ready.",
         "monthly": "Monthly",
         "annual": "Annual",
-        "discount": "-20%",
-        "recommended": "RECOMMENDED",
+        "discount": "-8%",
+        "recommended": "MOST POPULAR",
+        "agentsLabel": "agent",
+        "agentsLabelPlural": "agents",
+        "perMonth": "/mo",
+        "perMonthAnnual": "/mo (billed annually)",
         "plans": {
             "starter": {
                 "name": "Starter",
-                "price": "Free",
-                "period": "Forever",
-                "description": "Ideal for testing",
+                "priceMonthly": "Bs. 900",
+                "priceAnnual": "Bs. 828",
+                "description": "Ideal to get started",
+                "agents": "1",
                 "features": [
-                    "Up to 1 agent",
-                    "50 conversations/month",
-                    "Community support"
+                    "1 agent of your choice",
+                    "Unlimited conversations",
+                    "Standard support",
+                    "Guided setup"
                 ],
-                "cta": "Start free"
+                "cta": "Get started"
             },
-            "sales": {
-                "name": "Sales",
-                "priceMonthly": "USD 39",
-                "priceAnnual": "USD 33",
-                "periodMonthly": "/month",
-                "periodAnnual": "/month (billed annually)",
-                "description": "Complete sales agent",
+            "duo": {
+                "name": "Duo",
+                "priceMonthly": "Bs. 1,300",
+                "priceAnnual": "Bs. 1,196",
+                "description": "Double your capacity",
+                "agents": "2",
                 "features": [
-                    "WhatsApp sales agent",
-                    "Automatic quotes",
-                    "Customer follow-up",
-                    "500 conversations/month",
-                    "Standard support"
+                    "2 agents of your choice",
+                    "Unlimited conversations",
+                    "Priority support",
+                    "Basic metrics"
                 ],
-                "cta": "Try now"
+                "cta": "Get started"
             },
-            "salesMarketing": {
-                "name": "Sales + Marketing",
-                "priceMonthly": "USD 59",
-                "priceAnnual": "USD 49",
-                "periodMonthly": "/month",
-                "periodAnnual": "/month (billed annually)",
-                "description": "The perfect combination",
+            "pro": {
+                "name": "Pro",
+                "priceMonthly": "Bs. 1,700",
+                "priceAnnual": "Bs. 1,564",
+                "description": "For growing businesses",
+                "agents": "3",
                 "features": [
-                    "Everything in Sales",
-                    "Marketing Agent",
-                    "30 contents/month",
-                    "1000 conversations/month",
+                    "3 agents of your choice",
+                    "Unlimited conversations",
+                    "Priority support",
                     "Advanced metrics",
-                    "Priority support"
+                    "Integrations"
                 ],
-                "cta": "Recommended"
+                "cta": "Get started"
             },
-            "premium": {
-                "name": "Premium",
-                "priceMonthly": "USD 99",
-                "priceAnnual": "USD 79",
-                "periodMonthly": "/month",
-                "periodAnnual": "/month (billed annually)",
-                "description": "For large teams",
+            "full": {
+                "name": "Full",
+                "priceMonthly": "Bs. 2,200",
+                "priceAnnual": "Bs. 2,024",
+                "description": "Complete automation",
+                "agents": "4",
                 "features": [
-                    "All agents",
+                    "4 agents of your choice",
                     "Unlimited conversations",
                     "24/7 priority support",
-                    "Advanced configuration",
+                    "Advanced metrics",
+                    "Full API access"
+                ],
+                "cta": "Get started"
+            },
+            "max": {
+                "name": "Max",
+                "priceMonthly": "Bs. 2,500",
+                "priceAnnual": "Bs. 2,300",
+                "description": "Maximum performance",
+                "agents": "5",
+                "features": [
+                    "5 agents of your choice",
+                    "Unlimited conversations",
+                    "24/7 priority support",
+                    "Advanced metrics",
                     "Full API access",
                     "Personalized onboarding"
                 ],
-                "cta": "Talk to sales"
+                "cta": "Get started"
             }
-        }
+        },
+        "insightText": "5 agents cost less than 1 employee",
+        "specializedTitle": "Specialized Agents",
+        "specializedSubtitle": "Custom solutions for specific industries"
     },
     "cta": {
-        "title": "Automate your business today",
-        "description": "More sales, less costs and total control from a single panel.",
-        "descriptionHighlight": "Join +2,500 companies that already trust Yeison.",
-        "button": "Try free – no card",
+        "title": "Your business running 24/7",
+        "description": "Automate operations, focus on growing.",
+        "descriptionHighlight": "Less effort, more execution.",
+        "button": "Get started",
         "buttonSecondary": "Talk to an advisor"
+    },
+    "solution": {
+        "title": "The solution:",
+        "titleHighlight": "AI agents that work for you",
+        "description": "Not a chatbot. Not generic software. Intelligent agents that execute real tasks inside your company, automatically.",
+        "subtitle": "Operational in less than 72 hours",
+        "pillars": [
+            { "icon": "🤖", "title": "Real execution", "description": "They don't just answer questions. They execute complete sales, marketing and operations processes." },
+            { "icon": "⏰", "title": "24/7 operation", "description": "No limited hours. Your agents work while you rest." },
+            { "icon": "📈", "title": "Scalability", "description": "Grow without hiring. Add agents as needed, without increasing your payroll." },
+            { "icon": "🎯", "title": "Adapted to Bolivia", "description": "Not generic AI. Designed for the Bolivian and Latin American market." }
+        ]
+    },
+    "howItWorks": {
+        "title": "Activate your agents",
+        "titleHighlight": "in 5 steps",
+        "subtitle": "⏱️ Operational in less than 72 hours",
+        "steps": [
+            { "number": 1, "title": "Connect your business", "description": "Integrate WhatsApp Business, your systems and data sources in minutes." },
+            { "number": 2, "title": "Configure your agents", "description": "Choose which agents you need: sales, marketing, inventory and more." },
+            { "number": 3, "title": "Train them with your info", "description": "Agents learn your catalog, prices, processes and communication tone." },
+            { "number": 4, "title": "They start working", "description": "Your agents operate 24/7 autonomously, attending customers and executing tasks." },
+            { "number": 5, "title": "They optimize themselves", "description": "They improve with every interaction. More conversions, fewer errors, better service." }
+        ]
+    },
+    "differentiator": {
+        "title": "Why YEISON",
+        "titleHighlight": "and not another AI?",
+        "description": "We're not a generic Silicon Valley chatbot. We're real execution for real businesses.",
+        "features": [
+            "Adapted to Bolivia and LATAM",
+            "Real execution, not just answers",
+            "Multiple agents, not just one function",
+            "Spanish support from a local team",
+            "Prices in bolivianos",
+            "WhatsApp Business integration"
+        ],
+        "footer": "We don't use AI to experiment. We use it to operate."
+    },
+    "sitePages": {
+        "badge": "Yeison AI",
+        "box1Title": "What we offer",
+        "box2Title": "Why choose us",
+        "pages": {
+            "docs": { "title": "Documentation", "description": "Guides, tutorials and technical reference to get the most out of Yeison.", "box1": "Complete documentation with step-by-step examples for each agent.", "box2": "Constantly updated with the latest features and best practices." },
+            "security": { "title": "Security", "description": "Your information protected with the highest enterprise security standards.", "box1": "End-to-end encryption, access control and complete auditing.", "box2": "Compliance with data protection and enterprise security regulations." },
+            "integrations": { "title": "Integrations", "description": "Connect Yeison with the tools you already use.", "box1": "WhatsApp Business, CRMs, accounting systems and more.", "box2": "Open API for custom integrations." },
+            "about": { "title": "About Us", "description": "Meet the team behind Yeison and our mission to automate Bolivia.", "box1": "Local team with experience in AI, sales and business operations.", "box2": "Committed to Bolivian SME growth through technology." },
+            "blog": { "title": "Blog", "description": "Articles, guides and case studies on business automation with AI.", "box1": "Practical content on sales, marketing and operations with AI.", "box2": "Success stories from Bolivian companies using Yeison." },
+            "careers": { "title": "Careers", "description": "Join our team and help build the future of automation in Bolivia.", "box1": "Open positions in development, sales, support and marketing.", "box2": "Culture of innovation, professional growth and remote work." },
+            "press": { "title": "Press", "description": "News, press releases and media resources.", "box1": "Press kit, logos and publication materials.", "box2": "Direct contact with our communications team." },
+            "api-docs": { "title": "API", "description": "Technical API documentation for developers.", "box1": "Endpoints, authentication, webhooks and integration examples.", "box2": "Available SDKs and technical support for custom integrations." },
+            "status": { "title": "System Status", "description": "Real-time monitoring of all Yeison services.", "box1": "Uptime history and response times.", "box2": "Automatic notifications for any incidents." },
+            "help-center": { "title": "Help Center", "description": "Find quick answers to frequently asked questions.", "box1": "Knowledge base with step-by-step guides.", "box2": "Spanish support via chat, email and WhatsApp." },
+            "privacy": { "title": "Privacy", "description": "Yeison's privacy and data protection policy.", "box1": "How we collect, use and protect your information.", "box2": "Your rights as a user and how to exercise them." },
+            "terms": { "title": "Terms of Service", "description": "Terms and conditions for using the Yeison platform.", "box1": "General conditions of use, payments and cancellations.", "box2": "Service responsibilities and limitations." },
+            "cookies": { "title": "Cookies", "description": "Cookie and tracking technology policy.", "box1": "What cookies we use and why.", "box2": "How to manage your cookie preferences." },
+            "contact": { "title": "Contact", "description": "Get in touch with our team. We're here to help.", "box1": "WhatsApp: +591 64973066 | Email: hello@yeison.ai", "box2": "Response guaranteed in less than 24 hours." }
+        }
     },
     "footer": {
         "description": "Business automation with AI for the Bolivian market.",

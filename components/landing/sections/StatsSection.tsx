@@ -9,10 +9,10 @@ export default function StatsSection() {
     const t = useTranslations('stats')
 
     const stats = [
-        { value: 2.5, prefix: "Bs. ", suffix: "M+", label: t('salesManaged'), decimals: 1 },
-        { value: 99.9, suffix: "%", label: t('uptime'), decimals: 1 },
-        { value: 100, prefix: "<", suffix: "ms", label: t('responseTime'), decimals: 0 },
-        { value: 40, suffix: "%", label: t('salesIncrease'), decimals: 0 }
+        { value: 3, prefix: "< ", suffix: " seg", label: t('responseTime'), decimals: 0 },
+        { value: 24, suffix: "/7", label: t('uptime'), decimals: 0 },
+        { value: 72, prefix: "< ", suffix: "h", label: t('setupTime'), decimals: 0 },
+        { value: 8, suffix: "+", label: t('agentsAvailable'), decimals: 0 }
     ]
 
     return (

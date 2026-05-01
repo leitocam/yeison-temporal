@@ -59,7 +59,7 @@ export default function Navbar() {
             <Link href="/login" className="login-btn">
               {t('login')}
             </Link>
-            <GradientButton href="/login">
+            <GradientButton href="/register">
               {t('tryFree')}
             </GradientButton>
           </div>
@@ -103,7 +103,7 @@ export default function Navbar() {
                 <div className="mobile-lang-switcher">
                   <LanguageSwitcher />
                 </div>
-                <GradientButton href="/login">
+                <GradientButton href="/register">
                   {t('tryFree')}
                 </GradientButton>
               </div>

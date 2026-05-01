@@ -5,8 +5,15 @@ import { useTranslations } from "next-intl"
 import ShineText from "@/components/ui/ShineText"
 import { SectionContainer, SectionHeader } from "@/components/landing/shared"
 
+interface ComparisonRow {
+    aspect: string
+    employee: string
+    yeison: string
+}
+
 export default function CostComparisonSection() {
     const t = useTranslations('costs')
+    const rows = (t.raw('rows') || []) as ComparisonRow[]
 
     return (
         <section className="py-24 relative">
@@ -16,35 +23,58 @@ export default function CostComparisonSection() {
                     className="mb-12"
                     titleClassName="text-4xl sm:text-5xl lg:text-6xl"
                     subtitleClassName="max-w-none"
-                    title={t('title')}
-                    subtitle={t('subtitle')}
+                    title={
+                        <>
+                            {t('title')}{" "}
+                            <ShineText
+                                as="span"
+                                fontSize="inherit"
+                                fontWeight={900}
+                                baseColor="#A3FF00"
+                                shineColor="#C4FF4D"
+                                duration={4}
+                            >
+                                {t('subtitle')}
+                            </ShineText>
+                        </>
+                    }
                 />
 
                 <motion.div
-                    className="glass rounded-3xl p-8 border-2 border-primary/30"
+                    className="glass rounded-3xl p-6 sm:p-8 border-2 border-primary/30"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                 >
-                    <h3 className="text-xl font-bold mb-6 text-center flex items-center justify-center gap-2">
-                        {t('hiringTitle')}
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-4 mb-8">
-                        <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30 hover:bg-red-500/15 transition-colors">
-                            <span className="text-muted-foreground">{t('seller')}</span>
-                            <span className="font-bold text-red-400">{t('sellerCost')}</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30 hover:bg-red-500/15 transition-colors">
-                            <span className="text-muted-foreground">{t('community')}</span>
-                            <span className="font-bold text-red-400">{t('communityCost')}</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/30 hover:bg-red-500/15 transition-colors md:col-span-2">
-                            <span className="text-muted-foreground">{t('benefits')}</span>
-                            <span className="font-bold text-red-400">{t('benefitsCost')}</span>
-                        </div>
+                    <h3 className="text-xl font-bold mb-6 text-center">{t('tableTitle')}</h3>
+
+                    {/* Table Header */}
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                        <div className="p-3 text-sm font-bold uppercase tracking-wider text-muted-foreground">{t('headers.aspect')}</div>
+                        <div className="p-3 text-sm font-bold uppercase tracking-wider text-center text-red-400">{t('headers.employee')}</div>
+                        <div className="p-3 text-sm font-bold uppercase tracking-wider text-center text-primary">{t('headers.yeison')}</div>
                     </div>
 
-                    <div className="text-center p-8 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl border-2 border-primary/40 relative overflow-hidden">
+                    {/* Table Rows */}
+                    <div className="space-y-2">
+                        {rows.map((row, i) => (
+                            <motion.div
+                                key={i}
+                                className="grid grid-cols-3 gap-2 rounded-xl overflow-hidden"
+                                initial={{ opacity: 0, x: -10 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.05 }}
+                            >
+                                <div className="p-3 sm:p-4 bg-card border border-border rounded-l-xl text-sm font-medium text-foreground">{row.aspect}</div>
+                                <div className="p-3 sm:p-4 bg-red-500/5 border border-red-500/20 text-sm text-center text-red-400">{row.employee}</div>
+                                <div className="p-3 sm:p-4 bg-primary/5 border border-primary/20 rounded-r-xl text-sm text-center text-primary font-semibold">{row.yeison}</div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Insight */}
+                    <div className="text-center p-6 sm:p-8 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl border-2 border-primary/40 relative overflow-hidden mt-6">
                         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 animate-pulse"></div>
                         <div className="relative z-10">
                             <ShineText
@@ -56,10 +86,9 @@ export default function CostComparisonSection() {
                                 duration={6}
                                 className="mb-2"
                             >
-                                {t('yeisonReplaces')}
+                                {t('insight')}
                             </ShineText>
-                            <p className="text-4xl font-black text-accent mt-4 mb-2">{t('yeisonPrice')}</p>
-                            <p className="text-muted-foreground">{t('yeisonBenefits')}</p>
+                            <p className="text-lg font-bold text-primary mt-2">{t('insightPrice')}</p>
                         </div>
                     </div>
                 </motion.div>

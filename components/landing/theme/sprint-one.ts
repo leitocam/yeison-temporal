@@ -1,8 +1,8 @@
 export const NAV_LINKS = [
-  { href: "#features", key: "product" },
-  { href: "#pricing", key: "pricing" },
-  { href: "#testimonials", key: "testimonials" },
-  { href: "#", key: "docs" },
+  { href: "/features", key: "product" },
+  { href: "/pricing", key: "pricing" },
+  { href: "/testimonials", key: "testimonials" },
+  { href: "/docs", key: "docs" },
 ] as const
 
 export const HERO_BADGE_COLORS = ["#A3FF00", "#C4FF4D", "#E4FF99"] as const

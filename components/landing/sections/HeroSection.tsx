@@ -61,7 +61,7 @@ export default function HeroSection() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
-                            <GradientButton href="/login">
+                            <GradientButton href="/register">
                                 {t('cta')}
                                 <ArrowRight className="w-5 h-5" />
                             </GradientButton>
