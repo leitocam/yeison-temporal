@@ -1,5 +1,6 @@
 import { Bot, TrendingUp, Sparkles, Users, PackageSearch, Calculator } from "lucide-react"
 import { Team } from "./types"
+import Favicon from "@/components/Logos/Favicon.png"
 
 export const TEAMS: Record<string, Team> = {
     yeison: {
@@ -17,7 +18,7 @@ export const TEAMS: Record<string, Team> = {
         ],
         greeting: "Hola. Soy Yeison, tu Director General IA. Conozco toda la operativa de tu empresa y puedo conectarte con los equipos adecuados. ¿Quieres un resumen general del día o necesitas consultar algo específico?",
         suggestions: ["Dame un resumen general de hoy", "¿Qué equipo está rindiendo mejor?", "Analiza el cuello de botella actual"],
-        avatarImage: "/icon.svg"
+        avatarImage: (Favicon as any)?.src || (Favicon as any)?.default?.src || (typeof Favicon === 'string' ? Favicon : "/icon.svg")
     },
     ventas: {
         id: "ventas",

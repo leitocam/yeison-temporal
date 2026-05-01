@@ -188,7 +188,7 @@ export default function VirtualOffice() {
                 id: Date.now().toString(),
                 teamId: activeTeamId,
                 date: new Date(),
-                title: `Reunión ${activeTeam.name.split(' ')[0]}`,
+                title: `Reunión - ${activeTeam.name}`,
                 preview: "Reunión de sincronización y ajustes...",
                 sessionId: activeTeam.sessionIdPrefix
             }
@@ -267,7 +267,7 @@ export default function VirtualOffice() {
                                                 </div>
                                                 <div className="text-left flex-1 min-w-0">
                                                     <p className={`text-sm font-bold truncate transition-colors ${isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
-                                                        {team.name.split(' ')[0]}
+                                                        {team.name}
                                                     </p>
                                                     <p className="text-[10px] text-muted-foreground truncate">
                                                         {team.role}
@@ -441,7 +441,7 @@ export default function VirtualOffice() {
                                         handleSend()
                                     }
                                 }}
-                                placeholder={`Conversa con ${activeTeam.name.split(' ')[0]}...`}
+                                placeholder={`Conversa con ${activeTeam.name}...`}
                                 rows={1}
                                 className="flex-1 bg-transparent border-none outline-none resize-none text-sm text-foreground placeholder:text-muted-foreground/40 py-3.5 min-h-[48px] max-h-[120px] font-medium"
                                 style={{ scrollbarWidth: "none" }}
@@ -464,10 +464,12 @@ export default function VirtualOffice() {
                                 </button>
                             </div>
                         </div>
-                    </motion.div>
-                </AnimatePresence>
-            </div>
+                    </div>
+                </div>
+            </motion.div>
+        </AnimatePresence>
+    </div>
 
-        </div>
+</div>
     )
 }
