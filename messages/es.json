@@ -661,6 +661,7 @@
             "dashboard": "Panel",
             "agents": "Agentes",
             "settings": "Configuración",
+            "onboarding": "Onboarding",
             "security": "Seguridad",
             "upgradePlan": "Mejorar Plan",
             "planExpires": "Tu plan expira el",

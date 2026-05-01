@@ -19,7 +19,7 @@ import {
   Crown,
   HelpCircle,
   Home,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react"
 import { useState } from "react"
 import { useAuth } from "@/hooks/useAuth"
@@ -59,6 +59,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
 
   const settingsItems = [
     { icon: Settings, label: t("sidebar.settings"), href: "/dashboard/settings" },
+    { icon: Zap, label: t("sidebar.onboarding"), href: "/onboarding" },
     { icon: Lock, label: t("sidebar.security"), href: "/dashboard/security" },
     { icon: HelpCircle, label: "Ayuda", href: "/dashboard/help" },
   ]
