@@ -230,7 +230,11 @@
   transform: translateX(100%);
 }
 
-/* Premium Scrollbar - Visible only on hover */
+/* Premium Scrollbar - Dark theme forced globally */
+:root {
+  color-scheme: dark;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -248,25 +252,25 @@
 
 /* Container hover reveals scrollbar */
 .scroll-premium::-webkit-scrollbar-thumb,
-*:hover> ::-webkit-scrollbar-thumb,
+*:hover > ::-webkit-scrollbar-thumb,
 *:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--brand-cyan-rgb), 0.3);
+  background-color: rgba(163, 255, 0, 0.3); /* brand-cyan */
 }
 
 .scroll-premium::-webkit-scrollbar-thumb:hover,
-*:hover> ::-webkit-scrollbar-thumb:hover,
+*:hover > ::-webkit-scrollbar-thumb:hover,
 *:hover::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--brand-magenta-rgb), 0.45);
+  background-color: rgba(196, 255, 77, 0.45); /* brand-magenta */
 }
 
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+  scrollbar-color: rgba(163, 255, 0, 0.2) transparent;
 }
 
 *:hover {
-  scrollbar-color: rgba(var(--brand-cyan-rgb), 0.3) transparent;
+  scrollbar-color: rgba(163, 255, 0, 0.4) transparent;
 }
 
 /* Counter animation */
