@@ -4,6 +4,9 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Output standalone for optimized hosting (e.g., Hostinger/cPanel)
+  output: 'standalone',
+
   // TypeScript configuration
   typescript: {
     // Set to false in production for stricter checks
