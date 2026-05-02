@@ -195,7 +195,7 @@ export default function LoginPage() {
                                     {t('startTrial')}
                                 </Link>
                             </p>
-                            <p className="mt-4 text-xs">{t('trialInfo')}</p>
+                            {/* <p className="mt-4 text-xs">{t('trialInfo')}</p> */}
                         </div>
                     </div>
                 </div>
