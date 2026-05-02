@@ -27,60 +27,58 @@ export default function PlanSelection({ onSelect, initialPlan }: PlanSelectionPr
         {
             id: 'starter',
             name: t('plans.starter.name'),
-            price: t('plans.starter.price'),
-            period: t('plans.starter.period'),
+            price: billingCycle === 'monthly' ? t('plans.starter.priceMonthly') : t('plans.starter.priceAnnual'),
+            period: billingCycle === 'monthly' ? t('perMonth') : t('perMonthAnnual'),
             description: t('plans.starter.description'),
             features: [
                 t('plans.starter.features.0'),
                 t('plans.starter.features.1'),
-                t('plans.starter.features.2')
+                t('plans.starter.features.2'),
+                t('plans.starter.features.3')
             ],
             highlight: false
         },
         {
-            id: 'sales',
-            name: t('plans.sales.name'),
-            price: billingCycle === 'monthly' ? t('plans.sales.priceMonthly') : t('plans.sales.priceAnnual'),
-            period: billingCycle === 'monthly' ? t('plans.sales.periodMonthly') : t('plans.sales.periodAnnual'),
-            description: t('plans.sales.description'),
+            id: 'duo',
+            name: t('plans.duo.name'),
+            price: billingCycle === 'monthly' ? t('plans.duo.priceMonthly') : t('plans.duo.priceAnnual'),
+            period: billingCycle === 'monthly' ? t('perMonth') : t('perMonthAnnual'),
+            description: t('plans.duo.description'),
             features: [
-                t('plans.sales.features.0'),
-                t('plans.sales.features.1'),
-                t('plans.sales.features.2'),
-                t('plans.sales.features.3'),
-                t('plans.sales.features.4')
+                t('plans.duo.features.0'),
+                t('plans.duo.features.1'),
+                t('plans.duo.features.2'),
+                t('plans.duo.features.3')
             ],
             highlight: false
         },
         {
-            id: 'salesMarketing',
-            name: t('plans.salesMarketing.name'),
-            price: billingCycle === 'monthly' ? t('plans.salesMarketing.priceMonthly') : t('plans.salesMarketing.priceAnnual'),
-            period: billingCycle === 'monthly' ? t('plans.salesMarketing.periodMonthly') : t('plans.salesMarketing.periodAnnual'),
-            description: t('plans.salesMarketing.description'),
+            id: 'pro',
+            name: t('plans.pro.name'),
+            price: billingCycle === 'monthly' ? t('plans.pro.priceMonthly') : t('plans.pro.priceAnnual'),
+            period: billingCycle === 'monthly' ? t('perMonth') : t('perMonthAnnual'),
+            description: t('plans.pro.description'),
             features: [
-                t('plans.salesMarketing.features.0'),
-                t('plans.salesMarketing.features.1'),
-                t('plans.salesMarketing.features.2'),
-                t('plans.salesMarketing.features.3'),
-                t('plans.salesMarketing.features.4'),
-                t('plans.salesMarketing.features.5')
+                t('plans.pro.features.0'),
+                t('plans.pro.features.1'),
+                t('plans.pro.features.2'),
+                t('plans.pro.features.3'),
+                t('plans.pro.features.4')
             ],
             highlight: true
         },
         {
-            id: 'premium',
-            name: t('plans.premium.name'),
-            price: billingCycle === 'monthly' ? t('plans.premium.priceMonthly') : t('plans.premium.priceAnnual'),
-            period: billingCycle === 'monthly' ? t('plans.premium.periodMonthly') : t('plans.premium.periodAnnual'),
-            description: t('plans.premium.description'),
+            id: 'full',
+            name: t('plans.full.name'),
+            price: billingCycle === 'monthly' ? t('plans.full.priceMonthly') : t('plans.full.priceAnnual'),
+            period: billingCycle === 'monthly' ? t('perMonth') : t('perMonthAnnual'),
+            description: t('plans.full.description'),
             features: [
-                t('plans.premium.features.0'),
-                t('plans.premium.features.1'),
-                t('plans.premium.features.2'),
-                t('plans.premium.features.3'),
-                t('plans.premium.features.4'),
-                t('plans.premium.features.5')
+                t('plans.full.features.0'),
+                t('plans.full.features.1'),
+                t('plans.full.features.2'),
+                t('plans.full.features.3'),
+                t('plans.full.features.4')
             ],
             highlight: false
         }
