@@ -8,6 +8,8 @@ import { Zap, Settings, CreditCard, Headphones } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import GradientText from "@/components/ui/GradientText"
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher"
+import Image from "next/image"
+import LogoHorizontal from "@/components/Logos/LogoHorizontal.png"
 import {
     RegisterProgress,
     RegisterForm,
@@ -54,9 +56,9 @@ export default function RegisterPage() {
     }
 
     const highlights = [
-        { icon: Settings, title: t('feature1Title'), desc: t('feature1Desc'), gradient: 'from-blue-500 to-cyan-400' },
-        { icon: CreditCard, title: t('feature2Title'), desc: t('feature2Desc'), gradient: 'from-green-500 to-emerald-400' },
-        { icon: Headphones, title: t('feature3Title'), desc: t('feature3Desc'), gradient: 'from-purple-500 to-pink-400' },
+        { icon: Settings, title: t('feature1Title'), desc: t('feature1Desc'), gradient: 'from-primary/20 to-accent/5' },
+        { icon: CreditCard, title: t('feature2Title'), desc: t('feature2Desc'), gradient: 'from-primary/20 to-accent/5' },
+        { icon: Headphones, title: t('feature3Title'), desc: t('feature3Desc'), gradient: 'from-primary/20 to-accent/5' },
     ]
 
     return (
@@ -104,15 +106,14 @@ export default function RegisterPage() {
 
             {/* Left side - Branding (hidden on steps that need full width) */}
             {(currentStep === 'form') && (
-                <div className="hidden lg:flex lg:w-2/5 flex-col justify-between p-6 xl:p-10 border-r border-border/50 bg-gradient-to-br from-card/40 via-background to-background relative z-10">
+                <div className="hidden lg:flex lg:w-2/5 flex-col justify-between p-6 xl:p-10 border-r border-border bg-background relative z-10">
                     <div className="absolute inset-0 backdrop-blur-sm pointer-events-none" />
 
                     <div className="relative z-10">
-                        <Link href="/" className="flex items-center gap-3 mb-4 group">
-                            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg shadow-primary/40 group-hover:shadow-xl group-hover:shadow-primary/50 transition-all">
-                                <Zap className="w-6 h-6 text-white" />
+                        <Link href="/" className="flex items-center gap-3 mb-4 group w-full">
+                            <div className="relative w-[280px] h-[85px] transition-transform duration-300 group-hover:scale-105">
+                                <Image src={LogoHorizontal} alt="Yeison Logo" fill className="object-contain object-left" priority />
                             </div>
-                            <span className="text-2xl font-black tracking-tight">Yeison</span>
                         </Link>
                     </div>
 
@@ -144,8 +145,8 @@ export default function RegisterPage() {
 
                                         <div className="relative p-4 flex items-center gap-4">
                                             {/* Icon with gradient background */}
-                                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                                                <Icon className="w-6 h-6 text-white" />
+                                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.gradient} border border-primary/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(163,255,0,0.15)] group-hover:scale-110 group-hover:border-primary/50 transition-all duration-300`}>
+                                                <Icon className="w-6 h-6 text-primary" />
                                             </div>
                                             <div className="min-w-0 flex-1">
                                                 <h3 className="font-bold text-base mb-0.5 text-foreground">{item.title}</h3>
@@ -168,20 +169,18 @@ export default function RegisterPage() {
             <div className={`w-full ${currentStep === 'form' ? 'lg:w-3/5' : ''} flex flex-col relative z-10`}>
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 sm:p-6">
-                    <Link href="/" className="flex items-center gap-2 lg:hidden">
-                        <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                            <Zap className="w-5 h-5 text-white" />
+                    <Link href="/" className="flex items-center gap-2 lg:hidden w-full">
+                        <div className="relative w-52 h-[65px]">
+                            <Image src={LogoHorizontal} alt="Yeison Logo" fill className="object-contain object-left" priority />
                         </div>
-                        <span className="text-xl font-black">Yeison</span>
                     </Link>
 
                     {/* Show logo on desktop when not on form step */}
                     {currentStep !== 'form' && (
-                        <Link href="/" className="hidden lg:flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                                <Zap className="w-5 h-5 text-white" />
+                        <Link href="/" className="hidden lg:flex items-center gap-2 w-full">
+                            <div className="relative w-52 h-[65px]">
+                                <Image src={LogoHorizontal} alt="Yeison Logo" fill className="object-contain object-left" priority />
                             </div>
-                            <span className="text-xl font-black">Yeison</span>
                         </Link>
                     )}
 

@@ -13,6 +13,8 @@ export default function LoginForm() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
 
@@ -20,15 +22,32 @@ export default function LoginForm() {
 
   // Clear error when inputs change
   useEffect(() => {
-    if (error) {
-      clearError()
-    }
+    if (error) clearError()
+    if (emailError && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) setEmailError("")
+    if (passwordError && password.length > 0) setPasswordError("")
   }, [email, password]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const validateForm = () => {
+    let isValid = true
+    if (!email.trim()) {
+        setEmailError(t('emailRequired') || 'El correo es obligatorio')
+        isValid = false
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setEmailError(t('emailInvalid') || 'Formato de correo inválido')
+        isValid = false
+    }
+
+    if (!password) {
+        setPasswordError(t('passwordRequired') || 'La contraseña es obligatoria')
+        isValid = false
+    }
+    return isValid
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!email || !password) {
+    if (!validateForm()) {
       return
     }
 
@@ -39,9 +58,19 @@ export default function LoginForm() {
     apiClient.initiateGoogleOAuth()
   }
 
+  const inputClasses = (hasError: boolean) => `
+    w-full px-4 py-3.5 glass border-2 rounded-xl text-foreground 
+    placeholder-muted-foreground focus:outline-none transition-all duration-300
+    ${hasError
+      ? 'border-red-500/50 focus:border-red-500'
+      : 'border-primary/20 focus:border-primary/60 focus:bg-white/10'
+    }
+    disabled:opacity-50 disabled:cursor-not-allowed
+  `
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5 fade-in-up stagger-1">
-      {/* Error Alert */}
+      {/* Error Alert from Server */}
       {error && (
         <div className="flex items-center gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 animate-in fade-in slide-in-from-top-2 duration-300">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
@@ -59,12 +88,16 @@ export default function LoginForm() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
-          autoComplete="email"
           disabled={isLoading}
-          className="w-full px-4 py-3.5 glass border-2 border-primary/20 rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/60 focus:bg-white/10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className={inputClasses(!!emailError)}
           placeholder={t('emailPlaceholder')}
         />
+        {emailError && (
+          <div className="mt-2 flex items-center gap-2 p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 animate-in fade-in slide-in-from-top-1">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <p className="text-xs font-medium">{emailError}</p>
+          </div>
+        )}
       </div>
 
       {/* Password Field */}
@@ -78,10 +111,8 @@ export default function LoginForm() {
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
-            autoComplete="current-password"
             disabled={isLoading}
-            className="w-full px-4 py-3.5 glass border-2 border-primary/20 rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/60 focus:bg-white/10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`${inputClasses(!!passwordError)} pr-12`}
             placeholder={t('passwordPlaceholder')}
           />
           <button
@@ -94,6 +125,12 @@ export default function LoginForm() {
             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
           </button>
         </div>
+        {passwordError && (
+          <div className="mt-2 flex items-center gap-2 p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 animate-in fade-in slide-in-from-top-1">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <p className="text-xs font-medium">{passwordError}</p>
+          </div>
+        )}
       </div>
 
       {/* Remember Me & Forgot Password */}
