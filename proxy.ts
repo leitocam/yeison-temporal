@@ -7,8 +7,8 @@ import { routing } from './i18n/routing';
 // Route Configuration
 // ============================================
 
-const protectedRoutes = ['/dashboard', '/settings', '/profile', '/agents'];
-const authRoutes = ['/login', '/register'];
+const protectedRoutes = ['/dashboard', '/settings', '/profile', '/agents', '/onboarding'];
+const authRoutes = ['/login', '/register', '/forgot-password', '/reset-password'];
 
 // ============================================
 // i18n Middleware
