@@ -1,5 +1,5 @@
 export type ExperienceLevel = 'principiante' | 'intermedio' | 'experto'
-export type CreativeTab = 'hooks' | 'copys' | 'guiones' | 'angulos'
+export type CreativeTab = 'hooks' | 'copys' | 'guiones' | 'angulos' | 'visuales'
 export type GenerationPhase =
   | 'idle'
   | 'analizando'
@@ -91,6 +91,25 @@ export interface FacebookInsightsMetric {
   historicalConversionRate: number
 }
 
+// ─── Content Studio types ─────────────────────────────────────────────────────
+export type StudioPhase = 'idle' | 'analizando' | 'componiendo' | 'aplicando' | 'renderizando' | 'done'
+export type ContentFormat = 'post_square' | 'story_vertical' | 'banner_horizontal' | 'video_short'
+
+export interface ContentStyle {
+  backgroundStyle: 'gradient' | 'blurred_product' | 'solid_dark'
+  overlayText: string
+  includePrice: boolean
+  tagline: string
+}
+
+export interface ContentResult {
+  imageUrl: string
+  videoUrl?: string
+  generationId: string
+  format: ContentFormat
+}
+
+// ─── Wizard state ─────────────────────────────────────────────────────────────
 export interface MarketingWizardState {
   currentStep: number
   experienceLevel: ExperienceLevel | null

@@ -22,6 +22,8 @@ import {
   TrendingUp,
   Megaphone,
   Lock as LockIcon,
+  Wand2,
+  ImagePlay,
 } from "lucide-react"
 import { useState } from "react"
 import { useAuth } from "@/hooks/useAuth"
@@ -136,8 +138,8 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
               const isLocked = isMarketing && !hasMarketingAgent
 
               return (
+                <div key={item.href}>
                 <Link
-                  key={item.href}
                   href={item.href}
                   className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group relative
                                                ${isActive
@@ -198,6 +200,35 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
                     </div>
                   )}
                 </Link>
+
+                {/* Marketing sub-menu — visible when sidebar is open and marketing route is active */}
+                {isMarketing && open && pathname.includes('/dashboard/marketing') && (
+                  <div className="ml-8 mt-1 space-y-0.5">
+                    <Link
+                      href={`/dashboard/marketing`}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${
+                        !pathname.includes('/studio')
+                          ? 'text-[#A3FF00] bg-[#A3FF00]/10'
+                          : 'text-[#555] hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      <Wand2 className="w-3.5 h-3.5" />
+                      Wizard
+                    </Link>
+                    <Link
+                      href={`/dashboard/marketing/studio`}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${
+                        pathname.includes('/studio')
+                          ? 'text-[#A3FF00] bg-[#A3FF00]/10'
+                          : 'text-[#555] hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      <ImagePlay className="w-3.5 h-3.5" />
+                      Estudio
+                    </Link>
+                  </div>
+                )}
+                </div>
               )
             })}
 

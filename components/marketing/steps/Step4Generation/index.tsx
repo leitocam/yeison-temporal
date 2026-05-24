@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { Heart, X, Loader2 } from 'lucide-react'
+import { Heart, X, Loader2, ImagePlay, ExternalLink } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import * as Tabs from '@radix-ui/react-tabs'
 import { useMarketingStore } from '../../context/useMarketingStore'
 import { StepHeader } from '../../shared/StepHeader'
@@ -22,6 +24,7 @@ const TABS: { key: CreativeTab; label: string }[] = [
   { key: 'copys', label: 'Copys' },
   { key: 'guiones', label: 'Guiones' },
   { key: 'angulos', label: 'Ángulos' },
+  { key: 'visuales', label: '🎨 Visuales' },
 ]
 
 const MOCK_CREATIVES: CreativeCard[] = [
@@ -43,6 +46,9 @@ export function Step4Generation() {
   const discardCreative = useMarketingStore((s) => s.discardCreative)
   const nextStep = useMarketingStore((s) => s.nextStep)
   const prevStep = useMarketingStore((s) => s.prevStep)
+  const pathname = usePathname()
+  const localeMatch = pathname.match(/^\/([a-z]{2})\//)
+  const locale = localeMatch ? localeMatch[1] : 'es'
 
   const [activeTab, setActiveTab] = useState<CreativeTab>('hooks')
   const [phaseIndex, setPhaseIndex] = useState(0)
@@ -122,7 +128,7 @@ export function Step4Generation() {
               ))}
             </Tabs.List>
 
-            {TABS.map((tab) => (
+            {TABS.filter((t) => t.key !== 'visuales').map((tab) => (
               <Tabs.Content key={tab.key} value={tab.key}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <AnimatePresence>
@@ -161,6 +167,69 @@ export function Step4Generation() {
                 </div>
               </Tabs.Content>
             ))}
+
+            {/* Visuales tab — images/videos from Content Studio */}
+            <Tabs.Content value="visuales">
+              {(() => {
+                const visualCreatives = creatives.filter((c) => c.tab === 'visuales' && !c.isDiscarded)
+                if (visualCreatives.length === 0) {
+                  return (
+                    <div className="text-center py-12 bg-[#0A0A0A] border border-dashed border-[#1A1A1A] rounded-2xl">
+                      <ImagePlay className="w-10 h-10 text-[#333] mx-auto mb-3" />
+                      <p className="text-[#555] text-sm mb-4">Aún no tienes visuales generados.</p>
+                      <Link
+                        href={`/${locale}/dashboard/marketing/studio`}
+                        className="inline-flex items-center gap-2 text-[#A3FF00] text-sm font-medium border border-[#A3FF00]/30 px-4 py-2 rounded-xl hover:bg-[#A3FF00]/10 transition-all"
+                      >
+                        <ImagePlay className="w-4 h-4" />
+                        Ir al Estudio de Contenido
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  )
+                }
+                return (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <AnimatePresence>
+                      {visualCreatives.map((creative, i) => {
+                        // text format: "[Visual] ProductName — Post 1:1"
+                        const label = creative.text.replace('[Visual] ', '')
+                        return (
+                          <motion.div
+                            key={creative.id}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8, filter: 'blur(8px)' }}
+                            transition={{ delay: i * 0.08 }}
+                          >
+                            <NeonCard glow className="p-3 space-y-3">
+                              <div className="w-full aspect-square rounded-xl bg-[#111] border border-[#1A1A1A] overflow-hidden flex items-center justify-center">
+                                <ImagePlay className="w-8 h-8 text-[#A3FF00]/40" />
+                              </div>
+                              <p className="text-xs text-[#ADADAD] font-mono line-clamp-2">{label}</p>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => toggleFavorite(creative.id)}
+                                  className={`p-1.5 rounded-lg border transition-all ${creative.isFavorite ? 'border-[#A3FF00] text-[#A3FF00] bg-[#A3FF00]/10' : 'border-[#1A1A1A] text-[#444] hover:text-[#A3FF00]'}`}
+                                >
+                                  <Heart className="w-3.5 h-3.5" fill={creative.isFavorite ? 'currentColor' : 'none'} />
+                                </button>
+                                <button
+                                  onClick={() => discardCreative(creative.id)}
+                                  className="p-1.5 rounded-lg border border-[#1A1A1A] text-[#444] hover:text-red-400 transition-all"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </NeonCard>
+                          </motion.div>
+                        )
+                      })}
+                    </AnimatePresence>
+                  </div>
+                )
+              })()}
+            </Tabs.Content>
           </Tabs.Root>
 
           <div className="flex justify-between mt-8">
