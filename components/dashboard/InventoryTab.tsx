@@ -20,6 +20,7 @@ import {
 import { apiClient, InventoryItem } from "@/lib/api-client"
 import InventoryImageUploader from "@/components/dashboard/InventoryImageUploader"
 import { useApi, useMutation } from "@/hooks/useApi"
+import * as Dialog from '@radix-ui/react-dialog'
 
 interface InventoryForm {
     product_name: string
@@ -48,6 +49,7 @@ export default function InventoryTab() {
     const [pendingFile, setPendingFile] = useState<File | null>(null)
     const [pendingPreview, setPendingPreview] = useState<string | null>(null)
     const [adjustments, setAdjustments] = useState<Record<number, number>>({})
+    const [deleteTarget, setDeleteTarget] = useState<InventoryItem | null>(null)
     const pendingFileInputRef = useRef<HTMLInputElement | null>(null)
 
     const uploaderItemId = editingItem?.id ?? savedItemId
@@ -167,8 +169,8 @@ export default function InventoryTab() {
     }
 
     const handleDelete = async (id: number) => {
-        if (!window.confirm(t("inventory.confirmDelete"))) return
         await deleteItem(id)
+        setDeleteTarget(null)
         execute()
     }
 
@@ -184,6 +186,7 @@ export default function InventoryTab() {
     }
 
     return (
+        <>
         <div className="space-y-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
@@ -382,7 +385,7 @@ export default function InventoryTab() {
                                                 {t("inventory.edit")}
                                             </button>
                                             <button
-                                                onClick={() => handleDelete(item.id)}
+                                                onClick={() => setDeleteTarget(item)}
                                                 disabled={isDeleting}
                                                 className="inline-flex items-center gap-1 rounded-lg border border-red-500/20 px-2.5 py-1.5 text-xs text-red-500 hover:bg-red-500/10"
                                             >
@@ -584,5 +587,40 @@ export default function InventoryTab() {
                 </form>
             </div>
         </div>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog.Root open={!!deleteTarget} onOpenChange={(open: boolean) => { if (!open) setDeleteTarget(null) }}>
+            <Dialog.Portal>
+                <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+                <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-sm bg-[#0A0A0A] border border-[#1A1A1A] rounded-2xl p-6 shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="p-2 bg-red-500/10 rounded-xl">
+                            <Trash2 className="w-5 h-5 text-red-500" />
+                        </div>
+                        <Dialog.Title className="text-base font-bold text-white">
+                            Eliminar producto
+                        </Dialog.Title>
+                    </div>
+                    <Dialog.Description className="text-sm text-[#666] mb-6">
+                        ¿Estás seguro de que quieres eliminar <span className="text-[#ADADAD] font-medium">"{deleteTarget?.product_name}"</span>? Esta acción no se puede deshacer.
+                    </Dialog.Description>
+                    <div className="flex gap-3">
+                        <Dialog.Close asChild>
+                            <button className="flex-1 py-2.5 bg-[#111] border border-[#1A1A1A] text-[#ADADAD] rounded-xl text-sm font-medium hover:text-white transition-colors">
+                                Cancelar
+                            </button>
+                        </Dialog.Close>
+                        <button
+                            onClick={() => deleteTarget && handleDelete(deleteTarget.id)}
+                            disabled={isDeleting}
+                            className="flex-1 py-2.5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm font-medium hover:bg-red-500/20 transition-colors disabled:opacity-50"
+                        >
+                            {isDeleting ? 'Eliminando...' : 'Eliminar'}
+                        </button>
+                    </div>
+                </Dialog.Content>
+            </Dialog.Portal>
+        </Dialog.Root>
+        </>
     )
 }

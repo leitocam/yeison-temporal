@@ -74,7 +74,7 @@ export default function SmartAlerts({ alerts }: SmartAlertsProps) {
         }
     ]
 
-    const [visibleAlerts, setVisibleAlerts] = useState(alerts || defaultAlerts)
+    const [visibleAlerts, setVisibleAlerts] = useState(alerts || [])
 
     const dismissAlert = (id: string) => {
         setVisibleAlerts(prev => prev.filter(a => a.id !== id))

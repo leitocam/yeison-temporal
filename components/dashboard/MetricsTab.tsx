@@ -101,13 +101,35 @@ export default function MetricsTab() {
     const [timeRange, setTimeRange] = useState("7d")
 
     const { data: metrics, isLoading, error, execute } = useApi<DashboardMetricsResponse>(
-        () => apiClient.get("/dashboard/metrics")
+        () => apiClient.get(`/dashboard/metrics?period=${timeRange}`)
     )
 
+    // Re-fetch when timeRange changes
     useEffect(() => {
         execute()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [timeRange])
+
+    const handleExportCSV = () => {
+        if (!metrics) return
+        const rows = [
+            ['Métrica', 'Valor', 'Cambio %'],
+            ['Leads hoy', metrics.leads_entrantes_hoy.value, metrics.leads_entrantes_hoy.change_percent ?? 0],
+            ['Conversaciones activas', metrics.conversaciones_activas.value, metrics.conversaciones_activas.change_percent ?? 0],
+            ['Ventas cerradas hoy', metrics.ventas_cerradas_hoy.value, metrics.ventas_cerradas_hoy.change_percent ?? 0],
+            ['Valor ventas hoy', metrics.valor_ventas_hoy.value, metrics.valor_ventas_hoy.change_percent ?? 0],
+            ['Leads calificados hoy', metrics.leads_calificados_hoy.value, metrics.leads_calificados_hoy.change_percent ?? 0],
+            ['Pipeline total', metrics.valor_pipeline, ''],
+        ]
+        const csv = rows.map((r) => r.join(',')).join('\n')
+        const blob = new Blob([csv], { type: 'text/csv' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `yeison-metrics-${timeRange}-${new Date().toISOString().slice(0, 10)}.csv`
+        a.click()
+        URL.revokeObjectURL(url)
+    }
 
     const buildTrend = (value: number, changePercent?: number, points: number = 12) => {
         if (!Number.isFinite(value) || points < 2) return [value]
@@ -210,9 +232,13 @@ export default function MetricsTab() {
                         Filtros
                     </button>
 
-                    <button className="flex items-center gap-2 px-3 py-2 rounded-xl bg-background/50 border border-primary/10 text-xs font-medium hover:bg-primary/10 transition-colors">
+                    <button
+                        onClick={handleExportCSV}
+                        disabled={!metrics}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-background/50 border border-primary/10 text-xs font-medium hover:bg-primary/10 transition-colors disabled:opacity-40"
+                    >
                         <Download className="w-3 h-3" />
-                        Exportar
+                        Exportar CSV
                     </button>
 
                     <button

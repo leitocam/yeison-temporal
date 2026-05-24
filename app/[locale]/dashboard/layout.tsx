@@ -1,12 +1,18 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import DashboardSidebar from "@/components/dashboard-sidebar"
 import Topbar from "@/components/dashboard-layout/Topbar"
 import { OnboardingAlert } from "@/components/dashboard"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
+
+  // Sync sidebar state with localStorage after mount (avoids hydration mismatch)
+  useEffect(() => {
+    const stored = localStorage.getItem('sidebar_open')
+    if (stored !== null) setSidebarOpen(stored !== 'false')
+  }, [])
 
   return (
     <div className="min-h-screen bg-background text-foreground">

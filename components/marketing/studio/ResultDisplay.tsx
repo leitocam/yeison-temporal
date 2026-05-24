@@ -1,7 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'motion/react'
-import { Download, RefreshCw, PlusCircle, ExternalLink } from 'lucide-react'
+import { Download, RefreshCw, PlusCircle, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
@@ -35,6 +36,33 @@ export function ResultDisplay({ result, productName, onRegenerate }: ResultDispl
   const pathname = usePathname()
   const localeMatch = pathname.match(/^\/([a-z]{2})\//)
   const locale = localeMatch ? localeMatch[1] : 'es'
+  const [downloading, setDownloading] = useState(false)
+
+  const isPlaceholder = result.imageUrl.includes('placehold.co')
+
+  const handleDownload = async () => {
+    if (isPlaceholder) {
+      toast.info('Imagen de ejemplo — genera un resultado real para descargar')
+      return
+    }
+    setDownloading(true)
+    try {
+      const res = await fetch(result.imageUrl)
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${productName.replace(/\s+/g, '_')}_${result.format}.${isVideo ? 'mp4' : 'png'}`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    } catch {
+      toast.error('No se pudo descargar la imagen. Intenta de nuevo.')
+    } finally {
+      setDownloading(false)
+    }
+  }
 
   const handleAddToCampaign = () => {
     appendCreative({
@@ -104,16 +132,15 @@ export function ResultDisplay({ result, productName, onRegenerate }: ResultDispl
 
       {/* Actions */}
       <div className="grid grid-cols-2 gap-3">
-        <a
-          href={result.imageUrl}
-          download={`${productName.replace(/\s+/g, '_')}_${result.format}.${isVideo ? 'mp4' : 'png'}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 py-3 bg-[#0A0A0A] border border-[#1A1A1A] rounded-xl text-[#ADADAD] text-sm font-medium hover:border-[#333] hover:text-white transition-all"
+        <button
+          onClick={handleDownload}
+          disabled={downloading}
+          title={isPlaceholder ? 'Imagen de ejemplo — genera un resultado real para descargar' : 'Descargar imagen'}
+          className="flex items-center justify-center gap-2 py-3 bg-[#0A0A0A] border border-[#1A1A1A] rounded-xl text-[#ADADAD] text-sm font-medium hover:border-[#333] hover:text-white transition-all disabled:opacity-50"
         >
-          <Download className="w-4 h-4" />
-          Descargar
-        </a>
+          {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+          {isPlaceholder ? 'Ejemplo' : 'Descargar'}
+        </button>
 
         <button
           onClick={handleAddToCampaign}

@@ -6,6 +6,7 @@ import { Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle } from "lucide-react"
 import { useAuth } from "@/hooks/useAuth"
 import { apiClient } from "@/lib/api-client"
 import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/routing"
 import GradientButton from "@/components/ui/GradientButton"
 
 export default function LoginForm() {
@@ -147,9 +148,9 @@ export default function LoginForm() {
             {t('rememberMe') || 'Recordarme'}
           </span>
         </label>
-        <a href="#" className="text-sm text-accent hover:text-primary transition font-medium">
+        <Link href="/forgot-password" className="text-sm text-accent hover:text-primary transition font-medium">
           {t('forgotPassword') || '¿Olvidaste tu contraseña?'}
-        </a>
+        </Link>
       </div>
 
       {/* Submit Button */}

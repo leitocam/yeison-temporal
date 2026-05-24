@@ -54,6 +54,14 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
   const { logout } = useAuth()
   const hasMarketingAgent = useMarketingAgentStatus()
 
+  // Persist sidebar open state across reloads
+  const handleSetOpen = (value: boolean) => {
+    setOpen(value)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sidebar_open', String(value))
+    }
+  }
+
   const handleLogout = async () => {
     await logout()
   }
@@ -84,8 +92,8 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
     <>
       {/* Mobile Menu Button */}
       <button
-        onClick={() => setOpen(!open)}
-        className="lg:hidden fixed top-5 left-4 z-50 p-2.5 bg-background/80 backdrop-blur-xl border border-primary/20 
+        onClick={() => handleSetOpen(!open)}
+        className="lg:hidden fixed top-5 left-4 z-50 p-2.5 bg-background/80 backdrop-blur-xl border border-primary/20
                            hover:border-primary/40 hover:bg-primary/5 rounded-xl transition-all duration-300 shadow-lg shadow-black/10"
       >
         <Menu className="w-5 h-5 text-foreground" />
@@ -118,7 +126,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
 
             {/* Collapse Button - Desktop */}
             <button
-              onClick={() => setOpen(!open)}
+              onClick={() => handleSetOpen(!open)}
               className={`hidden lg:flex p-2 rounded-lg hover:bg-primary/10 transition-all duration-300 z-10
                                        ${open ? "" : "absolute -right-3 top-7 bg-background border border-primary/20 shadow-lg"}`}
             >
@@ -232,23 +240,16 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
               )
             })}
 
-            {/* Quick Stats - when expanded */}
+            {/* Quick Stats placeholder — connect to /dashboard/metrics when available */}
             {open && (
               <div className="mx-3 mt-4 p-3 rounded-xl bg-primary/5 border border-primary/10">
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-2">
                   <TrendingUp className="w-4 h-4 text-emerald-500" />
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Hoy</span>
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Dashboard</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-center">
-                  <div className="p-2 rounded-lg bg-background/50">
-                    <p className="text-lg font-black">47</p>
-                    <p className="text-[9px] text-muted-foreground uppercase">Leads</p>
-                  </div>
-                  <div className="p-2 rounded-lg bg-background/50">
-                    <p className="text-lg font-black text-emerald-500">3</p>
-                    <p className="text-[9px] text-muted-foreground uppercase">Ventas</p>
-                  </div>
-                </div>
+                <p className="text-[10px] text-muted-foreground/60">
+                  Ve a <span className="text-primary/70">Métricas</span> para ver estadísticas detalladas.
+                </p>
               </div>
             )}
 
@@ -304,7 +305,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
 
                 {expandUpgrade && (
                   <div className="mt-3 pt-3 border-t border-primary/10 space-y-2">
-                    <p className="text-xs text-muted-foreground">{t("sidebar.planExpires")} Mar 15, 2025</p>
+                    <p className="text-xs text-muted-foreground">Plan activo</p>
                     <Link
                       href="/pricing"
                       className="block text-xs text-primary hover:text-accent transition-colors font-medium"
@@ -336,7 +337,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
       {open && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
-          onClick={() => setOpen(false)}
+          onClick={() => handleSetOpen(false)}
         />
       )}
     </>

@@ -304,24 +304,11 @@ export default function AgentsTab() {
                                     </div>
                                 </div>
 
-                                {/* Metrics Summary */}
-                                <div className="px-6 py-4 bg-white/5 grid grid-cols-4 gap-2">
-                                    <div className="text-center">
-                                        <p className="text-xs text-muted-foreground mb-1">{t("metrics.performance")}</p>
-                                        <p className="text-lg font-black text-primary">--</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <p className="text-xs text-muted-foreground mb-1">{t("metrics.calls")}</p>
-                                        <p className="text-lg font-black">--</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <p className="text-xs text-muted-foreground mb-1">{t("metrics.success")}</p>
-                                        <p className="text-lg font-black text-emerald-500">--</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <p className="text-xs text-muted-foreground mb-1">{t("metrics.avgTime")}</p>
-                                        <p className="text-lg font-black">--</p>
-                                    </div>
+                                {/* Metrics — available once /agents/{id}/metrics endpoint is ready */}
+                                <div className="px-6 py-3 bg-white/5 flex items-center justify-center">
+                                    <p className="text-[10px] text-muted-foreground/40 font-mono">
+                                        Métricas del agente disponibles próximamente
+                                    </p>
                                 </div>
 
                                 {/* Expanded Configuration Menu */}

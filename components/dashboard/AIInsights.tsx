@@ -127,7 +127,8 @@ export default function AIInsights({ insights }: AIInsightsProps) {
         }
     ]
 
-    const displayInsights = insights || defaultInsights
+    const displayInsights = insights ?? []
+    const isEmpty = displayInsights.length === 0
 
     return (
         <div className="rounded-2xl bg-primary/5 border border-primary/10 overflow-hidden">
@@ -141,45 +142,45 @@ export default function AIInsights({ insights }: AIInsightsProps) {
                 </div>
             </div>
 
-            <div className="divide-y divide-primary/5">
-                {displayInsights.map((insight, index) => {
-                    const config = insightConfig[insight.type]
-                    const Icon = config.icon
+            {isEmpty ? (
+                <div className="flex flex-col items-center justify-center py-12 px-4 text-center gap-2">
+                    <Sparkles className="w-8 h-8 text-muted-foreground/30" />
+                    <p className="text-sm text-muted-foreground">Sin recomendaciones aún.</p>
+                    <p className="text-[11px] text-muted-foreground/60">La IA generará insights a medida que lleguen más datos.</p>
+                </div>
+            ) : (
+                <div className="divide-y divide-primary/5">
+                    {displayInsights.map((insight) => {
+                        const config = insightConfig[insight.type]
+                        const Icon = config.icon
 
-                    return (
-                        <div
-                            key={insight.id}
-                            className={`p-4 hover:bg-primary/5 transition-colors border-l-2 ${config.borderColor}`}
-                        >
-                            <div className="flex items-start gap-3">
-                                <ConfidenceRing percent={insight.confidence} />
+                        return (
+                            <div
+                                key={insight.id}
+                                className={`p-4 hover:bg-primary/5 transition-colors border-l-2 ${config.borderColor}`}
+                            >
+                                <div className="flex items-start gap-3">
+                                    <ConfidenceRing percent={insight.confidence} />
 
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <Icon className={`w-3.5 h-3.5 ${config.color}`} />
-                                        <p className="text-xs font-bold">{insight.title}</p>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <Icon className={`w-3.5 h-3.5 ${config.color}`} />
+                                            <p className="text-xs font-bold">{insight.title}</p>
+                                        </div>
+                                        <p className="text-[11px] text-muted-foreground mb-3">
+                                            {insight.description}
+                                        </p>
+                                        <button className={`flex items-center gap-1.5 text-[11px] font-semibold ${config.color} hover:underline`}>
+                                            {insight.actionLabel}
+                                            <ArrowRight className="w-3 h-3" />
+                                        </button>
                                     </div>
-                                    <p className="text-[11px] text-muted-foreground mb-3">
-                                        {insight.description}
-                                    </p>
-                                    <button className={`flex items-center gap-1.5 text-[11px] font-semibold ${config.color} hover:underline`}>
-                                        {insight.actionLabel}
-                                        <ArrowRight className="w-3 h-3" />
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    )
-                })}
-            </div>
-
-            {/* CTA */}
-            <div className="p-4 bg-gradient-to-r from-primary/10 to-accent/10 border-t border-primary/10">
-                <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-sm font-bold hover:shadow-lg hover:shadow-primary/30 transition-all">
-                    <Zap className="w-4 h-4" />
-                    Optimizar ventas ahora
-                </button>
-            </div>
+                        )
+                    })}
+                </div>
+            )}
         </div>
     )
 }

@@ -291,15 +291,42 @@ export const tokenStorage = {
 class ApiClient {
   private baseUrl: string;
   private timeout: number;
+  private isRefreshing = false;
 
   constructor() {
     this.baseUrl = API_BASE_URL;
     this.timeout = API_TIMEOUT;
   }
 
+  private async tryRefreshToken(): Promise<boolean> {
+    if (this.isRefreshing) return false;
+    const refreshToken = tokenStorage.getRefreshToken();
+    if (!refreshToken) return false;
+
+    this.isRefreshing = true;
+    try {
+      const data = await this.request<RefreshTokenResponse>(
+        '/auth/refresh',
+        {
+          method: 'POST',
+          body: JSON.stringify({ refresh_token: refreshToken }),
+          headers: { 'Content-Type': 'application/json' },
+          // internal flag consumed below — prevents recursive refresh on this call
+          ...(({ _skipRefresh: true }) as any),
+        }
+      );
+      tokenStorage.setAccessToken(data.access_token);
+      return true;
+    } catch {
+      return false;
+    } finally {
+      this.isRefreshing = false;
+    }
+  }
+
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit & { _skipRefresh?: boolean } = {}
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
     const token = tokenStorage.getAccessToken();
@@ -334,11 +361,20 @@ class ApiClient {
           details: errorData.details,
         };
 
-        // Handle 401 Unauthorized - clear tokens and redirect
+        // Handle 401 Unauthorized — try refresh first, then redirect
         if (response.status === 401) {
+          const skipRefresh = (options as any)._skipRefresh;
+          if (!skipRefresh) {
+            const refreshed = await this.tryRefreshToken();
+            if (refreshed) {
+              // Retry original request with new token
+              return this.request<T>(endpoint, { ...options, _skipRefresh: true } as any);
+            }
+          }
           tokenStorage.clearAll();
           if (typeof window !== 'undefined') {
-            window.location.href = '/login';
+            const prefix = window.location.pathname.startsWith('/en') ? '/en' : '';
+            window.location.href = `${prefix}/login`;
           }
         }
 

@@ -117,7 +117,8 @@ export default function ActivityFeed({ activities, maxItems = 6 }: ActivityFeedP
         }
     ]
 
-    const displayActivities = (activities || defaultActivities).slice(0, maxItems)
+    const displayActivities = (activities ?? []).slice(0, maxItems)
+    const isEmpty = displayActivities.length === 0
 
     return (
         <div className="rounded-2xl bg-primary/5 border border-primary/10 overflow-hidden">
@@ -126,11 +127,15 @@ export default function ActivityFeed({ activities, maxItems = 6 }: ActivityFeedP
                     <h3 className="font-bold text-sm">Actividad Reciente</h3>
                     <p className="text-[10px] text-muted-foreground">Eventos importantes en tiempo real</p>
                 </div>
-                <button className="text-[10px] text-primary hover:underline font-medium">
-                    Ver todo
-                </button>
             </div>
 
+            {isEmpty ? (
+                <div className="flex flex-col items-center justify-center py-12 px-4 text-center gap-2">
+                    <Clock className="w-8 h-8 text-muted-foreground/30" />
+                    <p className="text-sm text-muted-foreground">Aún no hay actividad registrada.</p>
+                    <p className="text-[11px] text-muted-foreground/60">Los eventos aparecerán aquí en tiempo real.</p>
+                </div>
+            ) : (
             <div className="divide-y divide-primary/5">
                 {displayActivities.map((activity, index) => {
                     const config = activityConfig[activity.type]
@@ -163,6 +168,7 @@ export default function ActivityFeed({ activities, maxItems = 6 }: ActivityFeedP
                     )
                 })}
             </div>
+            )}
         </div>
     )
 }
