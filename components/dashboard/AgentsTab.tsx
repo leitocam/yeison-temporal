@@ -1,11 +1,18 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useTranslations } from "next-intl"
-import { Bot, Settings, Play, BarChart3, Users, MessageSquare, TrendingUp, AlertCircle, Loader2, ChevronDown, Edit, Power, Save, X } from "lucide-react"
+import { Bot, Settings, Play, BarChart3, Users, MessageSquare, TrendingUp, AlertCircle, Loader2, ChevronDown, Edit, Power, Save, X, CheckCircle, ExternalLink } from "lucide-react"
 import { useApi } from "@/hooks/useApi"
 import { apiClient, AgentInstance } from "@/lib/api-client"
 import QRUploader from "./QRUploader"
+import CreateSalesAgentDialog from "./CreateSalesAgentDialog"
+
+interface TelegramConnectState {
+    connecting: boolean
+    deepLink: string | null
+    error: boolean
+}
 
 interface Agent {
     id: string
@@ -34,6 +41,9 @@ export default function AgentsTab() {
     const [expandedAgent, setExpandedAgent] = useState<string | null>(null)
     const [editingAgent, setEditingAgent] = useState<string | null>(null)
     const [configForm, setConfigForm] = useState<any>({})
+    const [createDialogOpen, setCreateDialogOpen] = useState(false)
+    const [telegramState, setTelegramState] = useState<Record<string, TelegramConnectState>>({})
+    const pollRefs = useRef<Record<string, ReturnType<typeof setInterval>>>({})
 
     const { data: agentInstances, isLoading, error, execute } = useApi<AgentInstance[]>(
         () => apiClient.get("/agents?skip=0&limit=100")
@@ -42,6 +52,13 @@ export default function AgentsTab() {
     useEffect(() => {
         execute()
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    // Clear all polling intervals on unmount
+    useEffect(() => {
+        return () => {
+            Object.values(pollRefs.current).forEach(clearInterval)
+        }
     }, [])
 
     // Transform API data to Agent format
@@ -74,6 +91,68 @@ export default function AgentsTab() {
             execute()
         } catch (err) {
             console.error('Failed to update configuration:', err)
+        }
+    }
+
+    const handleConnectTelegram = async (agentId: string) => {
+        setTelegramState(prev => ({ ...prev, [agentId]: { connecting: true, deepLink: null, error: false } }))
+        try {
+            const res: { deep_link: string } = await apiClient.post(
+                `/agents/${agentId}/integrations/telegram/connect-token`, {}
+            )
+            setTelegramState(prev => ({ ...prev, [agentId]: { connecting: true, deepLink: res.deep_link, error: false } }))
+            window.open(res.deep_link, "_blank", "noopener,noreferrer")
+
+            // Poll every 3s for up to 5 minutes to detect when the bot registers the chat
+            const interval = setInterval(async () => {
+                try {
+                    const cfg: { enabled: boolean; supervisor_chat_id: string | null } =
+                        await apiClient.get(`/agents/${agentId}/integrations/telegram`)
+                    if (cfg.supervisor_chat_id) {
+                        clearInterval(interval)
+                        delete pollRefs.current[agentId]
+                        setTelegramState(prev => ({ ...prev, [agentId]: { connecting: false, deepLink: null, error: false } }))
+                        execute() // refresh agent list so configForm reloads
+                    }
+                } catch {
+                    // ignore poll errors — keep polling
+                }
+            }, 3000)
+
+            pollRefs.current[agentId] = interval
+
+            // Stop polling after 5 minutes regardless
+            setTimeout(() => {
+                if (pollRefs.current[agentId]) {
+                    clearInterval(pollRefs.current[agentId])
+                    delete pollRefs.current[agentId]
+                    setTelegramState(prev => {
+                        if (prev[agentId]?.connecting) {
+                            return { ...prev, [agentId]: { connecting: false, deepLink: null, error: false } }
+                        }
+                        return prev
+                    })
+                }
+            }, 300_000)
+
+        } catch {
+            setTelegramState(prev => ({ ...prev, [agentId]: { connecting: false, deepLink: null, error: true } }))
+        }
+    }
+
+    const handleDisconnectTelegram = async (agentId: string) => {
+        try {
+            await apiClient.delete(`/agents/${agentId}/integrations/telegram`)
+            setConfigForm((prev: any) => ({
+                ...prev,
+                integrations: {
+                    ...prev.integrations,
+                    telegram: { enabled: false, supervisor_chat_id: null },
+                },
+            }))
+            execute()
+        } catch (err) {
+            console.error('Failed to disconnect Telegram:', err)
         }
     }
 
@@ -118,6 +197,13 @@ export default function AgentsTab() {
                     <Bot className="w-16 h-16 text-primary mx-auto mb-4" />
                     <h3 className="text-2xl font-bold mb-2">{t("agents.noAgents")}</h3>
                     <p className="text-muted-foreground mb-6">{t("agents.noAgentsDescription")}</p>
+                    <button
+                        onClick={() => setCreateDialogOpen(true)}
+                        className="px-6 py-3 rounded-lg font-semibold bg-primary/30 hover:bg-primary/40 transition-colors inline-flex items-center gap-2"
+                    >
+                        <MessageSquare className="w-4 h-4" />
+                        {t("agents.createSalesAgent.button")}
+                    </button>
                 </div>
             )}
 
@@ -461,6 +547,73 @@ export default function AgentsTab() {
                                                     />
                                                 </div>
 
+                                                {/* Telegram Supervisor */}
+                                                {(() => {
+                                                    const tgState = telegramState[agent.id]
+                                                    const isConnected = !!configForm?.integrations?.telegram?.supervisor_chat_id
+                                                    const isConnecting = tgState?.connecting
+                                                    const hasError = tgState?.error
+                                                    const deepLink = tgState?.deepLink
+                                                    return (
+                                                        <div className="space-y-3 p-4 bg-white/5 border border-primary/20 rounded-xl">
+                                                            <div>
+                                                                <p className="text-sm font-semibold">{t("agents.config.telegramSupervisor")}</p>
+                                                                <p className="text-xs text-muted-foreground mt-0.5">{t("agents.config.telegramSupervisorDescription")}</p>
+                                                            </div>
+
+                                                            {isConnected && !isConnecting ? (
+                                                                <div className="space-y-2">
+                                                                    <div className="flex items-center gap-2 text-sm text-green-400">
+                                                                        <CheckCircle className="w-4 h-4 shrink-0" />
+                                                                        <span className="font-semibold">{t("agents.config.telegramConnected")}</span>
+                                                                    </div>
+                                                                    <p className="text-xs text-muted-foreground">{t("agents.config.telegramConnectedHint")}</p>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => handleDisconnectTelegram(agent.id)}
+                                                                        className="text-xs text-red-400 hover:text-red-300 transition-colors underline"
+                                                                    >
+                                                                        {t("agents.config.telegramDisconnect")}
+                                                                    </button>
+                                                                </div>
+                                                            ) : isConnecting ? (
+                                                                <div className="space-y-3">
+                                                                    <div className="flex items-center gap-2 text-sm text-primary">
+                                                                        <Loader2 className="w-4 h-4 animate-spin shrink-0" />
+                                                                        <span>{t("agents.config.telegramConnecting")}</span>
+                                                                    </div>
+                                                                    <p className="text-xs text-muted-foreground">{t("agents.config.telegramConnectingHint")}</p>
+                                                                    {deepLink && (
+                                                                        <a
+                                                                            href={deepLink}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 bg-primary/20 hover:bg-primary/30 border border-primary/30 rounded-lg transition-colors"
+                                                                        >
+                                                                            <ExternalLink className="w-3 h-3" />
+                                                                            {t("agents.config.telegramOpenLink")}
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            ) : (
+                                                                <div className="space-y-2">
+                                                                    {hasError && (
+                                                                        <p className="text-xs text-red-400">{t("agents.config.telegramConnectError")}</p>
+                                                                    )}
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => handleConnectTelegram(agent.id)}
+                                                                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-primary/30 hover:bg-primary/40 border border-primary/30 rounded-lg transition-colors"
+                                                                    >
+                                                                        <ExternalLink className="w-4 h-4" />
+                                                                        {t("agents.config.telegramConnectButton")}
+                                                                    </button>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    )
+                                                })()}
+
                                                 {/* Sales Process */}
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                     <div className="space-y-2">
@@ -660,7 +813,7 @@ export default function AgentsTab() {
                 </div>
             )}
 
-            {/* Agent Configuration Card */}
+            {/* Create Agent CTA */}
             <div className="fade-in-up glass rounded-2xl p-8 border-2 border-primary/20 hover:border-primary/40 transition-all duration-300">
                 <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-xl bg-linear-to-br from-primary/30 to-accent/30 flex items-center justify-center">
@@ -672,24 +825,27 @@ export default function AgentsTab() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <button className="p-6 glass rounded-xl border-2 border-primary/20 hover:border-primary/40 hover:bg-white/10 transition-all group">
-                        <Users className="w-8 h-8 text-primary mb-3 group-hover:scale-110 transition-transform" />
-                        <p className="font-bold text-sm mb-1">{t("agents.agentTypes.leadQualification")}</p>
-                        <p className="text-xs text-muted-foreground">{t("agents.agentTypes.leadQualificationDesc")}</p>
-                    </button>
-                    <button className="p-6 glass rounded-xl border-2 border-primary/20 hover:border-primary/40 hover:bg-white/10 transition-all group">
-                        <MessageSquare className="w-8 h-8 text-accent mb-3 group-hover:scale-110 transition-transform" />
-                        <p className="font-bold text-sm mb-1">{t("agents.agentTypes.outreachAgent")}</p>
-                        <p className="text-xs text-muted-foreground">{t("agents.agentTypes.outreachAgentDesc")}</p>
-                    </button>
-                    <button className="p-6 glass rounded-xl border-2 border-primary/20 hover:border-primary/40 hover:bg-white/10 transition-all group">
-                        <BarChart3 className="w-8 h-8 text-emerald-500 mb-3 group-hover:scale-110 transition-transform" />
-                        <p className="font-bold text-sm mb-1">{t("agents.agentTypes.analyticsAgent")}</p>
-                        <p className="text-xs text-muted-foreground">{t("agents.agentTypes.analyticsAgentDesc")}</p>
-                    </button>
-                </div>
+                <button
+                    onClick={() => setCreateDialogOpen(true)}
+                    className="w-full p-6 glass rounded-xl border-2 border-primary/20 hover:border-primary/40 hover:bg-white/10 transition-all group flex items-center gap-4"
+                >
+                    <div className="w-12 h-12 rounded-xl bg-primary/20 grid place-items-center group-hover:scale-110 transition-transform">
+                        <MessageSquare className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="text-left flex-1">
+                        <p className="font-bold text-base mb-1">{t("agents.createSalesAgent.button")}</p>
+                        <p className="text-xs text-muted-foreground">{t("agents.createSalesAgent.dialogDescription")}</p>
+                    </div>
+                </button>
             </div>
+
+            <CreateSalesAgentDialog
+                open={createDialogOpen}
+                onClose={() => setCreateDialogOpen(false)}
+                onSuccess={() => {
+                    execute()
+                }}
+            />
         </div>
     )
 }

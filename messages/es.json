@@ -733,9 +733,7 @@
                 "quantity": "Cantidad",
                 "trackStock": "Controlar stock",
                 "description": "Descripción",
-                "image": "URL de imagen",
-                "reducedName": "Nombre corto",
-                "reducedDescription": "Descripción corta"
+                "image": "Imagen del producto"
             }
         },
         "agents": {
@@ -784,6 +782,16 @@
                 },
                 "supervisorNumber": "Número de WhatsApp del Supervisor",
                 "supervisorNumberPlaceholder": "ej., 59170123456",
+                "telegramSupervisor": "Supervisor Telegram",
+                "telegramSupervisorDescription": "Recibe solicitudes de aprobación de pago directamente en Telegram",
+                "telegramConnected": "Conectado",
+                "telegramConnectedHint": "Este chat está recibiendo notificaciones de aprobación de pagos",
+                "telegramDisconnect": "Desconectar",
+                "telegramConnectButton": "Conectar Telegram",
+                "telegramConnecting": "Esperando conexión...",
+                "telegramConnectingHint": "Abre el enlace en Telegram y toca Iniciar. Esta página se actualizará automáticamente.",
+                "telegramConnectError": "Error al generar el enlace. Intenta de nuevo.",
+                "telegramOpenLink": "Abrir en Telegram",
                 "formalityLevel": "Nivel de Formalidad",
                 "formalityLevels": {
                     "informal": "Informal",
@@ -831,6 +839,65 @@
                 "contextMessagesLimit": "Límite de mensajes de contexto",
                 "sessionTimeoutMinutes": "Tiempo de sesión (minutos)",
                 "handoffKeywords": "Palabras clave de derivación"
+            },
+            "createSalesAgent": {
+                "button": "Crear agente de ventas",
+                "dialogTitle": "Crear agente de ventas",
+                "dialogDescription": "Configura tu agente y conéctalo a WhatsApp en cuestión de minutos.",
+                "close": "Cerrar",
+                "cancel": "Cancelar",
+                "next": "Continuar",
+                "back": "Atrás",
+                "retry": "Reintentar",
+                "finish": "Finalizar",
+                "steps": {
+                    "details": "Detalles del agente",
+                    "initiating": "Preparando Twilio",
+                    "meta": "Conexión con Meta",
+                    "completing": "Finalizando",
+                    "done": "Listo"
+                },
+                "details": {
+                    "agentName": "Nombre del agente",
+                    "agentNamePlaceholder": "Ej: Andrea de Ventas",
+                    "supervisorPhone": "Número de WhatsApp del supervisor",
+                    "supervisorPhonePlaceholder": "+59170123456",
+                    "supervisorPhoneHint": "Formato E.164. Recibirás notificaciones cuando el agente necesite ayuda.",
+                    "language": "Idioma principal",
+                    "submit": "Crear agente"
+                },
+                "initiating": {
+                    "title": "Preparando tu subcuenta de Twilio",
+                    "description": "Estamos creando un entorno aislado para tu agente. Esto puede tardar unos segundos.",
+                    "error": "No pudimos crear la subcuenta de Twilio."
+                },
+                "meta": {
+                    "title": "Conecta WhatsApp con Meta",
+                    "description": "Inicia sesión con la cuenta de Facebook propietaria de tu WhatsApp Business para terminar la configuración.",
+                    "launch": "Conectar con Meta",
+                    "launching": "Abriendo Meta…",
+                    "sdkUnavailable": "El SDK de Facebook no está disponible. Verifica tu configuración.",
+                    "cancelled": "Cancelaste el flujo de Meta. Puedes intentarlo de nuevo.",
+                    "noPayload": "Meta no devolvió la información esperada. Inténtalo nuevamente.",
+                    "error": "Algo salió mal con Meta."
+                },
+                "completing": {
+                    "title": "Finalizando la conexión",
+                    "description": "Estamos enlazando tu número de WhatsApp con el agente.",
+                    "error": "No pudimos completar la conexión con Twilio. Hemos pausado el agente automáticamente."
+                },
+                "done": {
+                    "title": "¡Listo! Tu agente de ventas está conectado",
+                    "description": "Tu agente está activo y listo para responder en WhatsApp.",
+                    "connectedNumber": "Número conectado",
+                    "goToAgents": "Ver mis agentes"
+                },
+                "errors": {
+                    "invalidPhone": "El número debe estar en formato E.164 (ej: +59170123456).",
+                    "missingName": "Ingresa un nombre para el agente.",
+                    "missingTenant": "No pudimos identificar tu cuenta. Vuelve a iniciar sesión.",
+                    "generic": "Ocurrió un error inesperado. Inténtalo nuevamente."
+                }
             }
         },
         "chat": {

@@ -31,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${geist.variable} ${geistMono.variable} dark scroll-smooth`} suppressHydrationWarning>
       <body className="font-sans antialiased">
+        <div id="fb-root" />
         {children}
       </body>
     </html>

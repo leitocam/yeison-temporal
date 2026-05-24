@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import {
     Boxes,
@@ -14,8 +14,11 @@ import {
     Minus,
     PlusCircle,
     TrendingUp,
+    ImageIcon,
+    Upload,
 } from "lucide-react"
 import { apiClient, InventoryItem } from "@/lib/api-client"
+import InventoryImageUploader from "@/components/dashboard/InventoryImageUploader"
 import { useApi, useMutation } from "@/hooks/useApi"
 
 interface InventoryForm {
@@ -23,9 +26,6 @@ interface InventoryForm {
     price: number
     quantity: number | null
     description: string
-    image: string | null
-    reduced_name: string | null
-    reduced_description: string | null
     track_stock: boolean
 }
 
@@ -34,9 +34,6 @@ const emptyForm: InventoryForm = {
     price: 0,
     quantity: 0,
     description: "",
-    image: null,
-    reduced_name: null,
-    reduced_description: null,
     track_stock: true,
 }
 
@@ -47,7 +44,13 @@ export default function InventoryTab() {
     const [threshold, setThreshold] = useState(10)
     const [form, setForm] = useState<InventoryForm>(emptyForm)
     const [editingItem, setEditingItem] = useState<InventoryItem | null>(null)
+    const [savedItemId, setSavedItemId] = useState<number | null>(null)
+    const [pendingFile, setPendingFile] = useState<File | null>(null)
+    const [pendingPreview, setPendingPreview] = useState<string | null>(null)
     const [adjustments, setAdjustments] = useState<Record<number, number>>({})
+    const pendingFileInputRef = useRef<HTMLInputElement | null>(null)
+
+    const uploaderItemId = editingItem?.id ?? savedItemId
 
     const fetchInventory = async (): Promise<InventoryItem[]> => {
         if (showLowStock) {
@@ -117,15 +120,15 @@ export default function InventoryTab() {
             price: item.price,
             quantity: item.quantity,
             description: item.description,
-            image: item.image,
-            reduced_name: item.reduced_name,
-            reduced_description: item.reduced_description,
             track_stock: item.track_stock,
         })
     }
 
     const resetForm = () => {
         setEditingItem(null)
+        setSavedItemId(null)
+        setPendingFile(null)
+        setPendingPreview(null)
         setForm(emptyForm)
     }
 
@@ -134,7 +137,7 @@ export default function InventoryTab() {
 
         const payload: InventoryForm = {
             ...form,
-            quantity: form.track_stock ? form.quantity : null,
+            quantity: form.track_stock ? (form.quantity ?? 0) : null,
         }
 
         if (editingItem) {
@@ -148,17 +151,25 @@ export default function InventoryTab() {
 
         const result = await createItem(payload)
         if (result) {
-            resetForm()
+            setForm(emptyForm)
+            setSavedItemId(result.id)
+            if (pendingFile) {
+                try {
+                    await apiClient.uploadInventoryImage(result.id, pendingFile)
+                } catch {
+                    // upload failure is non-fatal; user can retry via the uploader
+                }
+                setPendingFile(null)
+                setPendingPreview(null)
+            }
             execute()
         }
     }
 
     const handleDelete = async (id: number) => {
         if (!window.confirm(t("inventory.confirmDelete"))) return
-        const result = await deleteItem(id)
-        if (result !== null) {
-            execute()
-        }
+        await deleteItem(id)
+        execute()
     }
 
     const handleAdjust = async (id: number) => {
@@ -315,8 +326,8 @@ export default function InventoryTab() {
                                     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                         <div className="flex items-center gap-4">
                                             <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center overflow-hidden">
-                                                {item.image ? (
-                                                    <img src={item.image} alt={item.product_name} className="h-full w-full object-cover" />
+                                                {item.image_url ? (
+                                                    <img src={item.image_url} alt={item.product_name} className="h-full w-full object-cover" />
                                                 ) : (
                                                     <Boxes className="h-5 w-5 text-primary" />
                                                 )}
@@ -494,7 +505,11 @@ export default function InventoryTab() {
                         <input
                             type="checkbox"
                             checked={form.track_stock}
-                            onChange={(e) => setForm((prev) => ({ ...prev, track_stock: e.target.checked }))}
+                            onChange={(e) => setForm((prev) => ({
+                                ...prev,
+                                track_stock: e.target.checked,
+                                quantity: e.target.checked ? (prev.quantity ?? 0) : null,
+                            }))}
                         />
                         {t("inventory.form.trackStock")}
                     </label>
@@ -515,35 +530,48 @@ export default function InventoryTab() {
                         <label className="text-xs font-semibold uppercase text-muted-foreground">
                             {t("inventory.form.image")}
                         </label>
-                        <input
-                            value={form.image || ""}
-                            onChange={(e) => setForm((prev) => ({ ...prev, image: e.target.value || null }))}
-                            className="w-full rounded-xl border border-primary/10 bg-background/80 px-3 py-2 text-sm focus:border-primary/30 focus:outline-none"
-                            placeholder="https://..."
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                        <div className="space-y-2">
-                            <label className="text-xs font-semibold uppercase text-muted-foreground">
-                                {t("inventory.form.reducedName")}
-                            </label>
-                            <input
-                                value={form.reduced_name || ""}
-                                onChange={(e) => setForm((prev) => ({ ...prev, reduced_name: e.target.value || null }))}
-                                className="w-full rounded-xl border border-primary/10 bg-background/80 px-3 py-2 text-sm focus:border-primary/30 focus:outline-none"
+                        {uploaderItemId ? (
+                            <InventoryImageUploader
+                                itemId={uploaderItemId}
+                                onUploaded={() => execute()}
                             />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-xs font-semibold uppercase text-muted-foreground">
-                                {t("inventory.form.reducedDescription")}
-                            </label>
-                            <input
-                                value={form.reduced_description || ""}
-                                onChange={(e) => setForm((prev) => ({ ...prev, reduced_description: e.target.value || null }))}
-                                className="w-full rounded-xl border border-primary/10 bg-background/80 px-3 py-2 text-sm focus:border-primary/30 focus:outline-none"
-                            />
-                        </div>
+                        ) : (
+                            <>
+                                <input
+                                    ref={pendingFileInputRef}
+                                    type="file"
+                                    accept="image/png,image/jpeg"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0]
+                                        if (!file) return
+                                        setPendingFile(file)
+                                        setPendingPreview(URL.createObjectURL(file))
+                                        e.target.value = ""
+                                    }}
+                                />
+                                <div className="flex items-start gap-4">
+                                    <div className="w-20 h-20 shrink-0 rounded-xl bg-white/5 border border-primary/20 overflow-hidden flex items-center justify-center">
+                                        {pendingPreview ? (
+                                            <img src={pendingPreview} alt="Preview" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <ImageIcon className="w-6 h-6 text-muted-foreground" />
+                                        )}
+                                    </div>
+                                    <div className="flex-1 space-y-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => pendingFileInputRef.current?.click()}
+                                            className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 hover:bg-primary/20 border border-primary/20 rounded-lg transition-colors text-xs"
+                                        >
+                                            <Upload className="w-3.5 h-3.5" />
+                                            {pendingFile ? "Cambiar imagen" : "Seleccionar imagen"}
+                                        </button>
+                                        <p className="text-xs text-muted-foreground">PNG o JPG, máx. 4 MB · se subirá al guardar</p>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
 
                     <button
