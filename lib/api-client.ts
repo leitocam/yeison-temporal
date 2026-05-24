@@ -42,6 +42,10 @@ export interface User {
   created_at?: string;
 }
 
+// The backend's /tenants/me returns the Tenant row itself — the JWT subject is
+// the tenant. Frontend treats `User.id` as the tenant_id when calling onboarding.
+export type TenantId = number;
+
 export interface RefreshTokenResponse {
   access_token: string;
   expires_in: number;
@@ -87,6 +91,43 @@ export interface AgentInstance {
   configuration: AgentConfiguration;
   created_at?: string;
   updated_at?: string;
+  phone_number?: string | null;
+  agent_type?: string;
+  tenant_id?: number;
+}
+
+export interface CreateAgentPayload {
+  agent_type: string;
+  phone_number?: string;
+  configuration?: Partial<AgentConfiguration>;
+}
+
+export interface OnboardingInitiateRequest {
+  tenant_id: number;
+  agent_instance_id: number;
+}
+
+export interface OnboardingInitiateResponse {
+  status: string;
+  subaccount_sid: string;
+  whatsapp_connection_id: number;
+}
+
+export interface MetaSignupCallback {
+  tenant_id: number;
+  agent_instance_id: number;
+  waba_id: string;
+  whatsapp_phone_number_id: string;
+  whatsapp_phone_number: string;
+}
+
+export interface OnboardingCompleteResponse {
+  status: string;
+  whatsapp_connection_id: number;
+  subaccount_sid: string;
+  waba_id: string;
+  whatsapp_phone_number: string;
+  coexistence_enabled: boolean;
 }
 
 export interface ChatMessage {
@@ -139,8 +180,7 @@ export interface InventoryItem {
   quantity: number | null;
   description: string;
   image: string | null;
-  reduced_name: string | null;
-  reduced_description: string | null;
+  image_url: string | null;
   track_stock: boolean;
   created_at: string;
   last_update: string;
@@ -305,6 +345,10 @@ class ApiClient {
         throw error;
       }
 
+      if (response.status === 204 || response.headers.get('content-length') === '0') {
+        return undefined as T;
+      }
+
       return response.json();
     } catch (error) {
       clearTimeout(timeoutId);
@@ -410,6 +454,30 @@ class ApiClient {
   }
 
   // ============================================
+  // Agent lifecycle
+  // ============================================
+
+  async createAgent(payload: CreateAgentPayload): Promise<AgentInstance> {
+    return this.post<AgentInstance>('/agents', payload);
+  }
+
+  // ============================================
+  // Embedded signup / onboarding
+  // ============================================
+
+  async initiateOnboarding(
+    payload: OnboardingInitiateRequest,
+  ): Promise<OnboardingInitiateResponse> {
+    return this.post<OnboardingInitiateResponse>('/onboarding/initiate', payload);
+  }
+
+  async completeOnboarding(
+    payload: MetaSignupCallback,
+  ): Promise<OnboardingCompleteResponse> {
+    return this.post<OnboardingCompleteResponse>('/onboarding/complete', payload);
+  }
+
+  // ============================================
   // Agent QR endpoints
   // ============================================
 
@@ -421,6 +489,20 @@ class ApiClient {
 
   async getAgentQRUrl(agentId: string | number): Promise<{ url: string | null; object_key: string | null }> {
     return this.get<{ url: string | null; object_key: string | null }>(`/agents/${agentId}/qr-url`);
+  }
+
+  // ============================================
+  // Inventory image endpoints
+  // ============================================
+
+  async uploadInventoryImage(itemId: string | number, file: File): Promise<InventoryItem> {
+    const form = new FormData();
+    form.append('file', file);
+    return this.upload<InventoryItem>(`/inventory/${itemId}/image-upload`, form);
+  }
+
+  async getInventoryImageUrl(itemId: string | number): Promise<{ url: string | null; object_key: string | null }> {
+    return this.get<{ url: string | null; object_key: string | null }>(`/inventory/${itemId}/image-url`);
   }
 
   // ============================================

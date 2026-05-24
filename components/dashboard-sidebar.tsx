@@ -20,9 +20,21 @@ import {
   HelpCircle,
   Home,
   TrendingUp,
+  Megaphone,
+  Lock as LockIcon,
 } from "lucide-react"
 import { useState } from "react"
 import { useAuth } from "@/hooks/useAuth"
+
+// ─── Marketing agent purchase status ─────────────────────────────────────────
+// Prepared for future integration: wire hasMarketingAgent to your plan/billing
+// API (e.g. user.features?.includes('marketing') or a dedicated endpoint).
+// Currently set to false so the UI shows the "locked" state by default.
+function useMarketingAgentStatus(): boolean {
+  // TODO: replace with real check once billing API is available
+  // Example: return user?.plan === 'pro' || user?.addons?.includes('marketing')
+  return false
+}
 
 // Import logos
 import Logo from "@/components/Logos/Logo.png"
@@ -38,6 +50,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
   const pathname = usePathname()
   const [expandUpgrade, setExpandUpgrade] = useState(false)
   const { logout } = useAuth()
+  const hasMarketingAgent = useMarketingAgentStatus()
 
   const handleLogout = async () => {
     await logout()
@@ -55,6 +68,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
     { icon: Bot, label: t("tabs.agents"), href: "/dashboard/agents", color: "from-purple-500 to-pink-500" },
     { icon: BarChart3, label: t("tabs.metrics"), href: "/dashboard/metrics", color: "from-orange-500 to-red-500" },
     { icon: Boxes, label: t("tabs.inventory"), href: "/dashboard/inventory", color: "from-amber-500 to-yellow-500" },
+    { icon: Megaphone, label: "Campañas", href: "/dashboard/marketing", color: "from-[#A3FF00] to-[#C4FF4D]", marketing: true },
   ]
 
   const settingsItems = [
@@ -116,8 +130,11 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
               {open && <p className="text-[10px] uppercase tracking-widest text-muted-foreground/60 font-semibold mb-3">Principal</p>}
             </div>
 
-            {mainMenuItems.map((item, index) => {
+            {mainMenuItems.map((item) => {
               const isActive = isActiveRoute(item.href)
+              const isMarketing = (item as any).marketing === true
+              const isLocked = isMarketing && !hasMarketingAgent
+
               return (
                 <Link
                   key={item.href}
@@ -135,7 +152,7 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
                   )}
 
                   <div className={`relative flex items-center justify-center ${isActive ? "text-primary" : ""}`}>
-                    <item.icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${!open ? "mx-auto" : ""}`} />
+                    <item.icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${!open ? "mx-auto" : ""} ${isMarketing && !isLocked ? "text-[#A3FF00]" : ""}`} />
                     {isActive && (
                       <div className="absolute inset-0 bg-primary/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
                     )}
@@ -143,8 +160,25 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
 
                   {open && (
                     <>
-                      <span className={`text-sm font-medium ${isActive ? "font-semibold" : ""}`}>{item.label}</span>
-                      {isActive && (
+                      <span className={`text-sm font-medium ${isActive ? "font-semibold" : ""} ${isMarketing && !isLocked ? "text-[#A3FF00]" : ""}`}>
+                        {item.label}
+                      </span>
+                      {/* Marketing agent status badge */}
+                      {isMarketing && (
+                        <div className="ml-auto flex items-center gap-1">
+                          {isLocked ? (
+                            <span className="flex items-center gap-1 text-[9px] font-mono uppercase tracking-wider text-[#666] border border-[#1A1A1A] rounded-full px-2 py-0.5">
+                              <LockIcon className="w-2.5 h-2.5" />
+                              Pro
+                            </span>
+                          ) : (
+                            <span className="flex items-center gap-1 text-[9px] font-mono uppercase tracking-wider text-[#A3FF00] border border-[#A3FF00]/30 bg-[#A3FF00]/10 rounded-full px-2 py-0.5">
+                              Activo
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      {isActive && !isMarketing && (
                         <div className="ml-auto w-2 h-2 bg-primary rounded-full animate-pulse shadow-lg shadow-primary/50" />
                       )}
                     </>
@@ -152,10 +186,15 @@ export default function DashboardSidebar({ open, setOpen }: DashboardSidebarProp
 
                   {/* Tooltip for collapsed state */}
                   {!open && (
-                    <div className="absolute left-full ml-3 px-3 py-1.5 bg-background border border-primary/20 rounded-lg 
-                                                      shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                    <div className="absolute left-full ml-3 px-3 py-1.5 bg-background border border-primary/20 rounded-lg
+                                                      shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible
                                                       transition-all duration-200 whitespace-nowrap z-50 text-sm font-medium">
                       {item.label}
+                      {isMarketing && (
+                        <span className="ml-2 text-[9px] font-mono uppercase text-[#666]">
+                          {isLocked ? '🔒 Pro' : '✓'}
+                        </span>
+                      )}
                     </div>
                   )}
                 </Link>

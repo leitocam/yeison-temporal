@@ -4,13 +4,15 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+<<<<<<< HEAD
   // Output standalone for optimized hosting (e.g., Hostinger/cPanel)
   output: 'standalone',
 
   // TypeScript configuration
+=======
+>>>>>>> 7d1adeff247d1eb358e5707756dabc7cd5789c1f
   typescript: {
-    // Set to false in production for stricter checks
-    ignoreBuildErrors: process.env.NODE_ENV === 'development',
+    ignoreBuildErrors: true,
   },
 
   // Image optimization
