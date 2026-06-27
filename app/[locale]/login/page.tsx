@@ -25,7 +25,7 @@ export default function LoginPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-background text-foreground flex overflow-hidden relative">
+        <div className="min-h-screen bg-background text-foreground flex overflow-hidden relative" style={{ height: '100dvh' }}>
             {/* Tech Pattern Background */}
             <div className="fixed inset-0 pointer-events-none opacity-30">
                 {/* Grid Pattern */}
@@ -163,7 +163,7 @@ export default function LoginPage() {
             </div>
 
             {/* Right side - Form */}
-            <div className="w-full lg:w-1/2 flex flex-col relative z-10">
+            <div className="w-full lg:w-1/2 flex flex-col relative z-10 overflow-y-auto">
                 {/* Header with Language Switcher */}
                 <div className="flex items-center justify-between p-4 sm:p-6">
                     <Link href="/" className="flex items-center gap-2 lg:hidden w-full">
@@ -177,7 +177,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* Form Content */}
-                <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+                <div className="flex-1 flex items-start lg:items-center justify-center p-4 sm:p-6 lg:p-8 pb-8">
                     <div className="w-full max-w-md">
                         <div className="fade-in-up stagger-1 mb-8 sm:mb-10 text-center lg:text-left">
                             <h1 className="text-3xl sm:text-4xl font-black mb-3 tracking-tight">
