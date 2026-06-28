@@ -138,7 +138,7 @@ export default function PlanSelection({ onSelect, initialPlan }: PlanSelectionPr
             </div>
 
             {/* Plans Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-2 sm:px-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-2 sm:px-0" id="planes">
                 {plans.map((plan, i) => {
                     const isSelected = selectedPlanId === plan.id
 
@@ -214,6 +214,36 @@ export default function PlanSelection({ onSelect, initialPlan }: PlanSelectionPr
                         </motion.div>
                     )
                 })}
+            </div>
+            {/* Legal notice */}
+            <div className="px-2 sm:px-0">
+                <div className="rounded-2xl border border-border/50 bg-white/[0.03] p-4 sm:p-5 text-center space-y-2">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                        Al seleccionar un plan y continuar, aceptas los{" "}
+                        <a
+                            href="/terms"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline font-medium"
+                        >
+                            Términos y Condiciones
+                        </a>{" "}
+                        y la{" "}
+                        <a
+                            href="/privacy"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline font-medium"
+                        >
+                            Política de Privacidad
+                        </a>{" "}
+                        de Yeison AI. Los planes de pago se renuevan automáticamente cada período.
+                        Puedes cancelar en cualquier momento desde tu panel de configuración.
+                    </p>
+                    <p className="text-[11px] text-muted-foreground/60">
+                        Los precios están expresados en bolivianos (Bs.) e incluyen acceso completo a las funcionalidades del plan seleccionado.
+                    </p>
+                </div>
             </div>
         </motion.div>
     )

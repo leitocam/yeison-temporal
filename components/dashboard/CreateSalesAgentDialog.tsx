@@ -50,6 +50,7 @@ export default function CreateSalesAgentDialog({ open, onClose, onSuccess }: Pro
     const [metaLaunching, setMetaLaunching] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [submitting, setSubmitting] = useState(false)
+    const [acceptedTerms, setAcceptedTerms] = useState(false)
 
     const tenantId = useMemo<number | null>(() => {
         if (!user?.id) return null
@@ -68,6 +69,7 @@ export default function CreateSalesAgentDialog({ open, onClose, onSuccess }: Pro
         setMetaLaunching(false)
         setError(null)
         setSubmitting(false)
+        setAcceptedTerms(false)
     }, [])
 
     useEffect(() => {
@@ -100,6 +102,10 @@ export default function CreateSalesAgentDialog({ open, onClose, onSuccess }: Pro
         const phone = normalizeE164(supervisorPhone)
         if (!E164.test(phone)) {
             setError(t("errors.invalidPhone"))
+            return
+        }
+        if (!acceptedTerms) {
+            setError("Debes aceptar los Términos de Uso del Agente para continuar.")
             return
         }
 
@@ -342,6 +348,51 @@ export default function CreateSalesAgentDialog({ open, onClose, onSuccess }: Pro
                                 </select>
                             </div>
 
+                            {/* T&C acceptance */}
+                            <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-3">
+                                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                                    Términos de uso del agente de ventas IA
+                                </p>
+                                <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                                    <li>El agente operará en tu nombre mediante WhatsApp Business API de Meta.</li>
+                                    <li>Eres responsable del contenido, veracidad de la información y comportamiento del agente.</li>
+                                    <li>Las conversaciones serán almacenadas de forma segura por hasta 12 meses.</li>
+                                    <li>El agente puede cometer errores — se recomienda supervisión periódica.</li>
+                                    <li>El incumplimiento de las políticas de Meta puede resultar en suspensión del número.</li>
+                                </ul>
+                                <label className="flex items-start gap-3 cursor-pointer group">
+                                    <input
+                                        type="checkbox"
+                                        checked={acceptedTerms}
+                                        onChange={(e) => setAcceptedTerms(e.target.checked)}
+                                        className="mt-0.5 w-4 h-4 accent-primary cursor-pointer flex-shrink-0"
+                                    />
+                                    <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
+                                        He leído y acepto los{" "}
+                                        <a
+                                            href="/terms"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-primary hover:underline"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            Términos y Condiciones
+                                        </a>{" "}
+                                        y la{" "}
+                                        <a
+                                            href="/privacy"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-primary hover:underline"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            Política de Privacidad
+                                        </a>{" "}
+                                        de Yeison AI, incluyendo el tratamiento de datos de conversaciones de mis clientes.
+                                    </span>
+                                </label>
+                            </div>
+
                             <div className="flex justify-end gap-2 pt-2">
                                 <button
                                     type="button"
@@ -352,7 +403,7 @@ export default function CreateSalesAgentDialog({ open, onClose, onSuccess }: Pro
                                 </button>
                                 <button
                                     type="submit"
-                                    disabled={submitting}
+                                    disabled={submitting || !acceptedTerms}
                                     className="px-5 py-2 rounded-lg font-semibold bg-primary/30 hover:bg-primary/40 transition-colors flex items-center gap-2 disabled:opacity-50"
                                 >
                                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
